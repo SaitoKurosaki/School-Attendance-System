@@ -22,7 +22,7 @@ namespace School_Attendance_System
 
         private void txtEmail_TextChanged(object sender, EventArgs e)
         {
-            txtEmail.PlaceholderText = "Email";
+            txtUsername.PlaceholderText = "Email";
         }
 
         private void txtPass_TextChanged(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace School_Attendance_System
 
         private void bntSign_Click(object sender, EventArgs e)
         {
-            if (txtEmail.Text == "" || txtPass.Text == "" || txtConfirm.Text == "")
+            if (txtUsername.Text == "" || txtPass.Text == "" || txtConfirm.Text == "")
             {
                 MessageBox.Show("Please fill all fields.");
                 return;
@@ -45,7 +45,37 @@ namespace School_Attendance_System
             else
             {
                 MessageBox.Show("Account created successfully!");
+
+                Login login = new Login();
+                login.Show();
+                this.Close();
+
             }
+        }
+
+        private void txtConfirm_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void SignUp_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
