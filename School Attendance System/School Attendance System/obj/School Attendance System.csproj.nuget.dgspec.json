@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\OneDrive\\Desktop\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj": {}
+    "D:\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\OneDrive\\Desktop\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj": {
+    "D:\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj",
+        "projectUniqueName": "D:\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj",
         "projectName": "School Attendance System",
-        "projectPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\School-Attendance-System\\School Attendance System\\School Attendance System\\obj\\",
+        "projectPath": "D:\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj",
+        "packagesPath": "C:\\Users\\SaitoKurosaki\\.nuget\\packages\\",
+        "outputPath": "D:\\School-Attendance-System\\School Attendance System\\School Attendance System\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\SaitoKurosaki\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
