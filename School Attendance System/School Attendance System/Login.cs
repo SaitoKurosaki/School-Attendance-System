@@ -1,8 +1,8 @@
 namespace School_Attendance_System
 {
-    public partial class Form1 : Form
+    public partial class Login : Form
     {
-        public Form1()
+        public Login()
         {
             InitializeComponent();
         }
@@ -14,7 +14,9 @@ namespace School_Attendance_System
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-
+            MainLogin mainlogin = new MainLogin();
+            mainlogin.Show();
+            this.Hide();
         }
 
         private void btnSign_Click(object sender, EventArgs e)
@@ -22,6 +24,16 @@ namespace School_Attendance_System
             SignUp signup = new SignUp();
             signup.Show();
             this.Hide();
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

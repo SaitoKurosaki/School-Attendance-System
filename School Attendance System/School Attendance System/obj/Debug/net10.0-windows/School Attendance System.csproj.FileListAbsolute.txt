@@ -3,7 +3,11 @@ C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School 
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\School Attendance System.runtimeconfig.json
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\School Attendance System.dll
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\School Attendance System.pdb
-C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Form1.resources
+C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Dashboard.resources
+C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Login.resources
+C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.MainLogin.resources
+C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Properties.Resources.resources
+C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.SignUp.resources
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.csproj.GenerateResource.cache
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.AssemblyInfoInputs.cache
@@ -15,6 +19,7 @@ C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School 
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.pdb
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.genruntimeconfig.cache
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\ref\School Attendance System.dll
+<<<<<<< HEAD
 C:\Users\admin\Desktop\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.SignUp.resources
 D:\School Attendance System\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\School Attendance System.exe
 D:\School Attendance System\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\School Attendance System.deps.json
@@ -39,3 +44,5 @@ D:\School Attendance System\School Attendance System\School Attendance System\ob
 D:\School Attendance System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.SignUpform.resources
 D:\School Attendance System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.dashboard.resources
 D:\School Attendance System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.StudentsControl.resources
+=======
+>>>>>>> 17dcc635a9599c92b57faf476a2600be1f31ec33
