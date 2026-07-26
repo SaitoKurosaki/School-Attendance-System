@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Igwzj7mXqXk=",
+  "dgSpecHash": "sUAnHkMqeIA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\School-Attendance-System\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj",
+  "projectFilePath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\School-Attendance-System(2)\\School Attendance System\\School Attendance System\\School Attendance System.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\bouncycastle.cryptography\\2.6.2\\bouncycastle.cryptography.2.6.2.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\google.protobuf\\3.32.0\\google.protobuf.3.32.0.nupkg.sha512",
