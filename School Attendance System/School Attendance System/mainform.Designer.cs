@@ -40,7 +40,7 @@
             panel2 = new Panel();
             pictureBox3 = new PictureBox();
             label4 = new Label();
-            checkBox1 = new CheckBox();
+            showpassword = new CheckBox();
             LoginBtn = new Button();
             label5 = new Label();
             linkLabel1 = new LinkLabel();
@@ -131,6 +131,7 @@
             passwordbox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             passwordbox.Location = new Point(3, 3);
             passwordbox.Name = "passwordbox";
+            passwordbox.PasswordChar = '*';
             passwordbox.PlaceholderText = "Enter Your Password";
             passwordbox.Size = new Size(305, 22);
             passwordbox.TabIndex = 0;
@@ -166,16 +167,17 @@
             label4.TabIndex = 6;
             label4.Text = "Password";
             // 
-            // checkBox1
+            // showpassword
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox1.Location = new Point(66, 384);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(112, 19);
-            checkBox1.TabIndex = 7;
-            checkBox1.Text = "Show Password";
-            checkBox1.UseVisualStyleBackColor = true;
+            showpassword.AutoSize = true;
+            showpassword.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            showpassword.Location = new Point(66, 384);
+            showpassword.Name = "showpassword";
+            showpassword.Size = new Size(112, 19);
+            showpassword.TabIndex = 7;
+            showpassword.Text = "Show Password";
+            showpassword.UseVisualStyleBackColor = true;
+            showpassword.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // LoginBtn
             // 
@@ -223,7 +225,7 @@
             Controls.Add(linkLabel1);
             Controls.Add(label5);
             Controls.Add(LoginBtn);
-            Controls.Add(checkBox1);
+            Controls.Add(showpassword);
             Controls.Add(label4);
             Controls.Add(panel2);
             Controls.Add(label3);
@@ -259,7 +261,7 @@
         private Panel panel2;
         private PictureBox pictureBox3;
         private Label label4;
-        private CheckBox checkBox1;
+        private CheckBox showpassword;
         private Button LoginBtn;
         private Label label5;
         private LinkLabel linkLabel1;

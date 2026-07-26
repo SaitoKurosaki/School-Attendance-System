@@ -31,27 +31,31 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignUpform));
             label2 = new Label();
             label1 = new Label();
-            emailbox = new TextBox();
+            firstnamebox = new TextBox();
             panel1 = new Panel();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             label3 = new Label();
-            textBox1 = new TextBox();
+            emailbox = new TextBox();
             panel2 = new Panel();
             pictureBox3 = new PictureBox();
-            linkLabel1 = new LinkLabel();
-            label5 = new Label();
             button1 = new Button();
             label4 = new Label();
             panel4 = new Panel();
             pictureBox5 = new PictureBox();
-            textBox3 = new TextBox();
+            passwordbox = new TextBox();
             button2 = new Button();
             label8 = new Label();
             panel5 = new Panel();
             pictureBox6 = new PictureBox();
-            textBox4 = new TextBox();
+            confirmbox = new TextBox();
             label7 = new Label();
+            label9 = new Label();
+            panel6 = new Panel();
+            pictureBox7 = new PictureBox();
+            lastnamebox = new TextBox();
+            label6 = new Label();
+            linkLabel2 = new LinkLabel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -61,6 +65,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             SuspendLayout();
             // 
             // label2
@@ -84,23 +90,24 @@
             label1.TabIndex = 13;
             label1.Text = "CREATE TEACHER ACCOUNT";
             // 
-            // emailbox
+            // firstnamebox
             // 
-            emailbox.BackColor = SystemColors.Control;
-            emailbox.BorderStyle = BorderStyle.None;
-            emailbox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            emailbox.Location = new Point(3, 3);
-            emailbox.Name = "emailbox";
-            emailbox.PlaceholderText = "Enter your full name";
-            emailbox.Size = new Size(305, 22);
-            emailbox.TabIndex = 20;
+            firstnamebox.BackColor = SystemColors.Control;
+            firstnamebox.BorderStyle = BorderStyle.None;
+            firstnamebox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            firstnamebox.Location = new Point(3, 3);
+            firstnamebox.Name = "firstnamebox";
+            firstnamebox.PlaceholderText = "Enter your last name";
+            firstnamebox.Size = new Size(305, 22);
+            firstnamebox.TabIndex = 20;
+            firstnamebox.TextChanged += emailbox_TextChanged;
             // 
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(pictureBox2);
-            panel1.Controls.Add(emailbox);
-            panel1.Location = new Point(54, 241);
+            panel1.Controls.Add(firstnamebox);
+            panel1.Location = new Point(54, 224);
             panel1.Name = "panel1";
             panel1.Size = new Size(389, 33);
             panel1.TabIndex = 15;
@@ -129,29 +136,31 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(54, 223);
+            label3.Location = new Point(54, 206);
             label3.Name = "label3";
-            label3.Size = new Size(62, 15);
+            label3.RightToLeft = RightToLeft.No;
+            label3.Size = new Size(67, 15);
             label3.TabIndex = 16;
-            label3.Text = "Full Name";
+            label3.Text = "First Name";
             // 
-            // textBox1
+            // emailbox
             // 
-            textBox1.BackColor = SystemColors.Control;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(3, 3);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Enter your email";
-            textBox1.Size = new Size(305, 22);
-            textBox1.TabIndex = 0;
+            emailbox.BackColor = SystemColors.Control;
+            emailbox.BorderStyle = BorderStyle.None;
+            emailbox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            emailbox.Location = new Point(3, 3);
+            emailbox.Name = "emailbox";
+            emailbox.PlaceholderText = "Enter your email";
+            emailbox.Size = new Size(305, 22);
+            emailbox.TabIndex = 0;
+            emailbox.TextChanged += emailbox_TextChanged_1;
             // 
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
             panel2.Controls.Add(pictureBox3);
-            panel2.Controls.Add(textBox1);
-            panel2.Location = new Point(54, 311);
+            panel2.Controls.Add(emailbox);
+            panel2.Location = new Point(54, 349);
             panel2.Name = "panel2";
             panel2.Size = new Size(389, 33);
             panel2.TabIndex = 17;
@@ -166,48 +175,26 @@
             pictureBox3.TabIndex = 1;
             pictureBox3.TabStop = false;
             // 
-            // linkLabel1
-            // 
-            linkLabel1.ActiveLinkColor = Color.DeepSkyBlue;
-            linkLabel1.AutoSize = true;
-            linkLabel1.LinkBehavior = LinkBehavior.NeverUnderline;
-            linkLabel1.LinkColor = SystemColors.HotTrack;
-            linkLabel1.Location = new Point(307, 555);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(37, 15);
-            linkLabel1.TabIndex = 22;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "Login";
-            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(164, 555);
-            label5.Name = "label5";
-            label5.Size = new Size(142, 15);
-            label5.TabIndex = 21;
-            label5.Text = "Already have an account?";
-            // 
             // button1
             // 
             button1.BackColor = SystemColors.HotTrack;
             button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(54, 496);
+            button1.Location = new Point(54, 518);
             button1.Name = "button1";
             button1.Padding = new Padding(15, 0, 0, 0);
             button1.Size = new Size(157, 38);
             button1.TabIndex = 0;
-            button1.Text = "Login";
+            button1.Text = "Submit";
             button1.TextImageRelation = TextImageRelation.ImageAboveText;
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(54, 293);
+            label4.Location = new Point(54, 331);
             label4.Name = "label4";
             label4.Size = new Size(36, 15);
             label4.TabIndex = 18;
@@ -217,8 +204,8 @@
             // 
             panel4.BorderStyle = BorderStyle.FixedSingle;
             panel4.Controls.Add(pictureBox5);
-            panel4.Controls.Add(textBox3);
-            panel4.Location = new Point(54, 373);
+            panel4.Controls.Add(passwordbox);
+            panel4.Location = new Point(54, 411);
             panel4.Name = "panel4";
             panel4.Size = new Size(389, 33);
             panel4.TabIndex = 23;
@@ -233,23 +220,24 @@
             pictureBox5.TabIndex = 1;
             pictureBox5.TabStop = false;
             // 
-            // textBox3
+            // passwordbox
             // 
-            textBox3.BackColor = SystemColors.Control;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox3.Location = new Point(3, 3);
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "Enter your password";
-            textBox3.Size = new Size(305, 22);
-            textBox3.TabIndex = 0;
+            passwordbox.BackColor = SystemColors.Control;
+            passwordbox.BorderStyle = BorderStyle.None;
+            passwordbox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            passwordbox.Location = new Point(3, 3);
+            passwordbox.Name = "passwordbox";
+            passwordbox.PlaceholderText = "Enter your password";
+            passwordbox.Size = new Size(305, 22);
+            passwordbox.TabIndex = 0;
+            passwordbox.TextChanged += passwordbox_TextChanged;
             // 
             // button2
             // 
             button2.BackColor = SystemColors.ControlDark;
             button2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = SystemColors.ControlText;
-            button2.Location = new Point(286, 496);
+            button2.Location = new Point(286, 518);
             button2.Name = "button2";
             button2.Padding = new Padding(15, 0, 0, 0);
             button2.Size = new Size(157, 38);
@@ -261,7 +249,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(54, 418);
+            label8.Location = new Point(54, 456);
             label8.Name = "label8";
             label8.Size = new Size(107, 15);
             label8.TabIndex = 26;
@@ -271,8 +259,8 @@
             // 
             panel5.BorderStyle = BorderStyle.FixedSingle;
             panel5.Controls.Add(pictureBox6);
-            panel5.Controls.Add(textBox4);
-            panel5.Location = new Point(54, 436);
+            panel5.Controls.Add(confirmbox);
+            panel5.Location = new Point(54, 474);
             panel5.Name = "panel5";
             panel5.Size = new Size(389, 33);
             panel5.TabIndex = 25;
@@ -287,32 +275,101 @@
             pictureBox6.TabIndex = 1;
             pictureBox6.TabStop = false;
             // 
-            // textBox4
+            // confirmbox
             // 
-            textBox4.BackColor = SystemColors.Control;
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox4.Location = new Point(3, 3);
-            textBox4.Name = "textBox4";
-            textBox4.PlaceholderText = "Enter your password";
-            textBox4.Size = new Size(305, 22);
-            textBox4.TabIndex = 0;
+            confirmbox.BackColor = SystemColors.Control;
+            confirmbox.BorderStyle = BorderStyle.None;
+            confirmbox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            confirmbox.Location = new Point(3, 3);
+            confirmbox.Name = "confirmbox";
+            confirmbox.PlaceholderText = "Enter your password";
+            confirmbox.Size = new Size(305, 22);
+            confirmbox.TabIndex = 0;
+            confirmbox.TextChanged += confirmbox_TextChanged;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(54, 355);
+            label7.Location = new Point(54, 393);
             label7.Name = "label7";
             label7.Size = new Size(59, 15);
             label7.TabIndex = 24;
             label7.Text = "Password";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(54, 267);
+            label9.Name = "label9";
+            label9.RightToLeft = RightToLeft.No;
+            label9.Size = new Size(65, 15);
+            label9.TabIndex = 28;
+            label9.Text = "Last Name";
+            // 
+            // panel6
+            // 
+            panel6.BorderStyle = BorderStyle.FixedSingle;
+            panel6.Controls.Add(pictureBox7);
+            panel6.Controls.Add(lastnamebox);
+            panel6.Location = new Point(54, 285);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(389, 33);
+            panel6.TabIndex = 27;
+            // 
+            // pictureBox7
+            // 
+            pictureBox7.BackgroundImage = (Image)resources.GetObject("pictureBox7.BackgroundImage");
+            pictureBox7.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox7.Location = new Point(330, -1);
+            pictureBox7.Name = "pictureBox7";
+            pictureBox7.Size = new Size(72, 37);
+            pictureBox7.TabIndex = 1;
+            pictureBox7.TabStop = false;
+            // 
+            // lastnamebox
+            // 
+            lastnamebox.BackColor = SystemColors.Control;
+            lastnamebox.BorderStyle = BorderStyle.None;
+            lastnamebox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lastnamebox.Location = new Point(3, 3);
+            lastnamebox.Name = "lastnamebox";
+            lastnamebox.PlaceholderText = "Enter your last name";
+            lastnamebox.Size = new Size(305, 22);
+            lastnamebox.TabIndex = 20;
+            lastnamebox.TextChanged += lastnamebox_TextChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(164, 570);
+            label6.Name = "label6";
+            label6.Size = new Size(142, 15);
+            label6.TabIndex = 21;
+            label6.Text = "Already have an account?";
+            // 
+            // linkLabel2
+            // 
+            linkLabel2.ActiveLinkColor = Color.DeepSkyBlue;
+            linkLabel2.AutoSize = true;
+            linkLabel2.LinkBehavior = LinkBehavior.NeverUnderline;
+            linkLabel2.LinkColor = SystemColors.HotTrack;
+            linkLabel2.Location = new Point(307, 570);
+            linkLabel2.Name = "linkLabel2";
+            linkLabel2.Size = new Size(37, 15);
+            linkLabel2.TabIndex = 22;
+            linkLabel2.TabStop = true;
+            linkLabel2.Text = "Login";
+            linkLabel2.LinkClicked += linkLabel1_LinkClicked;
             // 
             // SignUpform
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(500, 601);
+            Controls.Add(panel6);
+            Controls.Add(label9);
             Controls.Add(panel5);
             Controls.Add(label8);
             Controls.Add(button2);
@@ -324,8 +381,8 @@
             Controls.Add(pictureBox1);
             Controls.Add(label3);
             Controls.Add(panel2);
-            Controls.Add(linkLabel1);
-            Controls.Add(label5);
+            Controls.Add(linkLabel2);
+            Controls.Add(label6);
             Controls.Add(button1);
             Controls.Add(label4);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -344,6 +401,9 @@
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -352,26 +412,30 @@
 
         private Label label2;
         private Label label1;
-        private TextBox emailbox;
+        private TextBox firstnamebox;
         private Panel panel1;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
         private Label label3;
-        private TextBox textBox1;
+        private TextBox emailbox;
         private Panel panel2;
         private PictureBox pictureBox3;
-        private LinkLabel linkLabel1;
-        private Label label5;
         private Button button1;
         private Label label4;
         private Panel panel4;
         private PictureBox pictureBox5;
-        private TextBox textBox3;
+        private TextBox passwordbox;
         private Button button2;
         private Label label8;
         private Panel panel5;
         private PictureBox pictureBox6;
-        private TextBox textBox4;
+        private TextBox confirmbox;
         private Label label7;
+        private Label label9;
+        private Panel panel6;
+        private PictureBox pictureBox7;
+        private TextBox lastnamebox;
+        private Label label6;
+        private LinkLabel linkLabel2;
     }
 }
