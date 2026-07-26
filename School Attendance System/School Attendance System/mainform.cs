@@ -58,7 +58,9 @@ namespace School_Attendance_System
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            Dashboard dashboard = new Dashboard();
+            dashboard.Show();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
