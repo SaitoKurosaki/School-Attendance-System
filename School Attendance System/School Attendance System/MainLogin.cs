@@ -17,7 +17,25 @@ namespace School_Attendance_System
 
         private void btnLog_Click(object sender, EventArgs e)
         {
-            
+            if (txtUsername.Text == "" && txtPass.Text == "")
+            {
+                MessageBox.Show("Please fill all fields.");
+                return;
+            }
+            else if (txtUsername.Text == "")
+            {
+                MessageBox.Show("Please enter your Username.");
+                return;
+            }
+            else if (txtPass.Text == "")
+            {
+                MessageBox.Show("Please enter your Password");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("You're successfully login!");
+            }
         }
 
         private void chkShowPass_CheckedChanged(object sender, EventArgs e)
@@ -30,6 +48,11 @@ namespace School_Attendance_System
             {
                 txtPass.PasswordChar = '*';
             }
+        }
+
+        private void lnkForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
         }
     }
 }

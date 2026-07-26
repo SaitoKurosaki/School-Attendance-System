@@ -77,5 +77,10 @@ namespace School_Attendance_System
         {
 
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
