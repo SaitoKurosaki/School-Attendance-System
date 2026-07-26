@@ -36,7 +36,7 @@
             pictureBox2 = new PictureBox();
             emailbox = new TextBox();
             label3 = new Label();
-            textBox1 = new TextBox();
+            passwordbox = new TextBox();
             panel2 = new Panel();
             pictureBox3 = new PictureBox();
             label4 = new Label();
@@ -124,22 +124,23 @@
             label3.TabIndex = 4;
             label3.Text = "Email";
             // 
-            // textBox1
+            // passwordbox
             // 
-            textBox1.BackColor = SystemColors.Control;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(3, 3);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Enter Your Password";
-            textBox1.Size = new Size(305, 22);
-            textBox1.TabIndex = 0;
+            passwordbox.BackColor = SystemColors.Control;
+            passwordbox.BorderStyle = BorderStyle.None;
+            passwordbox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            passwordbox.Location = new Point(3, 3);
+            passwordbox.Name = "passwordbox";
+            passwordbox.PlaceholderText = "Enter Your Password";
+            passwordbox.Size = new Size(305, 22);
+            passwordbox.TabIndex = 0;
+            passwordbox.TextChanged += textBox1_TextChanged;
             // 
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
             panel2.Controls.Add(pictureBox3);
-            panel2.Controls.Add(textBox1);
+            panel2.Controls.Add(passwordbox);
             panel2.Location = new Point(66, 327);
             panel2.Name = "panel2";
             panel2.Size = new Size(389, 33);
@@ -254,7 +255,7 @@
         private TextBox emailbox;
         private Label label3;
         private PictureBox pictureBox2;
-        private TextBox textBox1;
+        private TextBox passwordbox;
         private Panel panel2;
         private PictureBox pictureBox3;
         private Label label4;
