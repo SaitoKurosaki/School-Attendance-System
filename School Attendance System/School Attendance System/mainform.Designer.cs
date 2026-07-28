@@ -186,7 +186,6 @@
             LoginBtn.ForeColor = Color.Transparent;
             LoginBtn.Location = new Point(66, 427);
             LoginBtn.Name = "LoginBtn";
-            LoginBtn.Padding = new Padding(15, 0, 0, 0);
             LoginBtn.Size = new Size(393, 38);
             LoginBtn.TabIndex = 0;
             LoginBtn.Text = "Login";

@@ -182,7 +182,6 @@
             button1.ForeColor = Color.Transparent;
             button1.Location = new Point(54, 518);
             button1.Name = "button1";
-            button1.Padding = new Padding(15, 0, 0, 0);
             button1.Size = new Size(157, 38);
             button1.TabIndex = 0;
             button1.Text = "Submit";
@@ -239,7 +238,6 @@
             button2.ForeColor = SystemColors.ControlText;
             button2.Location = new Point(286, 518);
             button2.Name = "button2";
-            button2.Padding = new Padding(15, 0, 0, 0);
             button2.Size = new Size(157, 38);
             button2.TabIndex = 25;
             button2.Text = "Cancel";

@@ -6,11 +6,14 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Pqc.Crypto.Lms;
+using System.Net;
+using System.Net.Mail;
 namespace School_Attendance_System
 {
     public partial class SignUpform : Form
     {
-        public string MysqlConnection = "server=localhost;database=school;uid=school;password=Administrator";
+        public string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
         public string first_name;
         public string last_name;
         public string email;
@@ -18,6 +21,8 @@ namespace School_Attendance_System
 
         public string confirm;
 
+        public string otp;
+        
         public SignUpform()
         {
             InitializeComponent();
@@ -77,13 +82,22 @@ namespace School_Attendance_System
                         try
                         {
                             conn.Open();
-                            string querycmd = $"INSERT INTO teachers(first_name,last_name,email,password,register_date) VALUES ('{first_name}','{last_name}','{email}','{password}',now())";
-                            MySqlCommand cmd = new MySqlCommand(querycmd, conn);
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Registration successful");
-                            this.Hide();
-                            mainform backtomain = new mainform();
-                            backtomain.Show();
+                            string query = $"SELECT email FROM teachers WHERE email = '{email}'";
+                            MySqlCommand cmd = new MySqlCommand(query, conn);
+                            MySqlDataReader reader = cmd.ExecuteReader();
+
+                            if (reader.Read())
+                            {
+                                MessageBox.Show("The email address you entered is already associated with an existing account");
+                            }
+                            else
+                            {
+                                
+                              
+                                verification veriform = new verification(first_name,last_name,email,password);
+                                this.Hide();
+                                veriform.Show();                           
+                            }
                         }
                         catch (Exception ex)
                         {

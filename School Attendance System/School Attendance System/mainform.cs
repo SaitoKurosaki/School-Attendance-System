@@ -15,7 +15,7 @@ namespace School_Attendance_System
 {
     public partial class mainform : Form
     {
-        public string MysqlConnection = "server=localhost;database=school;uid=school;password=Administrator";
+        public string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
         public string email;
         public string password;
         public mainform()
