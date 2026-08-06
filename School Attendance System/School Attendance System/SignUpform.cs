@@ -22,7 +22,7 @@ namespace School_Attendance_System
         public string confirm;
 
         public string otp;
-        
+
         public SignUpform()
         {
             InitializeComponent();
@@ -63,7 +63,7 @@ namespace School_Attendance_System
             MySqlConnection conn = new MySqlConnection(MysqlConnection);
 
 
-            
+
 
             try
             {
@@ -92,20 +92,20 @@ namespace School_Attendance_System
                             }
                             else
                             {
-                                
-                              
-                                verification veriform = new verification(first_name,last_name,email,password);
+
+
+                                verification veriform = new verification(first_name, last_name, email, password);
                                 this.Hide();
-                                veriform.Show();                           
+                                veriform.Show();
                             }
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message);
-                        } 
+                        }
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -120,6 +120,11 @@ namespace School_Attendance_System
         private void confirmbox_TextChanged(object sender, EventArgs e)
         {
             confirm = confirmbox.Text;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
