@@ -141,7 +141,7 @@
             button1.BackColor = SystemColors.HotTrack;
             button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(153, 296);
+            button1.Location = new Point(165, 298);
             button1.Name = "button1";
             button1.Size = new Size(157, 38);
             button1.TabIndex = 22;
