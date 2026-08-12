@@ -105,3 +105,5 @@ D:\School-Attendance-System\School Attendance System\School Attendance System\ob
 D:\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.genruntimeconfig.cache
 D:\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\ref\School Attendance System.dll
 D:\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.verification.resources
+D:\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.AddStudents.resources
+D:\School-Attendance-System\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.AttendanceForm.resources
