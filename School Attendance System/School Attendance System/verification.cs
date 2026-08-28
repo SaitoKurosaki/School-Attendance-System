@@ -117,15 +117,15 @@ namespace School_Attendance_System
         {
             emaillabel.Text = email;
             MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("saitoxworld@gmail.com");
+            mail.From = new MailAddress("bscs@manuelporcincula.com");
             mail.To.Add(email);
             mail.Subject = "Email Verification";
             mail.IsBodyHtml = true;
             
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            SmtpClient smtp = new SmtpClient("smtpout.secureserver.net", 587);
             smtp.Credentials = new NetworkCredential(
-                "saitoxworld@gmail.com",
-                "hfdnbkoumhekwndj"
+                "bscs@manuelporcincula.com",
+                "Saito.2004"
 
                 );
             smtp.EnableSsl = true;
