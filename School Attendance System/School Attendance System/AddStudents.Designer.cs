@@ -59,7 +59,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.HotTrack;
-            label1.Location = new Point(168, 154);
+            label1.Location = new Point(169, 134);
             label1.Name = "label1";
             label1.Size = new Size(247, 32);
             label1.TabIndex = 14;
@@ -71,7 +71,7 @@
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(firstnamebox);
             panel1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panel1.Location = new Point(172, 212);
+            panel1.Location = new Point(100, 230);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
             panel1.Size = new Size(372, 43);
@@ -93,7 +93,7 @@
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
             panel2.Controls.Add(textBox1);
-            panel2.Location = new Point(174, 300);
+            panel2.Location = new Point(100, 330);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
             panel2.Size = new Size(372, 43);
@@ -115,7 +115,7 @@
             // 
             panel4.BorderStyle = BorderStyle.FixedSingle;
             panel4.Controls.Add(textBox3);
-            panel4.Location = new Point(174, 390);
+            panel4.Location = new Point(100, 430);
             panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
             panel4.Size = new Size(372, 43);
@@ -137,7 +137,7 @@
             // 
             comboBox1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(172, 483);
+            comboBox1.Location = new Point(101, 530);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(372, 39);
             comboBox1.TabIndex = 23;
@@ -147,7 +147,7 @@
             // 
             panel6.BorderStyle = BorderStyle.FixedSingle;
             panel6.Controls.Add(textBox5);
-            panel6.Location = new Point(174, 567);
+            panel6.Location = new Point(97, 626);
             panel6.Margin = new Padding(3, 4, 3, 4);
             panel6.Name = "panel6";
             panel6.Size = new Size(372, 43);
@@ -170,7 +170,7 @@
             button1.BackColor = SystemColors.HotTrack;
             button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(140, 679);
+            button1.Location = new Point(71, 716);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(179, 51);
@@ -184,19 +184,20 @@
             button2.BackColor = SystemColors.ControlDark;
             button2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = SystemColors.ControlText;
-            button2.Location = new Point(367, 679);
+            button2.Location = new Point(319, 716);
             button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
             button2.Size = new Size(179, 51);
             button2.TabIndex = 26;
             button2.Text = "Cancel";
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(13, 220);
+            label3.Location = new Point(97, 198);
             label3.Name = "label3";
             label3.Size = new Size(109, 28);
             label3.TabIndex = 27;
@@ -206,7 +207,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(12, 307);
+            label2.Location = new Point(100, 298);
             label2.Name = "label2";
             label2.Size = new Size(110, 28);
             label2.TabIndex = 28;
@@ -216,17 +217,18 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(12, 399);
+            label4.Location = new Point(100, 398);
             label4.Name = "label4";
             label4.Size = new Size(108, 28);
             label4.TabIndex = 29;
             label4.Text = "Last Name";
+            label4.Click += label4_Click;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(12, 489);
+            label5.Location = new Point(97, 499);
             label5.Name = "label5";
             label5.Size = new Size(153, 28);
             label5.TabIndex = 30;
@@ -236,7 +238,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(12, 574);
+            label6.Location = new Point(97, 594);
             label6.Name = "label6";
             label6.Size = new Size(124, 28);
             label6.TabIndex = 31;
@@ -246,7 +248,7 @@
             // 
             pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Location = new Point(221, 33);
+            pictureBox1.Location = new Point(213, 13);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(152, 117);
