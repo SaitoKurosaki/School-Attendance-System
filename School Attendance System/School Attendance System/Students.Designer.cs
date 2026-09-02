@@ -28,20 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             label2 = new Label();
             button1 = new Button();
             label1 = new Label();
             panel1 = new Panel();
             firstnamebox = new TextBox();
             button2 = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
-            label7 = new Label();
+            dataGridView1 = new DataGridView();
+            ID = new DataGridViewTextBoxColumn();
+            FullName = new DataGridViewTextBoxColumn();
+            GradeSection = new DataGridViewTextBoxColumn();
+            ParentEmail = new DataGridViewTextBoxColumn();
+            Actions = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // label2
@@ -59,7 +60,7 @@
             button1.BackColor = SystemColors.HotTrack;
             button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(1007, 13);
+            button1.Location = new Point(1027, 13);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(200, 51);
@@ -86,7 +87,7 @@
             panel1.Location = new Point(86, 79);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(948, 51);
+            panel1.Size = new Size(966, 51);
             panel1.TabIndex = 28;
             // 
             // firstnamebox
@@ -106,7 +107,7 @@
             button2.BackColor = SystemColors.ControlDark;
             button2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = SystemColors.ControlText;
-            button2.Location = new Point(1053, 79);
+            button2.Location = new Point(1073, 79);
             button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
             button2.Size = new Size(154, 51);
@@ -114,91 +115,67 @@
             button2.Text = "Clear";
             button2.UseVisualStyleBackColor = false;
             // 
-            // tableLayoutPanel1
+            // dataGridView1
             // 
-            tableLayoutPanel1.AutoSize = true;
-            tableLayoutPanel1.ColumnCount = 5;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.3193722F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70.6806259F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 264F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 300F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 237F));
-            tableLayoutPanel1.Controls.Add(label7, 4, 0);
-            tableLayoutPanel1.Controls.Add(label6, 3, 0);
-            tableLayoutPanel1.Controls.Add(label5, 2, 0);
-            tableLayoutPanel1.Controls.Add(label3, 0, 0);
-            tableLayoutPanel1.Controls.Add(label4, 1, 0);
-            tableLayoutPanel1.Location = new Point(27, 153);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10.902256F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 89.09775F));
-            tableLayoutPanel1.Size = new Size(1184, 532);
-            tableLayoutPanel1.TabIndex = 30;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ID, FullName, GradeSection, ParentEmail, Actions });
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView1.Location = new Point(12, 155);
+            dataGridView1.MultiSelect = false;
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(1215, 525);
+            dataGridView1.TabIndex = 30;
             // 
-            // label3
+            // ID
             // 
-            label3.Anchor = AnchorStyles.None;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 13.2000008F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(37, 13);
-            label3.Name = "label3";
-            label3.Size = new Size(38, 31);
-            label3.TabIndex = 1;
-            label3.Text = "ID";
-            label3.Click += label3_Click;
+            ID.HeaderText = "ID";
+            ID.MinimumWidth = 6;
+            ID.Name = "ID";
             // 
-            // label4
+            // FullName
             // 
-            label4.Anchor = AnchorStyles.None;
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(185, 13);
-            label4.Name = "label4";
-            label4.Size = new Size(123, 31);
-            label4.TabIndex = 2;
-            label4.Text = "Full Name";
+            FullName.HeaderText = "Full Name";
+            FullName.MinimumWidth = 6;
+            FullName.Name = "FullName";
             // 
-            // label5
+            // GradeSection
             // 
-            label5.Anchor = AnchorStyles.None;
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(424, 13);
-            label5.Name = "label5";
-            label5.Size = new Size(179, 31);
-            label5.TabIndex = 3;
-            label5.Text = "Grade / Section";
-            label5.Click += label5_Click;
+            GradeSection.HeaderText = "Grade / Section";
+            GradeSection.MinimumWidth = 6;
+            GradeSection.Name = "GradeSection";
             // 
-            // label6
+            // ParentEmail
             // 
-            label6.Anchor = AnchorStyles.None;
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(722, 13);
-            label6.Name = "label6";
-            label6.Size = new Size(148, 31);
-            label6.TabIndex = 31;
-            label6.Text = "Parent Email";
+            ParentEmail.HeaderText = "Parent Email";
+            ParentEmail.MinimumWidth = 6;
+            ParentEmail.Name = "ParentEmail";
             // 
-            // label7
+            // Actions
             // 
-            label7.Anchor = AnchorStyles.None;
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(1017, 13);
-            label7.Name = "label7";
-            label7.Size = new Size(95, 31);
-            label7.TabIndex = 32;
-            label7.Text = "Actions";
+            Actions.HeaderText = "Actions";
+            Actions.MinimumWidth = 6;
+            Actions.Name = "Actions";
             // 
             // Students
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1239, 808);
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(dataGridView1);
             Controls.Add(button2);
             Controls.Add(panel1);
             Controls.Add(label1);
@@ -209,8 +186,7 @@
             Load += Students_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -223,11 +199,11 @@
         private Panel panel1;
         private TextBox firstnamebox;
         private Button button2;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label label3;
-        private Label label4;
-        private Label label7;
-        private Label label6;
-        private Label label5;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn FullName;
+        private DataGridViewTextBoxColumn GradeSection;
+        private DataGridViewTextBoxColumn ParentEmail;
+        private DataGridViewTextBoxColumn Actions;
     }
 }

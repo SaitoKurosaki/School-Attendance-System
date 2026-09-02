@@ -28,84 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tableLayoutPanel1 = new TableLayoutPanel();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             dateTimePicker1 = new DateTimePicker();
             comboBox1 = new ComboBox();
             label7 = new Label();
             label8 = new Label();
             button1 = new Button();
+            dataGridView1 = new DataGridView();
+            Number = new DataGridViewTextBoxColumn();
+            StudentName = new DataGridViewTextBoxColumn();
+            Present = new DataGridViewTextBoxColumn();
+            Late = new DataGridViewTextBoxColumn();
+            Absent = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 5;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.0588236F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 84.94118F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 254F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 247F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 237F));
-            tableLayoutPanel1.Location = new Point(27, 95);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10.902256F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 89.09775F));
-            tableLayoutPanel1.Size = new Size(1184, 532);
-            tableLayoutPanel1.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(44, 110);
-            label1.Name = "label1";
-            label1.Size = new Size(28, 31);
-            label1.TabIndex = 0;
-            label1.Text = "#";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(193, 109);
-            label2.Name = "label2";
-            label2.Size = new Size(167, 31);
-            label2.TabIndex = 1;
-            label2.Text = "Student Name";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(546, 109);
-            label3.Name = "label3";
-            label3.Size = new Size(94, 31);
-            label3.TabIndex = 2;
-            label3.Text = "Present";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(816, 109);
-            label4.Name = "label4";
-            label4.Size = new Size(59, 31);
-            label4.TabIndex = 3;
-            label4.Text = "Late";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(1043, 108);
-            label5.Name = "label5";
-            label5.Size = new Size(89, 31);
-            label5.TabIndex = 4;
-            label5.Text = "Absent";
             // 
             // dateTimePicker1
             // 
@@ -158,40 +94,91 @@
             button1.TextImageRelation = TextImageRelation.ImageAboveText;
             button1.UseVisualStyleBackColor = false;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Number, StudentName, Present, Late, Absent });
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView1.Location = new Point(12, 98);
+            dataGridView1.MultiSelect = false;
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(1215, 534);
+            dataGridView1.TabIndex = 34;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // Number
+            // 
+            Number.HeaderText = "#";
+            Number.MinimumWidth = 6;
+            Number.Name = "Number";
+            // 
+            // StudentName
+            // 
+            StudentName.HeaderText = "Student Name";
+            StudentName.MinimumWidth = 6;
+            StudentName.Name = "StudentName";
+            // 
+            // Present
+            // 
+            Present.HeaderText = "Present";
+            Present.MinimumWidth = 6;
+            Present.Name = "Present";
+            // 
+            // Late
+            // 
+            Late.HeaderText = "Late";
+            Late.MinimumWidth = 6;
+            Late.Name = "Late";
+            // 
+            // Absent
+            // 
+            Absent.HeaderText = "Absent";
+            Absent.MinimumWidth = 6;
+            Absent.Name = "Absent";
+            // 
             // AttendanceForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1239, 721);
+            Controls.Add(dataGridView1);
             Controls.Add(button1);
             Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(comboBox1);
             Controls.Add(dateTimePicker1);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(tableLayoutPanel1);
             Name = "AttendanceForm";
             Text = "AttendanceForm";
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private Label label5;
         private DateTimePicker dateTimePicker1;
         private ComboBox comboBox1;
         private Label label7;
         private Label label8;
         private Button button1;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn Number;
+        private DataGridViewTextBoxColumn StudentName;
+        private DataGridViewTextBoxColumn Present;
+        private DataGridViewTextBoxColumn Late;
+        private DataGridViewTextBoxColumn Absent;
     }
 }
