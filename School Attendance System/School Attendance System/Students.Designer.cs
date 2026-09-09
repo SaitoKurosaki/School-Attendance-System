@@ -28,21 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             label2 = new Label();
-            button1 = new Button();
+            bntAddStudent = new Button();
             label1 = new Label();
             panel1 = new Panel();
-            firstnamebox = new TextBox();
-            button2 = new Button();
-            dataGridView1 = new DataGridView();
+            txtSearch = new TextBox();
+            btnClear = new Button();
+            dgvStudents = new DataGridView();
             ID = new DataGridViewTextBoxColumn();
             FullName = new DataGridViewTextBoxColumn();
             GradeSection = new DataGridViewTextBoxColumn();
             ParentEmail = new DataGridViewTextBoxColumn();
             Actions = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
             // label2
@@ -55,19 +57,19 @@
             label2.TabIndex = 2;
             label2.Text = "Students";
             // 
-            // button1
+            // bntAddStudent
             // 
-            button1.BackColor = SystemColors.HotTrack;
-            button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(1027, 13);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(200, 51);
-            button1.TabIndex = 26;
-            button1.Text = "+ Add Student";
-            button1.TextImageRelation = TextImageRelation.ImageAboveText;
-            button1.UseVisualStyleBackColor = false;
+            bntAddStudent.BackColor = SystemColors.HotTrack;
+            bntAddStudent.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            bntAddStudent.ForeColor = Color.Transparent;
+            bntAddStudent.Location = new Point(1027, 13);
+            bntAddStudent.Margin = new Padding(3, 4, 3, 4);
+            bntAddStudent.Name = "bntAddStudent";
+            bntAddStudent.Size = new Size(200, 51);
+            bntAddStudent.TabIndex = 26;
+            bntAddStudent.Text = "+ Add Student";
+            bntAddStudent.TextImageRelation = TextImageRelation.ImageAboveText;
+            bntAddStudent.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -82,7 +84,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(firstnamebox);
+            panel1.Controls.Add(txtSearch);
             panel1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panel1.Location = new Point(86, 79);
             panel1.Margin = new Padding(3, 4, 3, 4);
@@ -90,55 +92,73 @@
             panel1.Size = new Size(966, 51);
             panel1.TabIndex = 28;
             // 
-            // firstnamebox
+            // txtSearch
             // 
-            firstnamebox.BackColor = SystemColors.Control;
-            firstnamebox.BorderStyle = BorderStyle.None;
-            firstnamebox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            firstnamebox.Location = new Point(3, 4);
-            firstnamebox.Margin = new Padding(3, 4, 3, 4);
-            firstnamebox.Name = "firstnamebox";
-            firstnamebox.PlaceholderText = "Search by name, email, or ID...";
-            firstnamebox.Size = new Size(349, 27);
-            firstnamebox.TabIndex = 20;
+            txtSearch.BackColor = SystemColors.Control;
+            txtSearch.BorderStyle = BorderStyle.None;
+            txtSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(3, 4);
+            txtSearch.Margin = new Padding(3, 4, 3, 4);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search by name, email, or ID...";
+            txtSearch.Size = new Size(349, 27);
+            txtSearch.TabIndex = 20;
             // 
-            // button2
+            // btnClear
             // 
-            button2.BackColor = SystemColors.ControlDark;
-            button2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.ControlText;
-            button2.Location = new Point(1073, 79);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Size = new Size(154, 51);
-            button2.TabIndex = 29;
-            button2.Text = "Clear";
-            button2.UseVisualStyleBackColor = false;
+            btnClear.BackColor = SystemColors.ControlDark;
+            btnClear.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClear.ForeColor = SystemColors.ControlText;
+            btnClear.Location = new Point(1073, 79);
+            btnClear.Margin = new Padding(3, 4, 3, 4);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(154, 51);
+            btnClear.TabIndex = 29;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = false;
+            btnClear.Click += btnClear_Click;
             // 
-            // dataGridView1
+            // dgvStudents
             // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ID, FullName, GradeSection, ParentEmail, Actions });
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
-            dataGridView1.Location = new Point(12, 155);
-            dataGridView1.MultiSelect = false;
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1215, 525);
-            dataGridView1.TabIndex = 30;
+            dgvStudents.AllowUserToAddRows = false;
+            dgvStudents.AllowUserToDeleteRows = false;
+            dgvStudents.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvStudents.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvStudents.BackgroundColor = SystemColors.Control;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvStudents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStudents.Columns.AddRange(new DataGridViewColumn[] { ID, FullName, GradeSection, ParentEmail, Actions });
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dgvStudents.DefaultCellStyle = dataGridViewCellStyle5;
+            dgvStudents.Location = new Point(12, 155);
+            dgvStudents.MultiSelect = false;
+            dgvStudents.Name = "dgvStudents";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            dgvStudents.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dgvStudents.RowHeadersVisible = false;
+            dgvStudents.RowHeadersWidth = 51;
+            dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvStudents.Size = new Size(1215, 525);
+            dgvStudents.TabIndex = 30;
             // 
             // ID
             // 
@@ -175,18 +195,18 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1239, 808);
-            Controls.Add(dataGridView1);
-            Controls.Add(button2);
+            Controls.Add(dgvStudents);
+            Controls.Add(btnClear);
             Controls.Add(panel1);
             Controls.Add(label1);
-            Controls.Add(button1);
+            Controls.Add(bntAddStudent);
             Controls.Add(label2);
             Name = "Students";
             Text = "Students";
             Load += Students_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStudents).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -194,12 +214,12 @@
         #endregion
 
         private Label label2;
-        private Button button1;
+        private Button bntAddStudent;
         private Label label1;
         private Panel panel1;
-        private TextBox firstnamebox;
-        private Button button2;
-        private DataGridView dataGridView1;
+        private TextBox txtSearch;
+        private Button btnClear;
+        private DataGridView dgvStudents;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn GradeSection;

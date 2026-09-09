@@ -31,27 +31,35 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddStudents));
             label1 = new Label();
             panel1 = new Panel();
-            firstnamebox = new TextBox();
+            txtStudentID = new TextBox();
             panel2 = new Panel();
-            textBox1 = new TextBox();
+            txtFirstName = new TextBox();
             panel4 = new Panel();
-            textBox3 = new TextBox();
-            comboBox1 = new ComboBox();
+            txtLastName = new TextBox();
+            cbGradeSection = new ComboBox();
             panel6 = new Panel();
-            textBox5 = new TextBox();
-            button1 = new Button();
-            button2 = new Button();
+            txtParentEmail = new TextBox();
+            btnSave = new Button();
+            btnCancel = new Button();
             label3 = new Label();
             label2 = new Label();
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
             pictureBox1 = new PictureBox();
+            pictureBox2 = new PictureBox();
+            pictureBox3 = new PictureBox();
+            pictureBox4 = new PictureBox();
+            pictureBox5 = new PictureBox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel4.SuspendLayout();
             panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -69,7 +77,8 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(firstnamebox);
+            panel1.Controls.Add(pictureBox2);
+            panel1.Controls.Add(txtStudentID);
             panel1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panel1.Location = new Point(100, 230);
             panel1.Margin = new Padding(3, 4, 3, 4);
@@ -77,121 +86,127 @@
             panel1.Size = new Size(372, 43);
             panel1.TabIndex = 16;
             // 
-            // firstnamebox
+            // txtStudentID
             // 
-            firstnamebox.BackColor = SystemColors.Control;
-            firstnamebox.BorderStyle = BorderStyle.None;
-            firstnamebox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            firstnamebox.Location = new Point(3, 4);
-            firstnamebox.Margin = new Padding(3, 4, 3, 4);
-            firstnamebox.Name = "firstnamebox";
-            firstnamebox.PlaceholderText = "Enter student ID";
-            firstnamebox.Size = new Size(349, 27);
-            firstnamebox.TabIndex = 20;
+            txtStudentID.BackColor = SystemColors.Control;
+            txtStudentID.BorderStyle = BorderStyle.None;
+            txtStudentID.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtStudentID.Location = new Point(3, 4);
+            txtStudentID.Margin = new Padding(3, 4, 3, 4);
+            txtStudentID.Name = "txtStudentID";
+            txtStudentID.PlaceholderText = "Enter student ID";
+            txtStudentID.Size = new Size(349, 27);
+            txtStudentID.TabIndex = 20;
+            txtStudentID.TextChanged += txtStudentID_TextChanged;
             // 
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(textBox1);
+            panel2.Controls.Add(pictureBox3);
+            panel2.Controls.Add(txtFirstName);
             panel2.Location = new Point(100, 330);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
             panel2.Size = new Size(372, 43);
             panel2.TabIndex = 21;
             // 
-            // textBox1
+            // txtFirstName
             // 
-            textBox1.BackColor = SystemColors.Control;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(3, 4);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Enter first name";
-            textBox1.Size = new Size(349, 27);
-            textBox1.TabIndex = 20;
+            txtFirstName.BackColor = SystemColors.Control;
+            txtFirstName.BorderStyle = BorderStyle.None;
+            txtFirstName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtFirstName.Location = new Point(3, 4);
+            txtFirstName.Margin = new Padding(3, 4, 3, 4);
+            txtFirstName.Name = "txtFirstName";
+            txtFirstName.PlaceholderText = "Enter first name";
+            txtFirstName.Size = new Size(349, 27);
+            txtFirstName.TabIndex = 20;
+            txtFirstName.TextChanged += txtFirstName_TextChanged;
             // 
             // panel4
             // 
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(textBox3);
+            panel4.Controls.Add(pictureBox5);
+            panel4.Controls.Add(txtLastName);
             panel4.Location = new Point(100, 430);
             panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
             panel4.Size = new Size(372, 43);
             panel4.TabIndex = 22;
             // 
-            // textBox3
+            // txtLastName
             // 
-            textBox3.BackColor = SystemColors.Control;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox3.Location = new Point(3, 4);
-            textBox3.Margin = new Padding(3, 4, 3, 4);
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "Enter last name";
-            textBox3.Size = new Size(349, 27);
-            textBox3.TabIndex = 20;
+            txtLastName.BackColor = SystemColors.Control;
+            txtLastName.BorderStyle = BorderStyle.None;
+            txtLastName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtLastName.Location = new Point(3, 4);
+            txtLastName.Margin = new Padding(3, 4, 3, 4);
+            txtLastName.Name = "txtLastName";
+            txtLastName.PlaceholderText = "Enter last name";
+            txtLastName.Size = new Size(349, 27);
+            txtLastName.TabIndex = 20;
             // 
-            // comboBox1
+            // cbGradeSection
             // 
-            comboBox1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(101, 530);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(372, 39);
-            comboBox1.TabIndex = 23;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            cbGradeSection.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cbGradeSection.FormattingEnabled = true;
+            cbGradeSection.Location = new Point(101, 530);
+            cbGradeSection.Name = "cbGradeSection";
+            cbGradeSection.Size = new Size(372, 39);
+            cbGradeSection.TabIndex = 23;
+            cbGradeSection.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // panel6
             // 
             panel6.BorderStyle = BorderStyle.FixedSingle;
-            panel6.Controls.Add(textBox5);
+            panel6.Controls.Add(pictureBox4);
+            panel6.Controls.Add(txtParentEmail);
             panel6.Location = new Point(97, 626);
             panel6.Margin = new Padding(3, 4, 3, 4);
             panel6.Name = "panel6";
             panel6.Size = new Size(372, 43);
             panel6.TabIndex = 24;
             // 
-            // textBox5
+            // txtParentEmail
             // 
-            textBox5.BackColor = SystemColors.Control;
-            textBox5.BorderStyle = BorderStyle.None;
-            textBox5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox5.Location = new Point(3, 4);
-            textBox5.Margin = new Padding(3, 4, 3, 4);
-            textBox5.Name = "textBox5";
-            textBox5.PlaceholderText = "Enter parent email";
-            textBox5.Size = new Size(349, 27);
-            textBox5.TabIndex = 20;
+            txtParentEmail.BackColor = SystemColors.Control;
+            txtParentEmail.BorderStyle = BorderStyle.None;
+            txtParentEmail.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtParentEmail.Location = new Point(3, 4);
+            txtParentEmail.Margin = new Padding(3, 4, 3, 4);
+            txtParentEmail.Name = "txtParentEmail";
+            txtParentEmail.PlaceholderText = "Enter parent email";
+            txtParentEmail.Size = new Size(349, 27);
+            txtParentEmail.TabIndex = 20;
             // 
-            // button1
+            // btnSave
             // 
-            button1.BackColor = SystemColors.HotTrack;
-            button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(71, 716);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(179, 51);
-            button1.TabIndex = 25;
-            button1.Text = "Save";
-            button1.TextImageRelation = TextImageRelation.ImageAboveText;
-            button1.UseVisualStyleBackColor = false;
+            btnSave.BackColor = SystemColors.HotTrack;
+            btnSave.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSave.ForeColor = Color.Transparent;
+            btnSave.Location = new Point(71, 716);
+            btnSave.Margin = new Padding(3, 4, 3, 4);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(179, 51);
+            btnSave.TabIndex = 25;
+            btnSave.Text = "Save";
+            btnSave.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
-            // button2
+            // btnCancel
             // 
-            button2.BackColor = SystemColors.ControlDark;
-            button2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.ControlText;
-            button2.Location = new Point(319, 716);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Size = new Size(179, 51);
-            button2.TabIndex = 26;
-            button2.Text = "Cancel";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            btnCancel.BackColor = SystemColors.ControlDark;
+            btnCancel.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCancel.ForeColor = SystemColors.ControlText;
+            btnCancel.Location = new Point(319, 716);
+            btnCancel.Margin = new Padding(3, 4, 3, 4);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(179, 51);
+            btnCancel.TabIndex = 26;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += button2_Click;
             // 
             // label3
             // 
@@ -255,6 +270,50 @@
             pictureBox1.TabIndex = 32;
             pictureBox1.TabStop = false;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.BackgroundImage = (Image)resources.GetObject("pictureBox2.BackgroundImage");
+            pictureBox2.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox2.Location = new Point(302, -1);
+            pictureBox2.Margin = new Padding(3, 4, 3, 4);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(82, 49);
+            pictureBox2.TabIndex = 21;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackgroundImage = (Image)resources.GetObject("pictureBox3.BackgroundImage");
+            pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox3.Location = new Point(302, -1);
+            pictureBox3.Margin = new Padding(3, 4, 3, 4);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(82, 49);
+            pictureBox3.TabIndex = 33;
+            pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.BackgroundImage = (Image)resources.GetObject("pictureBox4.BackgroundImage");
+            pictureBox4.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox4.Location = new Point(305, -7);
+            pictureBox4.Margin = new Padding(3, 4, 3, 4);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(82, 49);
+            pictureBox4.TabIndex = 33;
+            pictureBox4.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.BackgroundImage = (Image)resources.GetObject("pictureBox5.BackgroundImage");
+            pictureBox5.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox5.Location = new Point(302, -1);
+            pictureBox5.Margin = new Padding(3, 4, 3, 4);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(82, 49);
+            pictureBox5.TabIndex = 34;
+            pictureBox5.TabStop = false;
+            // 
             // AddStudents
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -266,10 +325,10 @@
             Controls.Add(label4);
             Controls.Add(label2);
             Controls.Add(label3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(btnCancel);
+            Controls.Add(btnSave);
             Controls.Add(panel6);
-            Controls.Add(comboBox1);
+            Controls.Add(cbGradeSection);
             Controls.Add(panel4);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -286,6 +345,10 @@
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -294,21 +357,25 @@
 
         private Label label1;
         private Panel panel1;
-        private TextBox firstnamebox;
+        private TextBox txtStudentID;
         private Panel panel2;
-        private TextBox textBox1;
+        private TextBox txtFirstName;
         private Panel panel4;
-        private TextBox textBox3;
-        private ComboBox comboBox1;
+        private TextBox txtLastName;
+        private ComboBox cbGradeSection;
         private Panel panel6;
-        private TextBox textBox5;
-        private Button button1;
-        private Button button2;
+        private TextBox txtParentEmail;
+        private Button btnSave;
+        private Button btnCancel;
         private Label label3;
         private Label label2;
         private Label label4;
         private Label label5;
         private Label label6;
         private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox5;
+        private PictureBox pictureBox4;
     }
 }

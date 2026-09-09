@@ -49,5 +49,24 @@ namespace School_Attendance_System
         {
 
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            string StudentID = txtStudentID.Text;
+            string FirstName = txtFirstName.Text;
+            string LastName = txtLastName.Text;
+            string GradeSection = cbGradeSection.Text;
+            string Parentemail = txtParentEmail.Text;
+        }
+
+        private void txtFirstName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtStudentID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
