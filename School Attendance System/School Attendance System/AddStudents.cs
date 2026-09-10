@@ -57,6 +57,8 @@ namespace School_Attendance_System
             string LastName = txtLastName.Text;
             string GradeSection = cbGradeSection.Text;
             string Parentemail = txtParentEmail.Text;
+
+            //MySQL code here:
         }
 
         private void txtFirstName_TextChanged(object sender, EventArgs e)
