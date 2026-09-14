@@ -68,6 +68,10 @@ namespace School_Attendance_System
                     if (reader.Read()) 
                     {
                         MessageBox.Show("Success");
+
+                        Dashboard Dashboard = new Dashboard();
+                        Dashboard.Show();
+                        this.Hide();
                     }
                     else
                     {
