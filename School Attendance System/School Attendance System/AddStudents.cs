@@ -60,8 +60,33 @@ namespace School_Attendance_System
             string GradeSection = cbGradeSection.Text;
             string Parentemail = txtParentEmail.Text;
 
-            //MySQL code here:
+            string query = @"INSERT INTO addstudent (student_id, first_name, last_name, grade_section, parent_email) VALUES
+                           (@StudentID, @FirstName, @LastName, @GradeSection, @ParentEmail)";
 
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@StudentID", StudentID);
+                        cmd.Parameters.AddWithValue("@FirstName", FirstName);
+                        cmd.Parameters.AddWithValue("@LastName", LastName);
+                        cmd.Parameters.AddWithValue("@GradeSection", GradeSection);
+                        cmd.Parameters.AddWithValue("@ParentEmail", Parentemail);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Student saved successfully!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
         }
 
         private void txtFirstName_TextChanged(object sender, EventArgs e)

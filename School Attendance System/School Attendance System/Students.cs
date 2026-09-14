@@ -115,7 +115,13 @@ namespace School_Attendance_System
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-           
+
+        }
+
+        private void bntAddStudent_Click(object sender, EventArgs e)
+        {
+            AddStudents AddStudents = new AddStudents();
+            AddStudents.Show();
         }
     }
 }
