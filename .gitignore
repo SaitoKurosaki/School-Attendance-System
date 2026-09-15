@@ -1,3 +1,5 @@
 .vs/
 obj/
 *.user1
+bin/
+obj/
