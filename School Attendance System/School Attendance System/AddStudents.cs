@@ -49,7 +49,7 @@ namespace School_Attendance_System
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace School_Attendance_System
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
-                {
+                {   
                     conn.Open();
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))

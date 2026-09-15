@@ -19,8 +19,8 @@ namespace School_Attendance_System
             SelectButton(btnDashboard);
             btnDashboard.Image = new Bitmap(btnDashboard.Image, new Size(32, 32));
             btnStudents.Image = new Bitmap(btnStudents.Image, new Size(32, 32));
-            btnDashboard.Image = new Bitmap(btnAttendance.Image, new Size(32, 32));
-            btnStudents.Image = new Bitmap(btnLogout.Image, new Size(32, 32));
+            btnAttendance.Image = new Bitmap(btnAttendance.Image, new Size(32, 32));
+            btnLogout.Image = new Bitmap(btnLogout.Image, new Size(32, 32));
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -35,7 +35,7 @@ namespace School_Attendance_System
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SelectButton(btnStudents);
+            
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -122,6 +122,13 @@ namespace School_Attendance_System
 
             if (btn != currentButton)
                 btn.BackColor = Color.FromArgb(15, 23, 42);
+        }
+
+        private void btnStudents_Click(object sender, EventArgs e)
+        {
+            Students Students = new Students();
+            Students.Show();
+            this.Hide();
         }
     }
 }

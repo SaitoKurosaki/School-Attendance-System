@@ -31,13 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddStudents));
             label1 = new Label();
             panel1 = new Panel();
+            pictureBox2 = new PictureBox();
             txtStudentID = new TextBox();
             panel2 = new Panel();
+            pictureBox3 = new PictureBox();
             txtFirstName = new TextBox();
             panel4 = new Panel();
+            pictureBox5 = new PictureBox();
             txtLastName = new TextBox();
             cbGradeSection = new ComboBox();
             panel6 = new Panel();
+            pictureBox4 = new PictureBox();
             txtParentEmail = new TextBox();
             btnSave = new Button();
             btnCancel = new Button();
@@ -47,19 +51,15 @@
             label5 = new Label();
             label6 = new Label();
             pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            pictureBox3 = new PictureBox();
-            pictureBox4 = new PictureBox();
-            pictureBox5 = new PictureBox();
             panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel4.SuspendLayout();
-            panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -86,6 +86,17 @@
             panel1.Size = new Size(372, 43);
             panel1.TabIndex = 16;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.BackgroundImage = (Image)resources.GetObject("pictureBox2.BackgroundImage");
+            pictureBox2.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox2.Location = new Point(302, -1);
+            pictureBox2.Margin = new Padding(3, 4, 3, 4);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(82, 49);
+            pictureBox2.TabIndex = 21;
+            pictureBox2.TabStop = false;
+            // 
             // txtStudentID
             // 
             txtStudentID.BackColor = SystemColors.Control;
@@ -109,6 +120,17 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(372, 43);
             panel2.TabIndex = 21;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackgroundImage = (Image)resources.GetObject("pictureBox3.BackgroundImage");
+            pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox3.Location = new Point(302, -1);
+            pictureBox3.Margin = new Padding(3, 4, 3, 4);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(82, 49);
+            pictureBox3.TabIndex = 33;
+            pictureBox3.TabStop = false;
             // 
             // txtFirstName
             // 
@@ -134,6 +156,17 @@
             panel4.Size = new Size(372, 43);
             panel4.TabIndex = 22;
             // 
+            // pictureBox5
+            // 
+            pictureBox5.BackgroundImage = (Image)resources.GetObject("pictureBox5.BackgroundImage");
+            pictureBox5.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox5.Location = new Point(302, -1);
+            pictureBox5.Margin = new Padding(3, 4, 3, 4);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(82, 49);
+            pictureBox5.TabIndex = 34;
+            pictureBox5.TabStop = false;
+            // 
             // txtLastName
             // 
             txtLastName.BackColor = SystemColors.Control;
@@ -150,6 +183,7 @@
             // 
             cbGradeSection.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbGradeSection.FormattingEnabled = true;
+            cbGradeSection.Items.AddRange(new object[] { "Jose Rizal 12A" });
             cbGradeSection.Location = new Point(101, 530);
             cbGradeSection.Name = "cbGradeSection";
             cbGradeSection.Size = new Size(372, 39);
@@ -166,6 +200,17 @@
             panel6.Name = "panel6";
             panel6.Size = new Size(372, 43);
             panel6.TabIndex = 24;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.BackgroundImage = (Image)resources.GetObject("pictureBox4.BackgroundImage");
+            pictureBox4.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox4.Location = new Point(305, -7);
+            pictureBox4.Margin = new Padding(3, 4, 3, 4);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(82, 49);
+            pictureBox4.TabIndex = 33;
+            pictureBox4.TabStop = false;
             // 
             // txtParentEmail
             // 
@@ -204,7 +249,7 @@
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(179, 51);
             btnCancel.TabIndex = 26;
-            btnCancel.Text = "Cancel";
+            btnCancel.Text = "Back";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += button2_Click;
             // 
@@ -270,50 +315,6 @@
             pictureBox1.TabIndex = 32;
             pictureBox1.TabStop = false;
             // 
-            // pictureBox2
-            // 
-            pictureBox2.BackgroundImage = (Image)resources.GetObject("pictureBox2.BackgroundImage");
-            pictureBox2.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox2.Location = new Point(302, -1);
-            pictureBox2.Margin = new Padding(3, 4, 3, 4);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(82, 49);
-            pictureBox2.TabIndex = 21;
-            pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.BackgroundImage = (Image)resources.GetObject("pictureBox3.BackgroundImage");
-            pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox3.Location = new Point(302, -1);
-            pictureBox3.Margin = new Padding(3, 4, 3, 4);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(82, 49);
-            pictureBox3.TabIndex = 33;
-            pictureBox3.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            pictureBox4.BackgroundImage = (Image)resources.GetObject("pictureBox4.BackgroundImage");
-            pictureBox4.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox4.Location = new Point(305, -7);
-            pictureBox4.Margin = new Padding(3, 4, 3, 4);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(82, 49);
-            pictureBox4.TabIndex = 33;
-            pictureBox4.TabStop = false;
-            // 
-            // pictureBox5
-            // 
-            pictureBox5.BackgroundImage = (Image)resources.GetObject("pictureBox5.BackgroundImage");
-            pictureBox5.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox5.Location = new Point(302, -1);
-            pictureBox5.Margin = new Padding(3, 4, 3, 4);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(82, 49);
-            pictureBox5.TabIndex = 34;
-            pictureBox5.TabStop = false;
-            // 
             // AddStudents
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -338,17 +339,17 @@
             Load += AddStudents_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

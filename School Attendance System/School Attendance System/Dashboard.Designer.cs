@@ -152,7 +152,7 @@
             btnStudents.TextImageRelation = TextImageRelation.ImageBeforeText;
             toolTip1.SetToolTip(btnStudents, "Students");
             btnStudents.UseVisualStyleBackColor = true;
-            btnStudents.Click += button2_Click;
+            btnStudents.Click += btnStudents_Click;
             btnStudents.MouseEnter += btnStudents_MouseEnter;
             btnStudents.MouseLeave += btnStudents_MouseLeave;
             // 
@@ -226,7 +226,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.HotTrack;
-            label1.Location = new Point(853, 36);
+            label1.Location = new Point(831, 39);
             label1.Name = "label1";
             label1.Size = new Size(317, 46);
             label1.TabIndex = 9;

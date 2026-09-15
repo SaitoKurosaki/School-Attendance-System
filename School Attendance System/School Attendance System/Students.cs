@@ -5,20 +5,60 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace School_Attendance_System
 {
     public partial class Students : Form
     {
+        string connectionString = "Server=localhost;Database=addstudent;Uid=root;Pwd=123456;";
         public Students()
         {
             InitializeComponent();
 
             CustomizeStudentTable();
-
             dgvStudents.CellPainting += dgvStudents_CellPainting;
+            LoadStudents();
         }
+        private void LoadStudents()
+        {
+            string query = "SELECT *FROM addstudent";
 
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        dgvStudents.Rows.Clear();
+
+                        while (reader.Read())
+                        {
+                            string studentId = reader["student_id"].ToString();
+                            string fullName = reader["first_name"].ToString() + " " +
+                                              reader["last_name"].ToString();
+                            string gradeSection = reader["grade_section"].ToString();
+                            string parentEmail = reader["parent_email"].ToString();
+
+                            dgvStudents.Rows.Add(
+                                studentId,
+                                fullName,
+                                gradeSection,
+                                parentEmail
+                            );
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading students: " + ex.Message);
+                }
+            }
+        }
         private void CustomizeStudentTable()
         {
             dgvStudents.AllowUserToAddRows = false;
@@ -100,7 +140,7 @@ namespace School_Attendance_System
 
         private void Students_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -122,6 +162,12 @@ namespace School_Attendance_System
         {
             AddStudents AddStudents = new AddStudents();
             AddStudents.Show();
+           
+        }
+
+        private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
