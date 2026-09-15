@@ -123,7 +123,9 @@ namespace School_Attendance_System
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
-            SelectButton(btnAttendance);
+            AttendanceForm Attendance = new AttendanceForm();
+            Attendance.Show();
+            this.Hide();
         }
 
         private void btnAttendance_MouseEnter(object sender, EventArgs e)

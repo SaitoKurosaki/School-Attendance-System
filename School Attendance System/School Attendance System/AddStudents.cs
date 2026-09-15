@@ -15,6 +15,7 @@ namespace School_Attendance_System
         public AddStudents()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         private void label1_Click(object sender, EventArgs e)
