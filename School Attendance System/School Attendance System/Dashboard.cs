@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
 
@@ -15,12 +16,38 @@ namespace School_Attendance_System
         public Dashboard()
         {
             InitializeComponent();
-            sidebar.BackColor = Color.FromArgb(15, 23, 42);
+            sidebar.BackColor = Color.FromArgb(243, 246, 250);
             SelectButton(btnDashboard);
-            btnDashboard.Image = new Bitmap(btnDashboard.Image, new Size(32, 32));
-            btnStudents.Image = new Bitmap(btnStudents.Image, new Size(32, 32));
-            btnAttendance.Image = new Bitmap(btnAttendance.Image, new Size(32, 32));
-            btnLogout.Image = new Bitmap(btnLogout.Image, new Size(32, 32));
+            btnDashboard.Image = new Bitmap(btnDashboard.Image!, new Size(50, 50));
+            btnDashboard.ImageAlign = ContentAlignment.MiddleLeft;
+            btnStudents.Image = new Bitmap(btnStudents.Image!, new Size(50, 50));
+            btnStudents.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAttendance.Image = new Bitmap(btnAttendance.Image!, new Size(50, 50));
+            btnAttendance.ImageAlign = ContentAlignment.MiddleLeft;
+            btnLogout.Image = new Bitmap(btnLogout.Image!, new Size(50, 50));
+            btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
+
+            btnDashboard.BackColor = Color.FromArgb(243, 246, 250);
+            btnDashboard.ForeColor = Color.FromArgb(38, 50, 56);
+            btnStudents.BackColor = Color.FromArgb(243, 246, 250);
+            btnStudents.ForeColor = Color.FromArgb(38, 50, 56);
+            btnAttendance.BackColor = Color.FromArgb(243, 246, 250);
+            btnAttendance.ForeColor = Color.FromArgb(38, 50, 56);
+
+            Maindashboard.BackColor = Color.FromArgb(193, 220, 250);
+        }
+        private void SelectButton(Button btn)
+        {
+
+            if (currentButton != null)
+            {
+                currentButton.BackColor = Color.FromArgb(243, 246, 250);
+                currentButton.ForeColor = Color.FromArgb(38, 50, 56);
+            }
+
+            currentButton = btn;
+            currentButton.BackColor = Color.FromArgb(210, 231, 255);
+            currentButton.ForeColor = Color.FromArgb(0, 74, 143);
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -63,7 +90,8 @@ namespace School_Attendance_System
             Button btn = (Button)sender;
 
             if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(30, 41, 59);
+                btn.BackColor = Color.FromArgb(227, 240, 255);
+                btn.ForeColor = Color.FromArgb(0, 87, 168);
         }
 
         private void btnDashboard_MouseLeave(object sender, EventArgs e)
@@ -71,20 +99,8 @@ namespace School_Attendance_System
             Button btn = (Button)sender;
 
             if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(15, 23, 42);
-        }
-        private void SelectButton(Button btn)
-        {
-
-            if (currentButton != null)
-            {
-                currentButton.BackColor = Color.FromArgb(15, 23, 42);
-                currentButton.ForeColor = Color.RoyalBlue;
-            }
-
-            currentButton = btn;
-            currentButton.BackColor = Color.FromArgb(59, 130, 246);
-            currentButton.ForeColor = Color.White;
+                btn.BackColor = Color.FromArgb(243, 246, 250);
+                btn.ForeColor = Color.FromArgb(38, 50, 56);
         }
 
         private void btnStudents_MouseEnter(object sender, EventArgs e)
@@ -92,7 +108,8 @@ namespace School_Attendance_System
             Button btn = (Button)sender;
 
             if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(30, 41, 59);
+                btn.BackColor = Color.FromArgb(227, 240, 255);
+                btn.ForeColor = Color.FromArgb(0, 87, 168);
         }
 
         private void btnStudents_MouseLeave(object sender, EventArgs e)
@@ -100,7 +117,8 @@ namespace School_Attendance_System
             Button btn = (Button)sender;
 
             if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(15, 23, 42);
+                btn.BackColor = Color.FromArgb(243, 246, 250);
+                btn.ForeColor = Color.FromArgb(38, 50, 56);
         }
 
         private void btnAttendance_Click(object sender, EventArgs e)
@@ -113,7 +131,8 @@ namespace School_Attendance_System
             Button btn = (Button)sender;
 
             if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(30, 41, 59);
+                btn.BackColor = Color.FromArgb(227, 240, 255);
+                btn.ForeColor = Color.FromArgb(0, 87, 168);
         }
 
         private void btnAttendance_MouseLeave(object sender, EventArgs e)
@@ -121,7 +140,8 @@ namespace School_Attendance_System
             Button btn = (Button)sender;
 
             if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(15, 23, 42);
+                btn.BackColor = Color.FromArgb(243, 246, 250);
+                btn.ForeColor = Color.FromArgb(38, 50, 56);
         }
 
         private void btnStudents_Click(object sender, EventArgs e)
