@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.DirectoryServices.ActiveDirectory;
+using MySqlX.XDevAPI.Common;
 
 namespace School_Attendance_System
 {
@@ -20,6 +22,7 @@ namespace School_Attendance_System
             CustomizeStudentTable();
             dgvStudents.CellPainting += dgvStudents_CellPainting;
             dgvStudents.CellMouseClick += dgvStudents_CellMouseClick;
+            dgvStudents.CellBeginEdit += dgvStudents_CellBeginEdit;
             LoadStudents();
         }
         private void LoadStudents()
@@ -45,12 +48,14 @@ namespace School_Attendance_System
                             string gradeSection = reader["grade_section"].ToString();
                             string parentEmail = reader["parent_email"].ToString();
 
-                            dgvStudents.Rows.Add(
-                                studentId,
-                                fullName,
-                                gradeSection,
-                                parentEmail
-                            );
+                            int newRowIndex = dgvStudents.Rows.Add(studentId, fullName, gradeSection, parentEmail);
+
+                            var row = dgvStudents.Rows[newRowIndex];
+
+                            foreach (DataGridViewCell cell in row.Cells)
+                            {
+                                cell.ReadOnly = true;
+                            }
                         }
                     }
                 }
@@ -65,7 +70,7 @@ namespace School_Attendance_System
             dgvStudents.CellBorderStyle = DataGridViewCellBorderStyle.Single;
             dgvStudents.GridColor = Color.Gray;
             dgvStudents.AllowUserToAddRows = false;
-            dgvStudents.ReadOnly = true;
+            dgvStudents.ReadOnly = false;
             dgvStudents.RowHeadersVisible = false;
 
             dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -171,45 +176,67 @@ namespace School_Attendance_System
 
                 if (editRect.Contains(mousePosition))
                 {
-                    string StudentID = dgvStudents.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    var row = dgvStudents.Rows[e.RowIndex];
 
-                    string query = "SELECT * FROM addstudent WHERE student_id = @StudentID";
+                    dgvStudents.ReadOnly = false;
 
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    foreach (DataGridViewCell cell in row.Cells)
                     {
-                        try
+                        cell.ReadOnly = true;
+
+                        if (cell.ColumnIndex != dgvStudents.Columns["Actions"].Index)
                         {
-                            conn.Open();
-
-                            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@StudentID", StudentID);
-
-                                using (MySqlDataReader reader = cmd.ExecuteReader())
-                                {
-                                    if (reader.Read())
-                                    {
-                                        string FirstName = reader["first_name"].ToString();
-                                        string LastName = reader["last_name"].ToString();
-                                        string GradeSection = reader["grade_section"].ToString();
-                                        string ParentEmail = reader["parent_email"].ToString();
-                                    }
-                                }
-
-                            }
-                        }
-                        catch
-                        {
-
+                            cell.ReadOnly = false;
                         }
                     }
+                    dgvStudents.CurrentCell = row.Cells["ID"];
+                    dgvStudents.BeginEdit(true);
+                    dgvStudents.Focus();
                 }
                 else if (deleteRect.Contains(mousePosition))
                 {
-                    MessageBox.Show("Student Delete");
+                    string studentId = dgvStudents.Rows[e.RowIndex].Cells["ID"].Value.ToString();
+
+                    DialogResult result = MessageBox.Show("Are you sure you want to delete?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        string query = "DELETE FROM addstudent WHERE student_id = @StudentID";
+
+                        using (MySqlConnection conn = new MySqlConnection(connectionString))
+                        {
+                            try
+                            {
+                                conn.Open();
+
+                                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                                {
+                                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+
+                                    cmd.ExecuteNonQuery();
+
+                                    MessageBox.Show("Student deleted successfully!");
+
+                                    LoadStudents();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error deleting student: " + ex.Message);
+                            }
+                        }
+                    }
                 }
             }
 
+        }
+
+        private void dgvStudents_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == dgvStudents.Columns["Actions"].Index)
+            {
+                e.Cancel = true;
+            }
         }
         private void Students_Load(object sender, EventArgs e)
         {
@@ -234,7 +261,9 @@ namespace School_Attendance_System
         private void bntAddStudent_Click(object sender, EventArgs e)
         {
             AddStudents AddStudents = new AddStudents();
-            AddStudents.Show();
+            AddStudents.ShowDialog();
+
+            LoadStudents();
            
         }
 
