@@ -40,7 +40,7 @@
             btnStudents = new Button();
             pictureBox1 = new PictureBox();
             label5 = new Label();
-            Maindashboard = new Panel();
+            Content = new Panel();
             label2 = new Label();
             label1 = new Label();
             linelabel = new Label();
@@ -49,7 +49,7 @@
             toolTip1 = new ToolTip(components);
             sidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            Maindashboard.SuspendLayout();
+            Content.SuspendLayout();
             SuspendLayout();
             // 
             // sidebar
@@ -212,15 +212,15 @@
             label5.TabIndex = 11;
             label5.Text = "__________________________________________";
             // 
-            // Maindashboard
+            // Content
             // 
-            Maindashboard.Controls.Add(label2);
-            Maindashboard.Controls.Add(label1);
-            Maindashboard.Controls.Add(linelabel);
-            Maindashboard.Location = new Point(253, 9);
-            Maindashboard.Name = "Maindashboard";
-            Maindashboard.Size = new Size(819, 544);
-            Maindashboard.TabIndex = 4;
+            Content.Controls.Add(label2);
+            Content.Controls.Add(label1);
+            Content.Controls.Add(linelabel);
+            Content.Location = new Point(253, 9);
+            Content.Name = "Content";
+            Content.Size = new Size(819, 544);
+            Content.TabIndex = 4;
             // 
             // label2
             // 
@@ -280,7 +280,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1084, 606);
             Controls.Add(button7);
-            Controls.Add(Maindashboard);
+            Controls.Add(Content);
             Controls.Add(sidebar);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Dashboard";
@@ -289,8 +289,8 @@
             sidebar.ResumeLayout(false);
             sidebar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            Maindashboard.ResumeLayout(false);
-            Maindashboard.PerformLayout();
+            Content.ResumeLayout(false);
+            Content.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -302,7 +302,6 @@
         private Button btnLogout;
         private Button btnAttendance;
         private Button btnStudents;
-        private Panel Maindashboard;
         private Label label2;
         private Label label1;
         private Button button7;
@@ -313,5 +312,6 @@
         private Label linelabel;
         private Label label5;
         private Label label6;
+        private Panel Content;
     }
 }

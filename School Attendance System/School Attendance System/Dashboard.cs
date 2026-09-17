@@ -13,6 +13,18 @@ namespace School_Attendance_System
     {
         private Button currentButton = null;
 
+        private void OpenForm(Form form)
+        {
+            Content.Controls.Clear();
+
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+
+            Content.Controls.Add(form);
+            form.Show();
+        }
+
         public Dashboard()
         {
             InitializeComponent();
@@ -34,7 +46,7 @@ namespace School_Attendance_System
             btnAttendance.BackColor = Color.FromArgb(243, 246, 250);
             btnAttendance.ForeColor = Color.FromArgb(38, 50, 56);
 
-            Maindashboard.BackColor = Color.FromArgb(193, 220, 250);
+            Content.BackColor = Color.FromArgb(193, 220, 250);
         }
         private void SelectButton(Button btn)
         {
@@ -148,9 +160,7 @@ namespace School_Attendance_System
 
         private void btnStudents_Click(object sender, EventArgs e)
         {
-            Students Students = new Students();
-            Students.Show();
-            this.Hide();
+            OpenForm(new Students());
         }
     }
 }
