@@ -51,6 +51,10 @@
             label5 = new Label();
             label6 = new Label();
             pictureBox1 = new PictureBox();
+            panel3 = new Panel();
+            pictureBox6 = new PictureBox();
+            txtMiddleName = new TextBox();
+            label7 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel2.SuspendLayout();
@@ -60,6 +64,8 @@
             panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -67,7 +73,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.HotTrack;
-            label1.Location = new Point(169, 134);
+            label1.Location = new Point(166, 132);
             label1.Name = "label1";
             label1.Size = new Size(247, 32);
             label1.TabIndex = 14;
@@ -80,7 +86,7 @@
             panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(txtStudentID);
             panel1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panel1.Location = new Point(100, 230);
+            panel1.Location = new Point(97, 209);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
             panel1.Size = new Size(372, 43);
@@ -115,7 +121,7 @@
             panel2.BorderStyle = BorderStyle.FixedSingle;
             panel2.Controls.Add(pictureBox3);
             panel2.Controls.Add(txtFirstName);
-            panel2.Location = new Point(100, 330);
+            panel2.Location = new Point(97, 304);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
             panel2.Size = new Size(372, 43);
@@ -150,7 +156,7 @@
             panel4.BorderStyle = BorderStyle.FixedSingle;
             panel4.Controls.Add(pictureBox5);
             panel4.Controls.Add(txtLastName);
-            panel4.Location = new Point(100, 430);
+            panel4.Location = new Point(96, 494);
             panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
             panel4.Size = new Size(372, 43);
@@ -184,7 +190,7 @@
             cbGradeSection.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbGradeSection.FormattingEnabled = true;
             cbGradeSection.Items.AddRange(new object[] { "Jose Rizal 12A" });
-            cbGradeSection.Location = new Point(101, 530);
+            cbGradeSection.Location = new Point(96, 588);
             cbGradeSection.Name = "cbGradeSection";
             cbGradeSection.Size = new Size(372, 39);
             cbGradeSection.TabIndex = 23;
@@ -195,7 +201,7 @@
             panel6.BorderStyle = BorderStyle.FixedSingle;
             panel6.Controls.Add(pictureBox4);
             panel6.Controls.Add(txtParentEmail);
-            panel6.Location = new Point(97, 626);
+            panel6.Location = new Point(96, 680);
             panel6.Margin = new Padding(3, 4, 3, 4);
             panel6.Name = "panel6";
             panel6.Size = new Size(372, 43);
@@ -229,7 +235,7 @@
             btnSave.BackColor = SystemColors.HotTrack;
             btnSave.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSave.ForeColor = Color.Transparent;
-            btnSave.Location = new Point(71, 716);
+            btnSave.Location = new Point(70, 749);
             btnSave.Margin = new Padding(3, 4, 3, 4);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(179, 51);
@@ -244,7 +250,7 @@
             btnCancel.BackColor = SystemColors.ControlDark;
             btnCancel.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = SystemColors.ControlText;
-            btnCancel.Location = new Point(319, 716);
+            btnCancel.Location = new Point(321, 749);
             btnCancel.Margin = new Padding(3, 4, 3, 4);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(179, 51);
@@ -257,7 +263,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(97, 198);
+            label3.Location = new Point(97, 177);
             label3.Name = "label3";
             label3.Size = new Size(109, 28);
             label3.TabIndex = 27;
@@ -267,7 +273,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(100, 298);
+            label2.Location = new Point(94, 272);
             label2.Name = "label2";
             label2.Size = new Size(110, 28);
             label2.TabIndex = 28;
@@ -277,7 +283,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(100, 398);
+            label4.Location = new Point(96, 462);
             label4.Name = "label4";
             label4.Size = new Size(108, 28);
             label4.TabIndex = 29;
@@ -288,7 +294,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(97, 499);
+            label5.Location = new Point(96, 557);
             label5.Name = "label5";
             label5.Size = new Size(153, 28);
             label5.TabIndex = 30;
@@ -298,7 +304,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(97, 594);
+            label6.Location = new Point(96, 648);
             label6.Name = "label6";
             label6.Size = new Size(124, 28);
             label6.TabIndex = 31;
@@ -308,18 +314,65 @@
             // 
             pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Location = new Point(213, 13);
+            pictureBox1.Location = new Point(213, 14);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(152, 117);
             pictureBox1.TabIndex = 32;
             pictureBox1.TabStop = false;
             // 
+            // panel3
+            // 
+            panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(pictureBox6);
+            panel3.Controls.Add(txtMiddleName);
+            panel3.Location = new Point(97, 400);
+            panel3.Margin = new Padding(3, 4, 3, 4);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(372, 43);
+            panel3.TabIndex = 34;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.BackgroundImage = (Image)resources.GetObject("pictureBox6.BackgroundImage");
+            pictureBox6.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox6.Location = new Point(302, -1);
+            pictureBox6.Margin = new Padding(3, 4, 3, 4);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(82, 49);
+            pictureBox6.TabIndex = 33;
+            pictureBox6.TabStop = false;
+            // 
+            // txtMiddleName
+            // 
+            txtMiddleName.BackColor = SystemColors.Control;
+            txtMiddleName.BorderStyle = BorderStyle.None;
+            txtMiddleName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtMiddleName.Location = new Point(3, 4);
+            txtMiddleName.Margin = new Padding(3, 4, 3, 4);
+            txtMiddleName.Name = "txtMiddleName";
+            txtMiddleName.PlaceholderText = "Enter middle name";
+            txtMiddleName.Size = new Size(349, 27);
+            txtMiddleName.TabIndex = 20;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(96, 368);
+            label7.Name = "label7";
+            label7.Size = new Size(135, 28);
+            label7.TabIndex = 35;
+            label7.Text = "Middle Name";
+            label7.Click += label7_Click;
+            // 
             // AddStudents
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(571, 801);
+            ClientSize = new Size(571, 831);
+            Controls.Add(label7);
+            Controls.Add(panel3);
             Controls.Add(pictureBox1);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -350,6 +403,9 @@
             panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -378,5 +434,9 @@
         private PictureBox pictureBox3;
         private PictureBox pictureBox5;
         private PictureBox pictureBox4;
+        private Panel panel3;
+        private PictureBox pictureBox6;
+        private TextBox txtMiddleName;
+        private Label label7;
     }
 }

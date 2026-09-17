@@ -39,7 +39,9 @@
             btnClear = new Button();
             dgvStudents = new DataGridView();
             ID = new DataGridViewTextBoxColumn();
-            FullName = new DataGridViewTextBoxColumn();
+            FirstName = new DataGridViewTextBoxColumn();
+            MiddleName = new DataGridViewTextBoxColumn();
+            LastName = new DataGridViewTextBoxColumn();
             GradeSection = new DataGridViewTextBoxColumn();
             ParentEmail = new DataGridViewTextBoxColumn();
             Actions = new DataGridViewTextBoxColumn();
@@ -62,7 +64,7 @@
             bntAddStudent.BackColor = SystemColors.HotTrack;
             bntAddStudent.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bntAddStudent.ForeColor = Color.Transparent;
-            bntAddStudent.Location = new Point(1027, 13);
+            bntAddStudent.Location = new Point(1102, 11);
             bntAddStudent.Margin = new Padding(3, 4, 3, 4);
             bntAddStudent.Name = "bntAddStudent";
             bntAddStudent.Size = new Size(200, 51);
@@ -90,7 +92,7 @@
             panel1.Location = new Point(86, 79);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(966, 51);
+            panel1.Size = new Size(1037, 51);
             panel1.TabIndex = 28;
             // 
             // txtSearch
@@ -102,7 +104,7 @@
             txtSearch.Margin = new Padding(3, 4, 3, 4);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Search by name, email, or ID...";
-            txtSearch.Size = new Size(349, 27);
+            txtSearch.Size = new Size(1033, 27);
             txtSearch.TabIndex = 20;
             // 
             // btnClear
@@ -110,7 +112,7 @@
             btnClear.BackColor = SystemColors.ControlDark;
             btnClear.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnClear.ForeColor = SystemColors.ControlText;
-            btnClear.Location = new Point(1073, 79);
+            btnClear.Location = new Point(1148, 79);
             btnClear.Margin = new Padding(3, 4, 3, 4);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(154, 51);
@@ -135,7 +137,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvStudents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStudents.Columns.AddRange(new DataGridViewColumn[] { ID, FullName, GradeSection, ParentEmail, Actions });
+            dgvStudents.Columns.AddRange(new DataGridViewColumn[] { ID, FirstName, MiddleName, LastName, GradeSection, ParentEmail, Actions });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -158,7 +160,7 @@
             dgvStudents.RowHeadersVisible = false;
             dgvStudents.RowHeadersWidth = 51;
             dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvStudents.Size = new Size(1215, 525);
+            dgvStudents.Size = new Size(1290, 525);
             dgvStudents.TabIndex = 30;
             dgvStudents.CellContentClick += dgvStudents_CellContentClick;
             // 
@@ -168,11 +170,23 @@
             ID.MinimumWidth = 6;
             ID.Name = "ID";
             // 
-            // FullName
+            // FirstName
             // 
-            FullName.HeaderText = "Full Name";
-            FullName.MinimumWidth = 6;
-            FullName.Name = "FullName";
+            FirstName.HeaderText = "First Name";
+            FirstName.MinimumWidth = 6;
+            FirstName.Name = "FirstName";
+            // 
+            // MiddleName
+            // 
+            MiddleName.HeaderText = "Middle Name";
+            MiddleName.MinimumWidth = 6;
+            MiddleName.Name = "MiddleName";
+            // 
+            // LastName
+            // 
+            LastName.HeaderText = "Last Name";
+            LastName.MinimumWidth = 6;
+            LastName.Name = "LastName";
             // 
             // GradeSection
             // 
@@ -196,7 +210,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1239, 808);
+            ClientSize = new Size(1314, 808);
             Controls.Add(dgvStudents);
             Controls.Add(btnClear);
             Controls.Add(panel1);
@@ -223,7 +237,9 @@
         private Button btnClear;
         private DataGridView dgvStudents;
         private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn FullName;
+        private DataGridViewTextBoxColumn FirstName;
+        private DataGridViewTextBoxColumn MiddleName;
+        private DataGridViewTextBoxColumn LastName;
         private DataGridViewTextBoxColumn GradeSection;
         private DataGridViewTextBoxColumn ParentEmail;
         private DataGridViewTextBoxColumn Actions;

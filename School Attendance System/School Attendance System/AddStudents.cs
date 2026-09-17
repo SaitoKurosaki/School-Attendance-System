@@ -57,23 +57,25 @@ namespace School_Attendance_System
         {
             string StudentID = txtStudentID.Text;
             string FirstName = txtFirstName.Text;
+            string MiddleName = txtMiddleName.Text;
             string LastName = txtLastName.Text;
             string GradeSection = cbGradeSection.Text;
             string Parentemail = txtParentEmail.Text;
 
-            string query = @"INSERT INTO addstudent (student_id, first_name, last_name, grade_section, parent_email) VALUES
-                           (@StudentID, @FirstName, @LastName, @GradeSection, @ParentEmail)";
+            string query = @"INSERT INTO addstudent (student_id, first_name, middle_name, last_name, grade_section, parent_email) VALUES
+                           (@StudentID, @FirstName, @MiddleName, @LastName, @GradeSection, @ParentEmail)";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
-                {   
+                {
                     conn.Open();
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@StudentID", StudentID);
                         cmd.Parameters.AddWithValue("@FirstName", FirstName);
+                        cmd.Parameters.AddWithValue("@MiddleName", MiddleName);
                         cmd.Parameters.AddWithValue("@LastName", LastName);
                         cmd.Parameters.AddWithValue("@GradeSection", GradeSection);
                         cmd.Parameters.AddWithValue("@ParentEmail", Parentemail);
@@ -96,6 +98,11 @@ namespace School_Attendance_System
         }
 
         private void txtStudentID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
         {
 
         }
