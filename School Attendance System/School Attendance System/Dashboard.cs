@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.XPath;
 
 namespace School_Attendance_System
 {
@@ -89,7 +90,7 @@ namespace School_Attendance_System
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btnDashboard_Click(object sender, EventArgs e)
@@ -135,9 +136,8 @@ namespace School_Attendance_System
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
-            AttendanceForm Attendance = new AttendanceForm();
-            Attendance.Show();
-            this.Hide();
+            OpenForm(new AttendanceForm());
+            SelectButton(btnAttendance);
         }
 
         private void btnAttendance_MouseEnter(object sender, EventArgs e)
@@ -161,6 +161,7 @@ namespace School_Attendance_System
         private void btnStudents_Click(object sender, EventArgs e)
         {
             OpenForm(new Students());
+            SelectButton(btnStudents);
         }
     }
 }

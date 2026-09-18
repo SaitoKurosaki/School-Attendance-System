@@ -31,7 +31,6 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            label2 = new Label();
             bntAddStudent = new Button();
             label1 = new Label();
             panel1 = new Panel();
@@ -45,30 +44,21 @@
             GradeSection = new DataGridViewTextBoxColumn();
             ParentEmail = new DataGridViewTextBoxColumn();
             Actions = new DataGridViewTextBoxColumn();
+            label2 = new Label();
             panel2 = new Panel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
-            panel2.SuspendLayout();
             SuspendLayout();
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(13, 46);
-            label2.Name = "label2";
-            label2.Size = new Size(91, 25);
-            label2.TabIndex = 2;
-            label2.Text = "Students";
             // 
             // bntAddStudent
             // 
             bntAddStudent.BackColor = SystemColors.HotTrack;
             bntAddStudent.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bntAddStudent.ForeColor = Color.Transparent;
-            bntAddStudent.Location = new Point(957, 41);
+            bntAddStudent.Location = new Point(513, 13);
+            bntAddStudent.Margin = new Padding(3, 4, 3, 4);
             bntAddStudent.Name = "bntAddStudent";
-            bntAddStudent.Size = new Size(175, 38);
+            bntAddStudent.Size = new Size(200, 51);
             bntAddStudent.TabIndex = 26;
             bntAddStudent.Text = "+ Add Student";
             bntAddStudent.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -79,9 +69,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(13, 95);
+            label1.Location = new Point(24, 89);
             label1.Name = "label1";
-            label1.Size = new Size(56, 20);
+            label1.Size = new Size(68, 25);
             label1.TabIndex = 27;
             label1.Text = "Search:";
             // 
@@ -90,9 +80,10 @@
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(txtSearch);
             panel1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panel1.Location = new Point(75, 86);
+            panel1.Location = new Point(98, 74);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(908, 39);
+            panel1.Size = new Size(1037, 51);
             panel1.TabIndex = 28;
             // 
             // txtSearch
@@ -100,10 +91,11 @@
             txtSearch.BackColor = SystemColors.Control;
             txtSearch.BorderStyle = BorderStyle.None;
             txtSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearch.Location = new Point(1, 7);
+            txtSearch.Location = new Point(1, 9);
+            txtSearch.Margin = new Padding(3, 4, 3, 4);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Search by name, email, or ID...";
-            txtSearch.Size = new Size(904, 22);
+            txtSearch.Size = new Size(1033, 27);
             txtSearch.TabIndex = 20;
             // 
             // btnClear
@@ -111,9 +103,10 @@
             btnClear.BackColor = SystemColors.ControlDark;
             btnClear.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnClear.ForeColor = SystemColors.ControlText;
-            btnClear.Location = new Point(997, 85);
+            btnClear.Location = new Point(1148, 72);
+            btnClear.Margin = new Padding(3, 4, 3, 4);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(135, 38);
+            btnClear.Size = new Size(154, 51);
             btnClear.TabIndex = 29;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = false;
@@ -145,8 +138,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvStudents.DefaultCellStyle = dataGridViewCellStyle2;
             dgvStudents.Dock = DockStyle.Bottom;
-            dgvStudents.Location = new Point(0, 212);
-            dgvStudents.Margin = new Padding(3, 2, 3, 2);
+            dgvStudents.Location = new Point(0, 283);
             dgvStudents.MultiSelect = false;
             dgvStudents.Name = "dgvStudents";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -160,7 +152,7 @@
             dgvStudents.RowHeadersVisible = false;
             dgvStudents.RowHeadersWidth = 51;
             dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvStudents.Size = new Size(1150, 394);
+            dgvStudents.Size = new Size(1314, 525);
             dgvStudents.TabIndex = 30;
             dgvStudents.CellContentClick += dgvStudents_CellContentClick;
             // 
@@ -206,44 +198,50 @@
             Actions.MinimumWidth = 6;
             Actions.Name = "Actions";
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(24, 20);
+            label2.Name = "label2";
+            label2.Size = new Size(108, 31);
+            label2.TabIndex = 2;
+            label2.Text = "Students";
+            // 
             // panel2
             // 
             panel2.AutoSize = true;
             panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel2.Controls.Add(panel1);
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(btnClear);
-            panel2.Controls.Add(bntAddStudent);
-            panel2.Controls.Add(label1);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1150, 128);
+            panel2.Size = new Size(1314, 0);
             panel2.TabIndex = 31;
             // 
             // Students
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1150, 606);
+            ClientSize = new Size(1314, 808);
+            Controls.Add(label2);
+            Controls.Add(panel1);
+            Controls.Add(label1);
             Controls.Add(panel2);
             Controls.Add(dgvStudents);
-            Margin = new Padding(3, 2, 3, 2);
+            Controls.Add(btnClear);
+            Controls.Add(bntAddStudent);
             Name = "Students";
             Text = "Students";
             Load += Students_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Label label2;
         private Button bntAddStudent;
         private Label label1;
         private Panel panel1;
@@ -257,6 +255,7 @@
         private DataGridViewTextBoxColumn GradeSection;
         private DataGridViewTextBoxColumn ParentEmail;
         private DataGridViewTextBoxColumn Actions;
+        private Label label2;
         private Panel panel2;
     }
 }
