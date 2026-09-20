@@ -13,6 +13,7 @@ namespace School_Attendance_System
     public partial class Dashboard : Form
     {
         private Button currentButton = null;
+        private bool sidebarCollapse = false;
 
         private void OpenForm(Form form)
         {
@@ -46,8 +47,10 @@ namespace School_Attendance_System
             btnStudents.ForeColor = Color.FromArgb(38, 50, 56);
             btnAttendance.BackColor = Color.FromArgb(243, 246, 250);
             btnAttendance.ForeColor = Color.FromArgb(38, 50, 56);
+            btnCollapse.Image = new Bitmap(btnCollapse.Image!, new Size(50, 50));
 
-            Content.BackColor = Color.FromArgb(193, 220, 250);
+            DSBHeader.BackColor = Color.FromArgb(23, 37, 84);
+            Content.BackColor = Color.FromArgb(244, 247, 251);
         }
         private void SelectButton(Button btn)
         {
@@ -75,7 +78,7 @@ namespace School_Attendance_System
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -90,7 +93,7 @@ namespace School_Attendance_System
 
         private void label1_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnDashboard_Click(object sender, EventArgs e)
@@ -104,7 +107,7 @@ namespace School_Attendance_System
 
             if (btn != currentButton)
                 btn.BackColor = Color.FromArgb(227, 240, 255);
-                btn.ForeColor = Color.FromArgb(0, 87, 168);
+            btn.ForeColor = Color.FromArgb(0, 87, 168);
         }
 
         private void btnDashboard_MouseLeave(object sender, EventArgs e)
@@ -113,7 +116,7 @@ namespace School_Attendance_System
 
             if (btn != currentButton)
                 btn.BackColor = Color.FromArgb(243, 246, 250);
-                btn.ForeColor = Color.FromArgb(38, 50, 56);
+            btn.ForeColor = Color.FromArgb(38, 50, 56);
         }
 
         private void btnStudents_MouseEnter(object sender, EventArgs e)
@@ -122,7 +125,7 @@ namespace School_Attendance_System
 
             if (btn != currentButton)
                 btn.BackColor = Color.FromArgb(227, 240, 255);
-                btn.ForeColor = Color.FromArgb(0, 87, 168);
+            btn.ForeColor = Color.FromArgb(0, 87, 168);
         }
 
         private void btnStudents_MouseLeave(object sender, EventArgs e)
@@ -131,7 +134,7 @@ namespace School_Attendance_System
 
             if (btn != currentButton)
                 btn.BackColor = Color.FromArgb(243, 246, 250);
-                btn.ForeColor = Color.FromArgb(38, 50, 56);
+            btn.ForeColor = Color.FromArgb(38, 50, 56);
         }
 
         private void btnAttendance_Click(object sender, EventArgs e)
@@ -146,7 +149,7 @@ namespace School_Attendance_System
 
             if (btn != currentButton)
                 btn.BackColor = Color.FromArgb(227, 240, 255);
-                btn.ForeColor = Color.FromArgb(0, 87, 168);
+            btn.ForeColor = Color.FromArgb(0, 87, 168);
         }
 
         private void btnAttendance_MouseLeave(object sender, EventArgs e)
@@ -155,13 +158,52 @@ namespace School_Attendance_System
 
             if (btn != currentButton)
                 btn.BackColor = Color.FromArgb(243, 246, 250);
-                btn.ForeColor = Color.FromArgb(38, 50, 56);
+            btn.ForeColor = Color.FromArgb(38, 50, 56);
         }
 
         private void btnStudents_Click(object sender, EventArgs e)
         {
             OpenForm(new Students());
             SelectButton(btnStudents);
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (btnCollapse.Image != null)
+            {
+                Bitmap flipped = new Bitmap(btnCollapse.Image);
+                flipped.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                btnCollapse.Image = flipped;
+            }
+            if (sidebarCollapse)
+            {
+                sidebar.Width = 214;
+                btnAttendance.Text = "Attendance";
+                btnStudents.Text = "Students";
+                btnDashboard.Text = "Dashboard";
+                btnLogout.Text = "Logout";
+                btnCollapse.Location = new Point(166, 6);
+                sidebarCollapse = false;
+                Content.Width = 871;
+                Content.Location = new Point(213, 53);
+            }
+            else
+            {
+                sidebar.Width = 65;
+                btnAttendance.Text = "";
+                btnStudents.Text = "";
+                btnDashboard.Text = "";
+                btnLogout.Text = "";
+                btnCollapse.Location = new Point(15,6);
+                sidebarCollapse = true;
+                Content.Width = 1020;
+                Content.Location = new Point(64, 53);
+            }
         }
     }
 }
