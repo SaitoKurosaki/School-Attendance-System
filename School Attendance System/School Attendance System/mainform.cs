@@ -50,48 +50,52 @@ namespace School_Attendance_System
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlConnection conn = new MySqlConnection(MysqlConnection);
-            try
+           
+            using (MySqlConnection conn = new MySqlConnection(MysqlConnection))
             {
-                conn.Open();
-                string querycmd = $"SELECT email FROM teachers WHERE email = '{email}'";
-                MySqlCommand cmd = new MySqlCommand(querycmd, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read())
+                try
                 {
-                    reader.Close();
-                    string emailandpass = $"SELECT email FROM teachers WHERE email = '{email}' AND password = '{password}'";
-                    cmd = new MySqlCommand(emailandpass, conn);
-                    reader = cmd.ExecuteReader();
+                    conn.Open();
+                    string querycmd = $"SELECT email FROM teachers WHERE email = '{email}'";
+                    MySqlCommand cmd = new MySqlCommand(querycmd, conn);
+                    MySqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read()) 
+                    if (reader.Read())
                     {
-                        MessageBox.Show("Success");
+                        reader.Close();
+                        string emailandpass = $"SELECT email FROM teachers WHERE email = '{email}' AND password = '{password}'";
+                        cmd = new MySqlCommand(emailandpass, conn);
+                        reader = cmd.ExecuteReader();
 
-                        Dashboard Dashboard = new Dashboard();
-                        Dashboard.Show();
-                        this.Hide();
+                        if (reader.Read())
+                        {
+                            MessageBox.Show("Success");
+
+                            Dashboard Dashboard = new Dashboard();
+                            Dashboard.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong password");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Wrong password");
+                        MessageBox.Show("Email not found");
                     }
                 }
-                else
+
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Email not found");
+                    MessageBox.Show(ex.Message);
                 }
-            }
+                finally
+                {
+                    conn.Close();
 
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn.Close();
-
+                }
             }
         }
 

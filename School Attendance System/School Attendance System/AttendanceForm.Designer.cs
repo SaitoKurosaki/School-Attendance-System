@@ -35,13 +35,16 @@
             label7 = new Label();
             label8 = new Label();
             button1 = new Button();
-            dataGridView1 = new DataGridView();
+            dgvAttendance = new DataGridView();
             Number = new DataGridViewTextBoxColumn();
+            ID = new DataGridViewTextBoxColumn();
             StudentName = new DataGridViewTextBoxColumn();
-            Present = new DataGridViewTextBoxColumn();
-            Late = new DataGridViewTextBoxColumn();
-            Absent = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            TimeIn = new DataGridViewTextBoxColumn();
+            TimeOut = new DataGridViewTextBoxColumn();
+            Present = new DataGridViewCheckBoxColumn();
+            Late = new DataGridViewCheckBoxColumn();
+            Absent = new DataGridViewCheckBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dgvAttendance).BeginInit();
             SuspendLayout();
             // 
             // dateTimePicker1
@@ -95,13 +98,13 @@
             button1.TextImageRelation = TextImageRelation.ImageAboveText;
             button1.UseVisualStyleBackColor = false;
             // 
-            // dataGridView1
+            // dgvAttendance
             // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridView1.BackgroundColor = SystemColors.Control;
+            dgvAttendance.AllowUserToAddRows = false;
+            dgvAttendance.AllowUserToDeleteRows = false;
+            dgvAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvAttendance.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvAttendance.BackgroundColor = SystemColors.Control;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -109,9 +112,9 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Number, StudentName, Present, Late, Absent });
+            dgvAttendance.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvAttendance.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvAttendance.Columns.AddRange(new DataGridViewColumn[] { Number, ID, StudentName, TimeIn, TimeOut, Present, Late, Absent });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -119,16 +122,16 @@
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView1.Location = new Point(12, 98);
-            dataGridView1.MultiSelect = false;
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1215, 534);
-            dataGridView1.TabIndex = 34;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dgvAttendance.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvAttendance.Location = new Point(12, 98);
+            dgvAttendance.MultiSelect = false;
+            dgvAttendance.Name = "dgvAttendance";
+            dgvAttendance.RowHeadersVisible = false;
+            dgvAttendance.RowHeadersWidth = 51;
+            dgvAttendance.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvAttendance.Size = new Size(1215, 534);
+            dgvAttendance.TabIndex = 34;
+            dgvAttendance.CellContentClick += dataGridView1_CellContentClick;
             // 
             // Number
             // 
@@ -136,36 +139,60 @@
             Number.MinimumWidth = 6;
             Number.Name = "Number";
             // 
+            // ID
+            // 
+            ID.HeaderText = "ID";
+            ID.MinimumWidth = 6;
+            ID.Name = "ID";
+            // 
             // StudentName
             // 
             StudentName.HeaderText = "Student Name";
             StudentName.MinimumWidth = 6;
             StudentName.Name = "StudentName";
             // 
+            // TimeIn
+            // 
+            TimeIn.HeaderText = "Time In";
+            TimeIn.MinimumWidth = 6;
+            TimeIn.Name = "TimeIn";
+            // 
+            // TimeOut
+            // 
+            TimeOut.HeaderText = "Time Out";
+            TimeOut.MinimumWidth = 6;
+            TimeOut.Name = "TimeOut";
+            // 
             // Present
             // 
             Present.HeaderText = "Present";
             Present.MinimumWidth = 6;
             Present.Name = "Present";
+            Present.Resizable = DataGridViewTriState.True;
+            Present.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // Late
             // 
             Late.HeaderText = "Late";
             Late.MinimumWidth = 6;
             Late.Name = "Late";
+            Late.Resizable = DataGridViewTriState.True;
+            Late.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // Absent
             // 
             Absent.HeaderText = "Absent";
             Absent.MinimumWidth = 6;
             Absent.Name = "Absent";
+            Absent.Resizable = DataGridViewTriState.True;
+            Absent.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // AttendanceForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1239, 721);
-            Controls.Add(dataGridView1);
+            Controls.Add(dgvAttendance);
             Controls.Add(button1);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -173,7 +200,7 @@
             Controls.Add(dateTimePicker1);
             Name = "AttendanceForm";
             Text = "AttendanceForm";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvAttendance).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -184,11 +211,14 @@
         private Label label7;
         private Label label8;
         private Button button1;
-        private DataGridView dataGridView1;
+        private DataGridView dgvAttendance;
         private DataGridViewTextBoxColumn Number;
+        private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn StudentName;
-        private DataGridViewTextBoxColumn Present;
-        private DataGridViewTextBoxColumn Late;
-        private DataGridViewTextBoxColumn Absent;
+        private DataGridViewTextBoxColumn TimeIn;
+        private DataGridViewTextBoxColumn TimeOut;
+        private DataGridViewCheckBoxColumn Present;
+        private DataGridViewCheckBoxColumn Late;
+        private DataGridViewCheckBoxColumn Absent;
     }
 }

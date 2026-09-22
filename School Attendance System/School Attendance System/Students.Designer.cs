@@ -31,16 +31,15 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            bntAddStudent = new Button();
             label1 = new Label();
             panel1 = new Panel();
             txtSearch = new TextBox();
             btnClear = new Button();
             dgvStudents = new DataGridView();
             ID = new DataGridViewTextBoxColumn();
+            LastName = new DataGridViewTextBoxColumn();
             FirstName = new DataGridViewTextBoxColumn();
             MiddleName = new DataGridViewTextBoxColumn();
-            LastName = new DataGridViewTextBoxColumn();
             GradeSection = new DataGridViewTextBoxColumn();
             ParentEmail = new DataGridViewTextBoxColumn();
             Actions = new DataGridViewTextBoxColumn();
@@ -50,27 +49,13 @@
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
-            // bntAddStudent
-            // 
-            bntAddStudent.BackColor = SystemColors.HotTrack;
-            bntAddStudent.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            bntAddStudent.ForeColor = Color.Transparent;
-            bntAddStudent.Location = new Point(12, 101);
-            bntAddStudent.Name = "bntAddStudent";
-            bntAddStudent.Size = new Size(175, 38);
-            bntAddStudent.TabIndex = 26;
-            bntAddStudent.Text = "+ Add Student";
-            bntAddStudent.TextImageRelation = TextImageRelation.ImageAboveText;
-            bntAddStudent.UseVisualStyleBackColor = false;
-            bntAddStudent.Click += bntAddStudent_Click;
-            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 66);
+            label1.Location = new Point(14, 88);
             label1.Name = "label1";
-            label1.Size = new Size(56, 20);
+            label1.Size = new Size(68, 25);
             label1.TabIndex = 27;
             label1.Text = "Search:";
             // 
@@ -79,9 +64,10 @@
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(txtSearch);
             panel1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panel1.Location = new Point(80, 56);
+            panel1.Location = new Point(91, 75);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(764, 39);
+            panel1.Size = new Size(873, 51);
             panel1.TabIndex = 28;
             // 
             // txtSearch
@@ -89,10 +75,11 @@
             txtSearch.BackColor = SystemColors.Control;
             txtSearch.BorderStyle = BorderStyle.None;
             txtSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearch.Location = new Point(1, 7);
+            txtSearch.Location = new Point(1, 9);
+            txtSearch.Margin = new Padding(3, 4, 3, 4);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Search by name, email, or ID...";
-            txtSearch.Size = new Size(758, 22);
+            txtSearch.Size = new Size(866, 27);
             txtSearch.TabIndex = 20;
             // 
             // btnClear
@@ -100,9 +87,10 @@
             btnClear.BackColor = SystemColors.ControlDark;
             btnClear.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnClear.ForeColor = SystemColors.ControlText;
-            btnClear.Location = new Point(216, 101);
+            btnClear.Location = new Point(247, 135);
+            btnClear.Margin = new Padding(3, 4, 3, 4);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(135, 38);
+            btnClear.Size = new Size(154, 51);
             btnClear.TabIndex = 29;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = false;
@@ -124,7 +112,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvStudents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStudents.Columns.AddRange(new DataGridViewColumn[] { ID, FirstName, MiddleName, LastName, GradeSection, ParentEmail, Actions });
+            dgvStudents.Columns.AddRange(new DataGridViewColumn[] { ID, LastName, FirstName, MiddleName, GradeSection, ParentEmail, Actions });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -134,8 +122,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvStudents.DefaultCellStyle = dataGridViewCellStyle2;
             dgvStudents.Dock = DockStyle.Bottom;
-            dgvStudents.Location = new Point(0, 212);
-            dgvStudents.Margin = new Padding(3, 2, 3, 2);
+            dgvStudents.Location = new Point(0, 283);
             dgvStudents.MultiSelect = false;
             dgvStudents.Name = "dgvStudents";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -149,7 +136,7 @@
             dgvStudents.RowHeadersVisible = false;
             dgvStudents.RowHeadersWidth = 51;
             dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvStudents.Size = new Size(1150, 394);
+            dgvStudents.Size = new Size(1314, 525);
             dgvStudents.TabIndex = 30;
             dgvStudents.CellContentClick += dgvStudents_CellContentClick;
             // 
@@ -158,6 +145,12 @@
             ID.HeaderText = "ID";
             ID.MinimumWidth = 6;
             ID.Name = "ID";
+            // 
+            // LastName
+            // 
+            LastName.HeaderText = "Last Name";
+            LastName.MinimumWidth = 6;
+            LastName.Name = "LastName";
             // 
             // FirstName
             // 
@@ -170,12 +163,6 @@
             MiddleName.HeaderText = "Middle Name";
             MiddleName.MinimumWidth = 6;
             MiddleName.Name = "MiddleName";
-            // 
-            // LastName
-            // 
-            LastName.HeaderText = "Last Name";
-            LastName.MinimumWidth = 6;
-            LastName.Name = "LastName";
             // 
             // GradeSection
             // 
@@ -199,9 +186,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(12, 9);
+            label2.Location = new Point(14, 12);
             label2.Name = "label2";
-            label2.Size = new Size(91, 25);
+            label2.Size = new Size(108, 31);
             label2.TabIndex = 2;
             label2.Text = "Students";
             // 
@@ -211,23 +198,22 @@
             panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1150, 0);
+            panel2.Size = new Size(1314, 0);
             panel2.TabIndex = 31;
             // 
             // Students
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1150, 606);
+            ClientSize = new Size(1314, 808);
             Controls.Add(label2);
             Controls.Add(panel1);
             Controls.Add(label1);
             Controls.Add(panel2);
             Controls.Add(dgvStudents);
             Controls.Add(btnClear);
-            Controls.Add(bntAddStudent);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "Students";
             Text = "Students";
             Load += Students_Load;
@@ -239,20 +225,19 @@
         }
 
         #endregion
-        private Button bntAddStudent;
         private Label label1;
         private Panel panel1;
         private TextBox txtSearch;
         private Button btnClear;
         private DataGridView dgvStudents;
+        private Label label2;
+        private Panel panel2;
         private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn LastName;
         private DataGridViewTextBoxColumn FirstName;
         private DataGridViewTextBoxColumn MiddleName;
-        private DataGridViewTextBoxColumn LastName;
         private DataGridViewTextBoxColumn GradeSection;
         private DataGridViewTextBoxColumn ParentEmail;
         private DataGridViewTextBoxColumn Actions;
-        private Label label2;
-        private Panel panel2;
     }
 }

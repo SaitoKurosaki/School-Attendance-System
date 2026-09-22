@@ -29,7 +29,7 @@ namespace School_Attendance_System
         }
         private void LoadStudents()
         {
-            string query = "SELECT * FROM addstudent";
+            string query = "SELECT * FROM addstudent ORDER BY last_name ASC";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -45,9 +45,9 @@ namespace School_Attendance_System
                         while (reader.Read())
                         {
                             string studentId = reader["student_id"].ToString();
+                            string lastName = reader["last_name"].ToString();
                             string firstName = reader["first_name"].ToString();
                             string middleName = reader["middle_name"].ToString();
-                            string lastName = reader["last_name"].ToString();
                             string gradeSection = reader["grade_section"].ToString();
                             string parentEmail = reader["parent_email"].ToString();
 
@@ -56,9 +56,9 @@ namespace School_Attendance_System
                             var row = dgvStudents.Rows[newRowIndex];
 
                             row.Cells["ID"].Value = studentId;
+                            row.Cells["LastName"].Value = lastName;
                             row.Cells["FirstName"].Value = firstName;
                             row.Cells["MiddleName"].Value = middleName;
-                            row.Cells["LastName"].Value = lastName;
                             row.Cells["GradeSection"].Value = gradeSection;
                             row.Cells["ParentEmail"].Value = parentEmail;
 
@@ -108,9 +108,9 @@ namespace School_Attendance_System
             dgvStudents.AllowUserToResizeRows = false;
 
             dgvStudents.Columns["ID"].Width = 100;
+            dgvStudents.Columns["LastName"].Width = 200;
             dgvStudents.Columns["FirstName"].Width = 200;
             dgvStudents.Columns["MiddleName"].Width = 200;
-            dgvStudents.Columns["LastName"].Width = 200;
             dgvStudents.Columns["GradeSection"].Width = 180;
             dgvStudents.Columns["ParentEmail"].Width = 250;
             dgvStudents.Columns["Actions"].Width = 120;
@@ -257,13 +257,13 @@ namespace School_Attendance_System
             var row = dgvStudents.Rows[e.RowIndex];
 
             string newStudentId = row.Cells["ID"].Value.ToString();
+            string lastName = row.Cells["LastName"].Value.ToString();
             string firstName = row.Cells["FirstName"].Value.ToString();
             string middleName = row.Cells["MiddleName"].Value.ToString();
-            string lastName = row.Cells["LastName"].Value.ToString();
             string gradeSection = row.Cells["GradeSection"].Value.ToString();
             string parentEmail = row.Cells["ParentEmail"].Value.ToString();
 
-            string query = "UPDATE addstudent SET student_id = @NewID, first_name = @FirstName, last_name = @LastName, middle_name = @MiddleName, grade_section = @GradeSection, parent_email = @ParentEmail WHERE student_id = @OldID";
+            string query = "UPDATE addstudent SET student_id = @NewID, last_name = @LastName, first_name = @FirstName, middle_name = @MiddleName, grade_section = @GradeSection, parent_email = @ParentEmail WHERE student_id = @OldID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -274,9 +274,9 @@ namespace School_Attendance_System
                     using (MySqlCommand cmd =  new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@NewID", newStudentId);
+                        cmd.Parameters.AddWithValue("@LastName", lastName);
                         cmd.Parameters.AddWithValue("@FirstName", firstName);
                         cmd.Parameters.AddWithValue("@MiddleName", middleName);
-                        cmd.Parameters.AddWithValue("@LastName", lastName);
                         cmd.Parameters.AddWithValue("@GradeSection", gradeSection);
                         cmd.Parameters.AddWithValue("@ParentEmail", parentEmail);
                         cmd.Parameters.AddWithValue("@OldID", oldStudentId);
@@ -314,11 +314,7 @@ namespace School_Attendance_System
 
         private void bntAddStudent_Click(object sender, EventArgs e)
         {
-            AddStudents AddStudents = new AddStudents();
-            AddStudents.ShowDialog();
 
-            LoadStudents();
-           
         }
 
         private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
