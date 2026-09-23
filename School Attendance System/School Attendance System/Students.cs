@@ -48,7 +48,7 @@ namespace School_Attendance_System
                             string lastName = reader["last_name"].ToString();
                             string firstName = reader["first_name"].ToString();
                             string middleName = reader["middle_name"].ToString();
-                            string gradeSection = reader["grade_section"].ToString();
+                            string gradeSection = reader["course_section"].ToString();
                             string parentEmail = reader["parent_email"].ToString();
 
                             int newRowIndex = dgvStudents.Rows.Add();
@@ -59,7 +59,7 @@ namespace School_Attendance_System
                             row.Cells["LastName"].Value = lastName;
                             row.Cells["FirstName"].Value = firstName;
                             row.Cells["MiddleName"].Value = middleName;
-                            row.Cells["GradeSection"].Value = gradeSection;
+                            row.Cells["CourseSection"].Value = gradeSection;
                             row.Cells["ParentEmail"].Value = parentEmail;
 
                             foreach (DataGridViewCell cell in row.Cells)
@@ -111,7 +111,7 @@ namespace School_Attendance_System
             dgvStudents.Columns["LastName"].Width = 200;
             dgvStudents.Columns["FirstName"].Width = 200;
             dgvStudents.Columns["MiddleName"].Width = 200;
-            dgvStudents.Columns["GradeSection"].Width = 180;
+            dgvStudents.Columns["CourseSection"].Width = 180;
             dgvStudents.Columns["ParentEmail"].Width = 250;
             dgvStudents.Columns["Actions"].Width = 120;
 
@@ -260,10 +260,10 @@ namespace School_Attendance_System
             string lastName = row.Cells["LastName"].Value.ToString();
             string firstName = row.Cells["FirstName"].Value.ToString();
             string middleName = row.Cells["MiddleName"].Value.ToString();
-            string gradeSection = row.Cells["GradeSection"].Value.ToString();
+            string courseSection = row.Cells["CourseSection"].Value.ToString();
             string parentEmail = row.Cells["ParentEmail"].Value.ToString();
 
-            string query = "UPDATE addstudent SET student_id = @NewID, last_name = @LastName, first_name = @FirstName, middle_name = @MiddleName, grade_section = @GradeSection, parent_email = @ParentEmail WHERE student_id = @OldID";
+            string query = "UPDATE addstudent SET student_id = @NewID, last_name = @LastName, first_name = @FirstName, middle_name = @MiddleName, course_section = @CourseSection, parent_email = @ParentEmail WHERE student_id = @OldID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -277,7 +277,7 @@ namespace School_Attendance_System
                         cmd.Parameters.AddWithValue("@LastName", lastName);
                         cmd.Parameters.AddWithValue("@FirstName", firstName);
                         cmd.Parameters.AddWithValue("@MiddleName", middleName);
-                        cmd.Parameters.AddWithValue("@GradeSection", gradeSection);
+                        cmd.Parameters.AddWithValue("@CourseSection", courseSection);
                         cmd.Parameters.AddWithValue("@ParentEmail", parentEmail);
                         cmd.Parameters.AddWithValue("@OldID", oldStudentId);
 

@@ -76,7 +76,8 @@ namespace School_Attendance_System
             if (e.RowIndex < 0)
             {
                 return;
-            
+            }
+
             if (e.ColumnIndex == dgvAttendance.Columns["Present"].Index)
                 {
                     dgvAttendance.Rows[e.RowIndex].Cells["Late"].Value = false;
@@ -94,7 +95,39 @@ namespace School_Attendance_System
                     dgvAttendance.Rows[e.RowIndex].Cells["Present"].Value = false;
                     dgvAttendance.Rows[e.RowIndex].Cells["Late"].Value = false;
                 }
+
+            if (e.ColumnIndex == dgvAttendance.Columns["Present"].Index)
+            {
+                if (Convert.ToBoolean(dgvAttendance.Rows[e.RowIndex].Cells["Present"].Value))
+                {
+                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = DateTime.Now.TimeOfDay;
+                }
+
+                else
+                {
+                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = null;
+                }
             }
+
+            if (e.ColumnIndex == dgvAttendance.Columns["Late"].Index)
+            {
+                if (Convert.ToBoolean(dgvAttendance.Rows[e.RowIndex].Cells["Late"].Value))
+                {
+                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = DateTime.Now.TimeOfDay;
+                }
+
+                else
+                {
+                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = null;
+                }
+            }
+
+            if (e.ColumnIndex == dgvAttendance.Columns["Absent"].Index)
+            {
+                dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = null;
+            }
+
+            //timeOut next work:
         }
     }
 }

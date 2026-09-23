@@ -44,6 +44,7 @@
             Present = new DataGridViewCheckBoxColumn();
             Late = new DataGridViewCheckBoxColumn();
             Absent = new DataGridViewCheckBoxColumn();
+            Remarks = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvAttendance).BeginInit();
             SuspendLayout();
             // 
@@ -70,9 +71,9 @@
             label7.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.Location = new Point(661, 30);
             label7.Name = "label7";
-            label7.Size = new Size(158, 28);
+            label7.Size = new Size(167, 28);
             label7.TabIndex = 31;
-            label7.Text = "Grade / Section:";
+            label7.Text = "Course / Section:";
             // 
             // label8
             // 
@@ -114,7 +115,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvAttendance.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvAttendance.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvAttendance.Columns.AddRange(new DataGridViewColumn[] { Number, ID, StudentName, TimeIn, TimeOut, Present, Late, Absent });
+            dgvAttendance.Columns.AddRange(new DataGridViewColumn[] { Number, ID, StudentName, TimeIn, TimeOut, Present, Late, Absent, Remarks });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -187,6 +188,12 @@
             Absent.Resizable = DataGridViewTriState.True;
             Absent.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
+            // Remarks
+            // 
+            Remarks.HeaderText = "Remarks";
+            Remarks.MinimumWidth = 6;
+            Remarks.Name = "Remarks";
+            // 
             // AttendanceForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -220,5 +227,6 @@
         private DataGridViewCheckBoxColumn Present;
         private DataGridViewCheckBoxColumn Late;
         private DataGridViewCheckBoxColumn Absent;
+        private DataGridViewTextBoxColumn Remarks;
     }
 }
