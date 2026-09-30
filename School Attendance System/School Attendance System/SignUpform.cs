@@ -14,14 +14,8 @@ namespace School_Attendance_System
     public partial class SignUpform : Form
     {
         public string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
-        public string first_name;
-        public string last_name;
-        public string email;
-        public string password;
+        public string full_name, email, password, confirm, otp;
 
-        public string confirm;
-
-        public string otp;
 
         public SignUpform()
         {
@@ -38,15 +32,9 @@ namespace School_Attendance_System
             MainForm.Show();
         }
 
-        private void emailbox_TextChanged(object sender, EventArgs e)
-        {
-            first_name = firstnamebox.Text;
-        }
 
-        private void lastnamebox_TextChanged(object sender, EventArgs e)
-        {
-            last_name = lastnamebox.Text;
-        }
+
+
 
         private void passwordbox_TextChanged(object sender, EventArgs e)
         {
@@ -60,6 +48,18 @@ namespace School_Attendance_System
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+        }
+
+
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void submitbtn_Click(object sender, EventArgs e)
+        {
             MySqlConnection conn = new MySqlConnection(MysqlConnection);
 
 
@@ -67,13 +67,13 @@ namespace School_Attendance_System
 
             try
             {
-                if (firstnamebox.Text == "" || lastnamebox.Text == "" || emailbox.Text == "" || passwordbox.Text == "" || confirmbox.Text == "")
+                if (fullnamebox.Text == "" || emailbox.Text == "" || passwordbox.Text == "" || confirmpassbox.Text == "")
                 {
                     MessageBox.Show("Please make sure you fill in all the fields.");
                 }
                 else
                 {
-                    if (passwordbox.Text != confirmbox.Text)
+                    if (passwordbox.Text != confirmpassbox.Text)
                     {
                         MessageBox.Show("Password and confirm password do not match.");
                     }
@@ -94,9 +94,9 @@ namespace School_Attendance_System
                             {
 
 
-                                verification veriform = new verification(first_name, last_name, email, password);
+                                /*verification veriform = new verification(full_name, email, password);
                                 this.Hide();
-                                veriform.Show();
+                                veriform.Show();*/
                             }
                         }
                         catch (Exception ex)
@@ -117,14 +117,43 @@ namespace School_Attendance_System
             }
         }
 
-        private void confirmbox_TextChanged(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            confirm = confirmbox.Text;
+
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void showpass_CheckedChanged(object sender, AntdUI.BoolEventArgs e)
         {
+            if (showpass.Checked)
+            {
+                passwordbox.PasswordChar = '\0';
+                confirmpassbox.PasswordChar = '\0';
+            }
+            else
+            {
+                passwordbox.PasswordChar = '*';
+                confirmpassbox.PasswordChar = '\0';
+            }
+        }
 
+        private void input2_TextChanged(object sender, EventArgs e)
+        {
+            full_name = fullnamebox.Text;
+        }
+
+        private void emailbox_TextChanged(object sender, EventArgs e)
+        {
+            email = emailbox.Text;
+        }
+
+        private void passwordbox_TextChanged_1(object sender, EventArgs e)
+        {
+            password = passwordbox.Text;
+        }
+
+        private void confirmpassbox_TextChanged(object sender, EventArgs e)
+        {
+            confirm = confirmpassbox.Text;
         }
     }
 }

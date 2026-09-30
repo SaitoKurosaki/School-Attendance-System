@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AntdUI" Version="2.4.12" />
     <PackageReference Include="MySql.Data" Version="9.7.0" />
+    <PackageReference Include="ReaLTaiizor" Version="3.8.2.1" />
   </ItemGroup>
 
   <ItemGroup>
