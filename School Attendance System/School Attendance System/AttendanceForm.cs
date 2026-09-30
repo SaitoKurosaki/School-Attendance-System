@@ -6,6 +6,7 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace School_Attendance_System
 {
@@ -17,6 +18,7 @@ namespace School_Attendance_System
             CenterToScreen();
             CustomizeAttendanceTable();
             LoadAttendance();
+            dgvAttendance.EditingControlShowing += dgvAttendance_EditingControlShowing;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -26,7 +28,11 @@ namespace School_Attendance_System
 
         private void LoadAttendance()
         {
+            int rowIndex = dgvAttendance.Rows.Add();
 
+            dgvAttendance.Rows[rowIndex].Cells["Number"].Value = 1;
+            dgvAttendance.Rows[rowIndex].Cells["ID"].Value = "2026001";
+            dgvAttendance.Rows[rowIndex].Cells["StudentName"].Value = "Louie Cabasal";
         }
 
         private void CustomizeAttendanceTable()
@@ -64,11 +70,17 @@ namespace School_Attendance_System
             dgvAttendance.Columns["Number"].Width = 50;
             dgvAttendance.Columns["ID"].Width = 70;
             dgvAttendance.Columns["StudentName"].Width = 100;
-            dgvAttendance.Columns["TimeIn"].Width = 50;
-            dgvAttendance.Columns["TimeOut"].Width = 50;
+            dgvAttendance.Columns["TimeIn"].Width = 80;
+            dgvAttendance.Columns["TimeOut"].Width = 80;
             dgvAttendance.Columns["Present"].Width = 30;
             dgvAttendance.Columns["Late"].Width = 30;
             dgvAttendance.Columns["Absent"].Width = 30;
+
+            dgvAttendance.Columns["Present"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgvAttendance.Columns["Late"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgvAttendance.Columns["Absent"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
         private void dgvAttendance_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -79,55 +91,87 @@ namespace School_Attendance_System
             }
 
             if (e.ColumnIndex == dgvAttendance.Columns["Present"].Index)
-                {
-                    dgvAttendance.Rows[e.RowIndex].Cells["Late"].Value = false;
-                    dgvAttendance.Rows[e.RowIndex].Cells["Absent"].Value = false;
-                }
-
-            if (e.ColumnIndex == dgvAttendance.Columns["Late"].Index)
-                {
-                    dgvAttendance.Rows[e.RowIndex].Cells["Present"].Value = false;
-                    dgvAttendance.Rows[e.RowIndex].Cells["Absent"].Value = false;
-                }
-
-            if (e.ColumnIndex == dgvAttendance.Columns["Absent"].Index)
-                {
-                    dgvAttendance.Rows[e.RowIndex].Cells["Present"].Value = false;
-                    dgvAttendance.Rows[e.RowIndex].Cells["Late"].Value = false;
-                }
-
-            if (e.ColumnIndex == dgvAttendance.Columns["Present"].Index)
             {
-                if (Convert.ToBoolean(dgvAttendance.Rows[e.RowIndex].Cells["Present"].Value))
-                {
-                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = DateTime.Now.TimeOfDay;
-                }
-
-                else
-                {
-                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = null;
-                }
+                dgvAttendance.Rows[e.RowIndex].Cells["Late"].Value = false;
+                dgvAttendance.Rows[e.RowIndex].Cells["Absent"].Value = false;
             }
 
             if (e.ColumnIndex == dgvAttendance.Columns["Late"].Index)
             {
-                if (Convert.ToBoolean(dgvAttendance.Rows[e.RowIndex].Cells["Late"].Value))
-                {
-                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = DateTime.Now.TimeOfDay;
-                }
-
-                else
-                {
-                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = null;
-                }
+                dgvAttendance.Rows[e.RowIndex].Cells["Present"].Value = false;
+                dgvAttendance.Rows[e.RowIndex].Cells["Absent"].Value = false;
             }
 
             if (e.ColumnIndex == dgvAttendance.Columns["Absent"].Index)
             {
-                dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = null;
+                dgvAttendance.Rows[e.RowIndex].Cells["Present"].Value = false;
+                dgvAttendance.Rows[e.RowIndex].Cells["Late"].Value = false;
             }
-
-            //timeOut next work:
         }
+
+        private void dgvAttendance_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgvAttendance.Columns["TimeIn"].Index)
+            {
+                if (dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value == null)
+                {
+                    return;
+                }
+
+                if (DateTime.TryParseExact(dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value.ToString(), "h:mmtt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime timeIn))
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("Invalid time format. Please use h:mm AM/PM.");
+
+                    dgvAttendance.Rows[e.RowIndex].Cells["TimeIn"].Value = null;
+                }
+
+            }
+
+            if (e.ColumnIndex == dgvAttendance.Columns["TimeOut"].Index)
+            {
+                if (dgvAttendance.Rows[e.RowIndex].Cells["TimeOut"].Value == null)
+                {
+                    return;
+                }
+
+                if (DateTime.TryParseExact(dgvAttendance.Rows[e.RowIndex].Cells["TimeOut"].Value.ToString(), "h:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime timeOut))
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("Invalid time format. Please use h:mm AM/PM.");
+
+                    dgvAttendance.Rows[e.RowIndex].Cells["TimeOut"].Value = null;
+                }
+            }
+        }
+        private void dgvAttendance_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (dgvAttendance.CurrentCell.ColumnIndex == dgvAttendance.Columns["TimeIn"].Index || dgvAttendance.CurrentCell.ColumnIndex == dgvAttendance.Columns["TimeOut"].Index)
+            {
+                TextBox textBox = e.Control as TextBox;
+
+                textBox.KeyPress -= Time_KeyPress;
+                textBox.KeyPress += Time_KeyPress;
+            }
+        }
+
+        private void Time_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) || e.KeyChar == ':' || e.KeyChar == 'A' || e.KeyChar == 'P' || e.KeyChar == 'M' || e.KeyChar == (char)Keys.Back)
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
     }
 }

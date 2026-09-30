@@ -36,6 +36,8 @@
             txtSearch = new TextBox();
             btnClear = new Button();
             dgvStudents = new DataGridView();
+            label2 = new Label();
+            panel2 = new Panel();
             ID = new DataGridViewTextBoxColumn();
             LastName = new DataGridViewTextBoxColumn();
             FirstName = new DataGridViewTextBoxColumn();
@@ -43,8 +45,6 @@
             GradeSection = new DataGridViewTextBoxColumn();
             ParentEmail = new DataGridViewTextBoxColumn();
             Actions = new DataGridViewTextBoxColumn();
-            label2 = new Label();
-            panel2 = new Panel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
@@ -140,6 +140,27 @@
             dgvStudents.TabIndex = 30;
             dgvStudents.CellContentClick += dgvStudents_CellContentClick;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(14, 12);
+            label2.Name = "label2";
+            label2.Size = new Size(108, 31);
+            label2.TabIndex = 2;
+            label2.Text = "Students";
+            // 
+            // panel2
+            // 
+            panel2.AutoSize = true;
+            panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(3, 4, 3, 4);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1314, 0);
+            panel2.TabIndex = 31;
+            // 
             // ID
             // 
             ID.HeaderText = "ID";
@@ -166,7 +187,7 @@
             // 
             // GradeSection
             // 
-            GradeSection.HeaderText = "Grade / Section";
+            GradeSection.HeaderText = "Course / Year";
             GradeSection.MinimumWidth = 6;
             GradeSection.Name = "GradeSection";
             // 
@@ -181,27 +202,6 @@
             Actions.HeaderText = "Actions";
             Actions.MinimumWidth = 6;
             Actions.Name = "Actions";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(14, 12);
-            label2.Name = "label2";
-            label2.Size = new Size(108, 31);
-            label2.TabIndex = 2;
-            label2.Text = "Students";
-            // 
-            // panel2
-            // 
-            panel2.AutoSize = true;
-            panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(3, 4, 3, 4);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1314, 0);
-            panel2.TabIndex = 31;
             // 
             // Students
             // 
@@ -236,8 +236,9 @@
         private DataGridViewTextBoxColumn LastName;
         private DataGridViewTextBoxColumn FirstName;
         private DataGridViewTextBoxColumn MiddleName;
-        private DataGridViewTextBoxColumn GradeSection;
+        private DataGridViewTextBoxColumn CourseYear;
         private DataGridViewTextBoxColumn ParentEmail;
         private DataGridViewTextBoxColumn Actions;
+        private DataGridViewTextBoxColumn GradeSection;
     }
 }
