@@ -7,11 +7,15 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
+using MySqlX.XDevAPI.Common;
+using MySql.Data.MySqlClient;
+
 
 namespace School_Attendance_System
 {
     public partial class AttendanceForm : Form
     {
+        string connectionString = "Server=localhost;Database=addstudent;Uid=root;Pwd=123456;";
         public AttendanceForm()
         {
             InitializeComponent();
@@ -19,6 +23,7 @@ namespace School_Attendance_System
             CustomizeAttendanceTable();
             LoadAttendance();
             dgvAttendance.EditingControlShowing += dgvAttendance_EditingControlShowing;
+            btnSave.Type = AntdUI.TTypeMini.Success;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -173,5 +178,41 @@ namespace School_Attendance_System
             }
         }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string query = "INSERT INTO attendance (attendance_date, student_id, time_in, time_out, present, late, absent, remarks) VALUES (@AttendanceDate, @StudentID, @TimeIN, @TimeOut, @Present, @Late, @Absent, @Remarks)";
+
+                    foreach (DataGridViewRow row in dgvAttendance.Rows)
+                    {
+                        string studentID = row.Cells["ID"].Value?.ToString();
+
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@AttendanceDate", pdtDate.Value.Date);
+                            cmd.Parameters.AddWithValue("@StudentID", studentID);
+                            cmd.Parameters.AddWithValue("@TimeIn", row.Cells["TimeIn"].Value?.ToString());
+                            cmd.Parameters.AddWithValue("@TimeOut", row.Cells["TimeOut"].Value?.ToString());
+                            cmd.Parameters.AddWithValue("@Present", Convert.ToBoolean(row.Cells["Present"].Value));
+                            cmd.Parameters.AddWithValue("@Late", Convert.ToBoolean(row.Cells["Late"].Value));
+                            cmd.Parameters.AddWithValue("@Absent", Convert.ToBoolean(row.Cells["Absent"].Value));
+                            cmd.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value?.ToString());
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                }
+            }
+        }
     }
-}

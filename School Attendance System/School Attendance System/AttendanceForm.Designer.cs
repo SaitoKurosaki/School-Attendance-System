@@ -28,13 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            dateTimePicker1 = new DateTimePicker();
-            comboBox1 = new ComboBox();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             label7 = new Label();
             label8 = new Label();
-            button1 = new Button();
             dgvAttendance = new DataGridView();
             Number = new DataGridViewTextBoxColumn();
             ID = new DataGridViewTextBoxColumn();
@@ -45,25 +42,12 @@
             Late = new DataGridViewCheckBoxColumn();
             Absent = new DataGridViewCheckBoxColumn();
             Remarks = new DataGridViewTextBoxColumn();
+            mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
+            comboBoxEdit1 = new ReaLTaiizor.Controls.ComboBoxEdit();
+            pdtDate = new ReaLTaiizor.Controls.PoisonDateTime();
+            btnSave = new AntdUI.Button();
             ((System.ComponentModel.ISupportInitialize)dgvAttendance).BeginInit();
             SuspendLayout();
-            // 
-            // dateTimePicker1
-            // 
-            dateTimePicker1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dateTimePicker1.Location = new Point(102, 28);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(413, 34);
-            dateTimePicker1.TabIndex = 6;
-            // 
-            // comboBox1
-            // 
-            comboBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(839, 28);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(372, 36);
-            comboBox1.TabIndex = 24;
             // 
             // label7
             // 
@@ -85,20 +69,6 @@
             label8.TabIndex = 32;
             label8.Text = "Date:";
             // 
-            // button1
-            // 
-            button1.BackColor = Color.Green;
-            button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(897, 650);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(314, 56);
-            button1.TabIndex = 33;
-            button1.Text = "Save Attendance";
-            button1.TextImageRelation = TextImageRelation.ImageAboveText;
-            button1.UseVisualStyleBackColor = false;
-            // 
             // dgvAttendance
             // 
             dgvAttendance.AllowUserToAddRows = false;
@@ -106,25 +76,25 @@
             dgvAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAttendance.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvAttendance.BackgroundColor = SystemColors.Control;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvAttendance.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvAttendance.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvAttendance.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvAttendance.Columns.AddRange(new DataGridViewColumn[] { Number, ID, StudentName, TimeIn, TimeOut, Present, Late, Absent, Remarks });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvAttendance.DefaultCellStyle = dataGridViewCellStyle2;
-            dgvAttendance.Location = new Point(12, 98);
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvAttendance.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvAttendance.Location = new Point(11, 98);
             dgvAttendance.MultiSelect = false;
             dgvAttendance.Name = "dgvAttendance";
             dgvAttendance.RowHeadersVisible = false;
@@ -194,17 +164,62 @@
             Remarks.MinimumWidth = 6;
             Remarks.Name = "Remarks";
             // 
+            // mySqlCommand1
+            // 
+            mySqlCommand1.CacheAge = 0;
+            mySqlCommand1.Connection = null;
+            mySqlCommand1.EnableCaching = false;
+            mySqlCommand1.Transaction = null;
+            // 
+            // comboBoxEdit1
+            // 
+            comboBoxEdit1.BackColor = Color.FromArgb(246, 246, 246);
+            comboBoxEdit1.DrawMode = DrawMode.OwnerDrawFixed;
+            comboBoxEdit1.DropDownHeight = 100;
+            comboBoxEdit1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxEdit1.Font = new Font("Segoe UI", 10F);
+            comboBoxEdit1.ForeColor = Color.FromArgb(142, 142, 142);
+            comboBoxEdit1.FormattingEnabled = true;
+            comboBoxEdit1.HoverSelectionColor = Color.FromArgb(241, 241, 241);
+            comboBoxEdit1.IntegralHeight = false;
+            comboBoxEdit1.ItemHeight = 20;
+            comboBoxEdit1.Location = new Point(834, 35);
+            comboBoxEdit1.Name = "comboBoxEdit1";
+            comboBoxEdit1.Size = new Size(372, 26);
+            comboBoxEdit1.StartIndex = 0;
+            comboBoxEdit1.TabIndex = 35;
+            // 
+            // pdtDate
+            // 
+            pdtDate.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Medium;
+            pdtDate.Location = new Point(92, 30);
+            pdtDate.MinimumSize = new Size(0, 30);
+            pdtDate.Name = "pdtDate";
+            pdtDate.Size = new Size(413, 30);
+            pdtDate.TabIndex = 36;
+            // 
+            // btnSave
+            // 
+            btnSave.BackColor = Color.DarkGreen;
+            btnSave.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSave.Location = new Point(912, 653);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(314, 56);
+            btnSave.TabIndex = 37;
+            btnSave.Text = "Save Attendance";
+            btnSave.Click += btnSave_Click;
+            // 
             // AttendanceForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1239, 721);
+            Controls.Add(btnSave);
+            Controls.Add(pdtDate);
+            Controls.Add(comboBoxEdit1);
             Controls.Add(dgvAttendance);
-            Controls.Add(button1);
             Controls.Add(label8);
             Controls.Add(label7);
-            Controls.Add(comboBox1);
-            Controls.Add(dateTimePicker1);
             Name = "AttendanceForm";
             Text = "AttendanceForm";
             ((System.ComponentModel.ISupportInitialize)dgvAttendance).EndInit();
@@ -213,11 +228,8 @@
         }
 
         #endregion
-        private DateTimePicker dateTimePicker1;
-        private ComboBox comboBox1;
         private Label label7;
         private Label label8;
-        private Button button1;
         private DataGridView dgvAttendance;
         private DataGridViewTextBoxColumn Number;
         private DataGridViewTextBoxColumn ID;
@@ -228,5 +240,9 @@
         private DataGridViewCheckBoxColumn Late;
         private DataGridViewCheckBoxColumn Absent;
         private DataGridViewTextBoxColumn Remarks;
+        private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
+        private ReaLTaiizor.Controls.ComboBoxEdit comboBoxEdit1;
+        private ReaLTaiizor.Controls.PoisonDateTime pdtDate;
+        private AntdUI.Button btnSave;
     }
 }

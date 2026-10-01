@@ -56,8 +56,9 @@
             sidebar.Controls.Add(btnDashboard);
             sidebar.Controls.Add(btnStudents);
             sidebar.Location = new Point(0, -1);
+            sidebar.Margin = new Padding(3, 4, 3, 4);
             sidebar.Name = "sidebar";
-            sidebar.Size = new Size(214, 607);
+            sidebar.Size = new Size(245, 809);
             sidebar.TabIndex = 0;
             sidebar.Paint += panel1_Paint;
             // 
@@ -67,9 +68,10 @@
             btnCollapse.FlatAppearance.BorderSize = 0;
             btnCollapse.FlatStyle = FlatStyle.Flat;
             btnCollapse.Image = (Image)resources.GetObject("btnCollapse.Image");
-            btnCollapse.Location = new Point(166, 6);
+            btnCollapse.Location = new Point(190, 8);
+            btnCollapse.Margin = new Padding(3, 4, 3, 4);
             btnCollapse.Name = "btnCollapse";
-            btnCollapse.Size = new Size(45, 46);
+            btnCollapse.Size = new Size(51, 61);
             btnCollapse.TabIndex = 8;
             btnCollapse.UseVisualStyleBackColor = true;
             btnCollapse.Click += button1_Click;
@@ -84,9 +86,10 @@
             btnLogout.ForeColor = SystemColors.HotTrack;
             btnLogout.Image = (Image)resources.GetObject("btnLogout.Image");
             btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLogout.Location = new Point(3, 549);
+            btnLogout.Location = new Point(3, 732);
+            btnLogout.Margin = new Padding(3, 4, 3, 4);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(184, 46);
+            btnLogout.Size = new Size(210, 61);
             btnLogout.TabIndex = 7;
             btnLogout.Text = "Log-out";
             btnLogout.TextAlign = ContentAlignment.MiddleLeft;
@@ -105,9 +108,10 @@
             btnAttendance.ForeColor = SystemColors.HotTrack;
             btnAttendance.Image = (Image)resources.GetObject("btnAttendance.Image");
             btnAttendance.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAttendance.Location = new Point(3, 242);
+            btnAttendance.Location = new Point(3, 323);
+            btnAttendance.Margin = new Padding(3, 4, 3, 4);
             btnAttendance.Name = "btnAttendance";
-            btnAttendance.Size = new Size(184, 46);
+            btnAttendance.Size = new Size(210, 61);
             btnAttendance.TabIndex = 5;
             btnAttendance.Text = "Attendance";
             btnAttendance.TextAlign = ContentAlignment.MiddleLeft;
@@ -128,9 +132,10 @@
             btnDashboard.ForeColor = SystemColors.HotTrack;
             btnDashboard.Image = (Image)resources.GetObject("btnDashboard.Image");
             btnDashboard.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDashboard.Location = new Point(3, 138);
+            btnDashboard.Location = new Point(3, 184);
+            btnDashboard.Margin = new Padding(3, 4, 3, 4);
             btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(184, 46);
+            btnDashboard.Size = new Size(210, 61);
             btnDashboard.TabIndex = 2;
             btnDashboard.Text = "Dashboard";
             btnDashboard.TextAlign = ContentAlignment.MiddleLeft;
@@ -151,9 +156,10 @@
             btnStudents.ForeColor = SystemColors.HotTrack;
             btnStudents.Image = (Image)resources.GetObject("btnStudents.Image");
             btnStudents.ImageAlign = ContentAlignment.MiddleLeft;
-            btnStudents.Location = new Point(3, 190);
+            btnStudents.Location = new Point(3, 253);
+            btnStudents.Margin = new Padding(3, 4, 3, 4);
             btnStudents.Name = "btnStudents";
-            btnStudents.Size = new Size(184, 46);
+            btnStudents.Size = new Size(210, 61);
             btnStudents.TabIndex = 3;
             btnStudents.Text = "Students";
             btnStudents.TextAlign = ContentAlignment.MiddleLeft;
@@ -169,9 +175,9 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(277, 14);
+            label3.Location = new Point(317, 19);
             label3.Name = "label3";
-            label3.Size = new Size(294, 25);
+            label3.Size = new Size(370, 32);
             label3.TabIndex = 11;
             label3.Text = "SCHOOL ATTENDANCE SYSTEM";
             label3.Click += label3_Click;
@@ -180,18 +186,20 @@
             // 
             pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Location = new Point(220, 3);
+            pictureBox1.Location = new Point(251, 4);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(51, 47);
+            pictureBox1.Size = new Size(58, 63);
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
             // Content
             // 
             Content.BackColor = SystemColors.Control;
-            Content.Location = new Point(213, 53);
+            Content.Location = new Point(243, 71);
+            Content.Margin = new Padding(3, 4, 3, 4);
             Content.Name = "Content";
-            Content.Size = new Size(871, 553);
+            Content.Size = new Size(1305, 737);
             Content.TabIndex = 4;
             // 
             // mySqlCommand1
@@ -206,19 +214,19 @@
             DSBHeader.Controls.Add(pictureBox1);
             DSBHeader.Controls.Add(label3);
             DSBHeader.Location = new Point(0, -1);
+            DSBHeader.Margin = new Padding(3, 4, 3, 4);
             DSBHeader.Name = "DSBHeader";
-            DSBHeader.Size = new Size(1084, 55);
+            DSBHeader.Size = new Size(1548, 73);
             DSBHeader.TabIndex = 5;
             // 
             // Dashboard
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1084, 606);
+            ClientSize = new Size(1546, 808);
             Controls.Add(sidebar);
             Controls.Add(DSBHeader);
             Controls.Add(Content);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "Dashboard";
             Text = "Dashboard";
             Load += Dashboard_Load;
