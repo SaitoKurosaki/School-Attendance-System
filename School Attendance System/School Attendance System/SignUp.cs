@@ -11,13 +11,13 @@ using System.Net;
 using System.Net.Mail;
 namespace School_Attendance_System
 {
-    public partial class SignUpform : Form
+    public partial class SignUp : Form
     {
         public string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
         public string full_name, email, password, confirm, otp;
 
 
-        public SignUpform()
+        public SignUp()
         {
             InitializeComponent();
             CenterToScreen();
@@ -28,7 +28,7 @@ namespace School_Attendance_System
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Hide();
-            mainform MainForm = new mainform();
+            Login MainForm = new Login();
             MainForm.Show();
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace School_Attendance_System
 {
-    partial class SignUpform
+    partial class SignUp
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignUpform));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignUp));
             label2 = new Label();
             label1 = new Label();
             pictureBox1 = new PictureBox();

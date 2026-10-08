@@ -67,7 +67,7 @@ namespace School_Attendance_System
 
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Registration successful");
-                    mainform mainform = new mainform();
+                    Login mainform = new Login();
                     this.Hide();
                     mainform.Show();
 
@@ -279,7 +279,7 @@ namespace School_Attendance_System
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            SignUpform signupform = new SignUpform();
+            SignUp signupform = new SignUp();
             this.Hide();
             signupform.Show();
 

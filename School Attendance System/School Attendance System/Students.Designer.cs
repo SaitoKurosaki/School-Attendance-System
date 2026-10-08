@@ -34,7 +34,10 @@
             label1 = new Label();
             panel1 = new Panel();
             txtSearch = new TextBox();
+            btnClear = new Button();
             dgvStudents = new DataGridView();
+            label2 = new Label();
+            panel2 = new Panel();
             ID = new DataGridViewTextBoxColumn();
             LastName = new DataGridViewTextBoxColumn();
             FirstName = new DataGridViewTextBoxColumn();
@@ -42,9 +45,6 @@
             GradeSection = new DataGridViewTextBoxColumn();
             ParentEmail = new DataGridViewTextBoxColumn();
             Actions = new DataGridViewTextBoxColumn();
-            label2 = new Label();
-            panel2 = new Panel();
-            btnClear = new AntdUI.Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
@@ -82,6 +82,20 @@
             txtSearch.Size = new Size(866, 27);
             txtSearch.TabIndex = 20;
             // 
+            // btnClear
+            // 
+            btnClear.BackColor = SystemColors.ControlDark;
+            btnClear.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClear.ForeColor = SystemColors.ControlText;
+            btnClear.Location = new Point(247, 135);
+            btnClear.Margin = new Padding(3, 4, 3, 4);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(154, 51);
+            btnClear.TabIndex = 29;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = false;
+            btnClear.Click += btnClear_Click;
+            // 
             // dgvStudents
             // 
             dgvStudents.AllowUserToAddRows = false;
@@ -108,7 +122,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvStudents.DefaultCellStyle = dataGridViewCellStyle2;
             dgvStudents.Dock = DockStyle.Bottom;
-            dgvStudents.Location = new Point(0, 285);
+            dgvStudents.Location = new Point(0, 283);
             dgvStudents.MultiSelect = false;
             dgvStudents.Name = "dgvStudents";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -122,9 +136,30 @@
             dgvStudents.RowHeadersVisible = false;
             dgvStudents.RowHeadersWidth = 51;
             dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvStudents.Size = new Size(1314, 523);
+            dgvStudents.Size = new Size(1314, 525);
             dgvStudents.TabIndex = 30;
             dgvStudents.CellContentClick += dgvStudents_CellContentClick;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(14, 12);
+            label2.Name = "label2";
+            label2.Size = new Size(108, 31);
+            label2.TabIndex = 2;
+            label2.Text = "Students";
+            // 
+            // panel2
+            // 
+            panel2.AutoSize = true;
+            panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(3, 4, 3, 4);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1314, 0);
+            panel2.TabIndex = 31;
             // 
             // ID
             // 
@@ -168,48 +203,17 @@
             Actions.MinimumWidth = 6;
             Actions.Name = "Actions";
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(14, 12);
-            label2.Name = "label2";
-            label2.Size = new Size(108, 31);
-            label2.TabIndex = 2;
-            label2.Text = "Students";
-            // 
-            // panel2
-            // 
-            panel2.AutoSize = true;
-            panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(3, 4, 3, 4);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1314, 0);
-            panel2.TabIndex = 31;
-            // 
-            // btnClear
-            // 
-            btnClear.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnClear.Location = new Point(976, 68);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(154, 62);
-            btnClear.TabIndex = 32;
-            btnClear.Text = "Clear";
-            btnClear.Click += btnClear_Click_1;
-            // 
             // Students
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1314, 808);
-            Controls.Add(btnClear);
             Controls.Add(label2);
             Controls.Add(panel1);
             Controls.Add(label1);
             Controls.Add(panel2);
             Controls.Add(dgvStudents);
+            Controls.Add(btnClear);
             Name = "Students";
             Text = "Students";
             Load += Students_Load;
@@ -224,6 +228,7 @@
         private Label label1;
         private Panel panel1;
         private TextBox txtSearch;
+        private Button btnClear;
         private DataGridView dgvStudents;
         private Label label2;
         private Panel panel2;
@@ -235,6 +240,5 @@
         private DataGridViewTextBoxColumn ParentEmail;
         private DataGridViewTextBoxColumn Actions;
         private DataGridViewTextBoxColumn GradeSection;
-        private AntdUI.Button btnClear;
     }
 }

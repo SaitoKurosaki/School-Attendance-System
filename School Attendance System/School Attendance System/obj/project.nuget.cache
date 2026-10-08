@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sM1LxHE45g8=",
+  "dgSpecHash": "7IFKaLa69ho=",
   "success": true,
-  "projectFilePath": "D:\\School-Attendance-System\\School Attendance System\\School Attendance System\\School Attendance System.csproj",
+  "projectFilePath": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\School Attendance System.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SaitoKurosaki\\.nuget\\packages\\antdui\\2.4.12\\antdui.2.4.12.nupkg.sha512",
     "C:\\Users\\SaitoKurosaki\\.nuget\\packages\\bouncycastle.cryptography\\2.6.2\\bouncycastle.cryptography.2.6.2.nupkg.sha512",

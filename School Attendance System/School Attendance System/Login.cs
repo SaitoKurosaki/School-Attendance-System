@@ -13,12 +13,12 @@ using MySql.Data.MySqlClient;
 
 namespace School_Attendance_System
 {
-    public partial class mainform : Form
+    public partial class Login : Form
     {
         public string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
         public string email;
         public string password;
-        public mainform()
+        public Login()
         {
             InitializeComponent();
             CenterToScreen();
@@ -26,10 +26,7 @@ namespace School_Attendance_System
 
         }
 
-        private void emailbox_TextChanged(object sender, EventArgs e)
-        {
-            email = emailbox.Text;
-        }
+
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
@@ -44,13 +41,31 @@ namespace School_Attendance_System
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Hide();
-            SignUpform SignUp = new SignUpform();
+            SignUp SignUp = new SignUp();
             SignUp.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-           
+
+        }
+
+        private void emailbox_TextChanged_1(object sender, EventArgs e)
+        {
+            email = emailbox.Text;
+        }
+
+        private void passwordbox_TextChanged(object sender, EventArgs e)
+        {
+            password = passwordbox.Text;
+        }
+
+        private void loginbtn_Click(object sender, EventArgs e)
+        {
+
             using (MySqlConnection conn = new MySqlConnection(MysqlConnection))
             {
 
@@ -99,14 +114,9 @@ namespace School_Attendance_System
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void showpass_CheckedChanged(object sender, AntdUI.BoolEventArgs e)
         {
-            password = passwordbox.Text;
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (showpassword.Checked)
+            if (showpass.Checked)
             {
                 passwordbox.PasswordChar = '\0';
             }

@@ -158,9 +158,9 @@ namespace School_Attendance_System
 
         private void dgvStudents_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == dgvStudents.Columns["Actions"].Index)
+           if (e.RowIndex >= 0 && e.ColumnIndex == dgvStudents.Columns["Actions"].Index)
             {
-                Rectangle cellBounds = dgvStudents.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                Rectangle cellBounds = dgvStudents.GetCellDisplayRectangle(e.ColumnIndex,e.RowIndex,false);
                 int iconSize = 20;
                 int spacing = 15;
 
@@ -190,7 +190,7 @@ namespace School_Attendance_System
                 {
                     var row = dgvStudents.Rows[e.RowIndex];
 
-                    oldStudentId = row.Cells["ID"].Value.ToString();
+                   oldStudentId = row.Cells["ID"].Value.ToString();
 
                     dgvStudents.ReadOnly = false;
 
@@ -271,7 +271,7 @@ namespace School_Attendance_System
                 {
                     conn.Open();
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (MySqlCommand cmd =  new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@NewID", newStudentId);
                         cmd.Parameters.AddWithValue("@LastName", lastName);
@@ -281,7 +281,7 @@ namespace School_Attendance_System
                         cmd.Parameters.AddWithValue("@ParentEmail", parentEmail);
                         cmd.Parameters.AddWithValue("@OldID", oldStudentId);
 
-                        int rowsAffected = cmd.ExecuteNonQuery();
+                       int rowsAffected = cmd.ExecuteNonQuery();
 
                         oldStudentId = newStudentId;
                     }
@@ -294,12 +294,12 @@ namespace School_Attendance_System
         }
         private void Students_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -318,16 +318,6 @@ namespace School_Attendance_System
         }
 
         private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnClear_Click_1(object sender, EventArgs e)
         {
 
         }
