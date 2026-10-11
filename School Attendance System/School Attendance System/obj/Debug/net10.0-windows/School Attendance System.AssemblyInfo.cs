@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("School Attendance System")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+085e2448ea95a419a2fc7cce06c7b8b89e7564d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("School Attendance System")]
 [assembly: System.Reflection.AssemblyTitleAttribute("School Attendance System")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

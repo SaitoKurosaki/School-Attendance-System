@@ -18,7 +18,7 @@ namespace School_Attendance_System
         public manueldashboard()
         {
             InitializeComponent();
-           
+            
 
         }
 

@@ -15,7 +15,7 @@ namespace School_Attendance_System
 {
     public partial class Login : Form
     {
-        public string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
+        public string MysqlConnection = "server=localhost;database=school;uid=school;password=Administrator";
         public string email;
         public string password;
         public Login()
@@ -79,20 +79,31 @@ namespace School_Attendance_System
                     if (reader.Read())
                     {
                         reader.Close();
-                        string emailandpass = $"SELECT email FROM teachers WHERE email = '{email}' AND password = '{password}'";
+
+                        string emailandpass = "SELECT ID, email FROM teachers WHERE email = @email AND password = @password";
+
                         cmd = new MySqlCommand(emailandpass, conn);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@password", password);
+
                         reader = cmd.ExecuteReader();
 
                         if (reader.Read())
                         {
+                            int teacherID = Convert.ToInt32(reader["ID"]);
+
+                            reader.Close();
+
                             MessageBox.Show("Success");
 
-                            Dashboard Dashboard = new Dashboard();
-                            Dashboard.Show();
+                            MainDashboard mainDashboard = new MainDashboard(teacherID);
+                            mainDashboard.Show();
+
                             this.Hide();
                         }
                         else
                         {
+                            reader.Close();
                             MessageBox.Show("Wrong password");
                         }
                     }

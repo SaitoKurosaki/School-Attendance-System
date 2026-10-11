@@ -81,3 +81,4 @@ D:\School-Attendance-System-main\School Attendance System\School Attendance Syst
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.manueldashboard.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.manuelstudents.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.reports.resources
+D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.sourcelink.json

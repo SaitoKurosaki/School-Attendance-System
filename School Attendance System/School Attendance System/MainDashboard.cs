@@ -10,8 +10,11 @@ namespace School_Attendance_System
 {
     public partial class MainDashboard : Form
     {
-        public MainDashboard()
+        public int TeacherID { get; private set; }
+
+        public MainDashboard(int teacherID)
         {
+            TeacherID = teacherID;
             InitializeComponent();
             LoadUserControl(new manueldashboard());
             
@@ -33,7 +36,7 @@ namespace School_Attendance_System
 
         private void btnStudents_Click(object sender, EventArgs e)
         {
-            LoadUserControl(new manuelstudents());
+            LoadUserControl(new manuelstudents(TeacherID));
         }
 
         private void btnAttendance_Click(object sender, EventArgs e)
@@ -43,7 +46,7 @@ namespace School_Attendance_System
 
         private void btnClasscode_Click(object sender, EventArgs e)
         {
-            LoadUserControl(new classcode());
+            LoadUserControl(new classcode(TeacherID));
         }
 
         private void btnReports_Click(object sender, EventArgs e)

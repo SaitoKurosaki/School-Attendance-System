@@ -28,21 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             label1 = new AntdUI.Label();
-            recentAttendanceGrid = new ReaLTaiizor.Controls.PoisonDataGridView();
-            colNo = new DataGridViewTextBoxColumn();
-            colStudentName = new DataGridViewTextBoxColumn();
-            colSection = new DataGridViewTextBoxColumn();
-            colStatus = new DataGridViewComboBoxColumn();
-            aloneComboBox1 = new ReaLTaiizor.Controls.AloneComboBox();
-            aloneComboBox2 = new ReaLTaiizor.Controls.AloneComboBox();
-            btnDashboard = new AntdUI.ButtonShadow();
+            coursecombo = new ReaLTaiizor.Controls.AloneComboBox();
+            sectioncombo = new ReaLTaiizor.Controls.AloneComboBox();
+            codebtn = new AntdUI.ButtonShadow();
             label2 = new AntdUI.Label();
             label3 = new AntdUI.Label();
-            ((System.ComponentModel.ISupportInitialize)recentAttendanceGrid).BeginInit();
+            listcodecontent = new ReaLTaiizor.Controls.PoisonDataGridView();
+            ((System.ComponentModel.ISupportInitialize)listcodecontent).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -54,116 +50,38 @@
             label1.TabIndex = 3;
             label1.Text = "Class Code";
             // 
-            // recentAttendanceGrid
+            // coursecombo
             // 
-            recentAttendanceGrid.AllowUserToAddRows = false;
-            recentAttendanceGrid.AllowUserToDeleteRows = false;
-            recentAttendanceGrid.AllowUserToResizeColumns = false;
-            recentAttendanceGrid.AllowUserToResizeRows = false;
-            recentAttendanceGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            recentAttendanceGrid.BackgroundColor = Color.FromArgb(255, 255, 255);
-            recentAttendanceGrid.BorderStyle = BorderStyle.None;
-            recentAttendanceGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            recentAttendanceGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle10.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle10.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle10.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            recentAttendanceGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            recentAttendanceGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            recentAttendanceGrid.Columns.AddRange(new DataGridViewColumn[] { colNo, colStudentName, colSection, colStatus });
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle11.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle11.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle11.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle11.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
-            recentAttendanceGrid.DefaultCellStyle = dataGridViewCellStyle11;
-            recentAttendanceGrid.EnableHeadersVisualStyles = false;
-            recentAttendanceGrid.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            recentAttendanceGrid.GridColor = Color.FromArgb(255, 255, 255);
-            recentAttendanceGrid.Location = new Point(17, 124);
-            recentAttendanceGrid.Name = "recentAttendanceGrid";
-            recentAttendanceGrid.ReadOnly = true;
-            recentAttendanceGrid.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle12.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle12.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle12.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle12.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
-            recentAttendanceGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            recentAttendanceGrid.RowHeadersVisible = false;
-            recentAttendanceGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            recentAttendanceGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            recentAttendanceGrid.Size = new Size(892, 450);
-            recentAttendanceGrid.TabIndex = 12;
-            recentAttendanceGrid.UseCustomBackColor = true;
-            recentAttendanceGrid.UseCustomForeColor = true;
-            recentAttendanceGrid.UseStyleColors = true;
+            coursecombo.DrawMode = DrawMode.OwnerDrawFixed;
+            coursecombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            coursecombo.EnabledCalc = true;
+            coursecombo.FormattingEnabled = true;
+            coursecombo.ItemHeight = 20;
+            coursecombo.Location = new Point(17, 79);
+            coursecombo.Name = "coursecombo";
+            coursecombo.Size = new Size(293, 26);
+            coursecombo.TabIndex = 13;
             // 
-            // colNo
+            // sectioncombo
             // 
-            colNo.HeaderText = "#";
-            colNo.Name = "colNo";
-            colNo.ReadOnly = true;
+            sectioncombo.DrawMode = DrawMode.OwnerDrawFixed;
+            sectioncombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            sectioncombo.EnabledCalc = true;
+            sectioncombo.FormattingEnabled = true;
+            sectioncombo.ItemHeight = 20;
+            sectioncombo.Location = new Point(342, 79);
+            sectioncombo.Name = "sectioncombo";
+            sectioncombo.Size = new Size(217, 26);
+            sectioncombo.TabIndex = 14;
             // 
-            // colStudentName
+            // codebtn
             // 
-            colStudentName.HeaderText = "Student Name";
-            colStudentName.Name = "colStudentName";
-            colStudentName.ReadOnly = true;
-            // 
-            // colSection
-            // 
-            colSection.HeaderText = "Grade / Section";
-            colSection.Name = "colSection";
-            colSection.ReadOnly = true;
-            // 
-            // colStatus
-            // 
-            colStatus.HeaderText = "Status";
-            colStatus.Name = "colStatus";
-            colStatus.ReadOnly = true;
-            colStatus.Resizable = DataGridViewTriState.True;
-            colStatus.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // aloneComboBox1
-            // 
-            aloneComboBox1.DrawMode = DrawMode.OwnerDrawFixed;
-            aloneComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            aloneComboBox1.EnabledCalc = true;
-            aloneComboBox1.FormattingEnabled = true;
-            aloneComboBox1.ItemHeight = 20;
-            aloneComboBox1.Location = new Point(17, 79);
-            aloneComboBox1.Name = "aloneComboBox1";
-            aloneComboBox1.Size = new Size(253, 26);
-            aloneComboBox1.TabIndex = 13;
-            // 
-            // aloneComboBox2
-            // 
-            aloneComboBox2.DrawMode = DrawMode.OwnerDrawFixed;
-            aloneComboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            aloneComboBox2.EnabledCalc = true;
-            aloneComboBox2.FormattingEnabled = true;
-            aloneComboBox2.ItemHeight = 20;
-            aloneComboBox2.Location = new Point(306, 79);
-            aloneComboBox2.Name = "aloneComboBox2";
-            aloneComboBox2.Size = new Size(253, 26);
-            aloneComboBox2.TabIndex = 14;
-            // 
-            // btnDashboard
-            // 
-            btnDashboard.Location = new Point(692, 63);
-            btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(217, 42);
-            btnDashboard.TabIndex = 15;
-            btnDashboard.Text = "Create Class Code";
+            codebtn.Location = new Point(692, 63);
+            codebtn.Name = "codebtn";
+            codebtn.Size = new Size(217, 42);
+            codebtn.TabIndex = 15;
+            codebtn.Text = "Create Class Code";
+            codebtn.Click += codebtn_Click;
             // 
             // label2
             // 
@@ -175,11 +93,64 @@
             // 
             // label3
             // 
-            label3.Location = new Point(306, 50);
+            label3.Location = new Point(342, 50);
             label3.Name = "label3";
             label3.Size = new Size(93, 23);
             label3.TabIndex = 17;
             label3.Text = "Section";
+            // 
+            // listcodecontent
+            // 
+            listcodecontent.AllowUserToAddRows = false;
+            listcodecontent.AllowUserToDeleteRows = false;
+            listcodecontent.AllowUserToResizeColumns = false;
+            listcodecontent.AllowUserToResizeRows = false;
+            listcodecontent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            listcodecontent.BackgroundColor = Color.FromArgb(255, 255, 255);
+            listcodecontent.BorderStyle = BorderStyle.None;
+            listcodecontent.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            listcodecontent.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            listcodecontent.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            listcodecontent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            listcodecontent.DefaultCellStyle = dataGridViewCellStyle2;
+            listcodecontent.EnableHeadersVisualStyles = false;
+            listcodecontent.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            listcodecontent.GridColor = Color.FromArgb(255, 255, 255);
+            listcodecontent.Location = new Point(17, 124);
+            listcodecontent.Name = "listcodecontent";
+            listcodecontent.ReadOnly = true;
+            listcodecontent.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            listcodecontent.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            listcodecontent.RowHeadersVisible = false;
+            listcodecontent.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            listcodecontent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            listcodecontent.Size = new Size(892, 450);
+            listcodecontent.TabIndex = 12;
+            listcodecontent.UseCustomBackColor = true;
+            listcodecontent.UseCustomForeColor = true;
+            listcodecontent.UseStyleColors = true;
+            listcodecontent.CellContentClick += recentAttendanceGrid_CellContentClick;
             // 
             // classcode
             // 
@@ -187,29 +158,25 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(btnDashboard);
-            Controls.Add(aloneComboBox2);
-            Controls.Add(aloneComboBox1);
-            Controls.Add(recentAttendanceGrid);
+            Controls.Add(codebtn);
+            Controls.Add(sectioncombo);
+            Controls.Add(coursecombo);
+            Controls.Add(listcodecontent);
             Controls.Add(label1);
             Name = "classcode";
             Size = new Size(926, 586);
-            ((System.ComponentModel.ISupportInitialize)recentAttendanceGrid).EndInit();
+            ((System.ComponentModel.ISupportInitialize)listcodecontent).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private AntdUI.Label label1;
-        private ReaLTaiizor.Controls.PoisonDataGridView recentAttendanceGrid;
-        private DataGridViewTextBoxColumn colNo;
-        private DataGridViewTextBoxColumn colStudentName;
-        private DataGridViewTextBoxColumn colSection;
-        private DataGridViewComboBoxColumn colStatus;
-        private ReaLTaiizor.Controls.AloneComboBox aloneComboBox1;
-        private ReaLTaiizor.Controls.AloneComboBox aloneComboBox2;
-        private AntdUI.ButtonShadow btnDashboard;
+        private ReaLTaiizor.Controls.AloneComboBox coursecombo;
+        private ReaLTaiizor.Controls.AloneComboBox sectioncombo;
+        private AntdUI.ButtonShadow codebtn;
         private AntdUI.Label label2;
         private AntdUI.Label label3;
+        private ReaLTaiizor.Controls.PoisonDataGridView listcodecontent;
     }
 }

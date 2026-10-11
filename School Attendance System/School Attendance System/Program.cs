@@ -12,7 +12,7 @@ namespace School_Attendance_System
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            Application.Run(new MainDashboard());
+            Application.Run(new Login());
 
 
         }

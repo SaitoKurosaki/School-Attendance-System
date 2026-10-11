@@ -15,7 +15,7 @@ namespace School_Attendance_System
 
     public partial class verification : Form
     {
-        public string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
+        public string Connection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
         public string otp;
         public string firstname;
         public string lastname;
@@ -51,7 +51,7 @@ namespace School_Attendance_System
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlConnection conn = new MySqlConnection(MysqlConnection);
+            MySqlConnection conn = new MySqlConnection(Connection);
             MySqlCommand cmd = new MySqlCommand();
 
             try
