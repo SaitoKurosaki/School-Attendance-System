@@ -1,159 +1,99 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Pqc.Crypto.Lms;
-using System.Net;
+using System;
 using System.Net.Mail;
+using System.Windows.Forms;
+
 namespace School_Attendance_System
 {
     public partial class SignUp : Form
     {
-        public string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
-        public string full_name, email, password, confirm, otp;
-
+        private const string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
 
         public SignUp()
         {
             InitializeComponent();
-            CenterToScreen();
-
-
+            AuthWindowPlacement.Apply(this);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.Hide();
-            Login MainForm = new Login();
-            MainForm.Show();
-        }
-
-
-
-
-
-        private void passwordbox_TextChanged(object sender, EventArgs e)
-        {
-            password = passwordbox.Text;
-        }
-
-        private void emailbox_TextChanged_1(object sender, EventArgs e)
-        {
-            email = emailbox.Text;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            AuthWindowPlacement.Remember(this);
+            Hide();
+            Login.ShowLogin();
         }
 
         private void submitbtn_Click(object sender, EventArgs e)
         {
-            MySqlConnection conn = new MySqlConnection(MysqlConnection);
+            string fullName = fullnamebox.Text.Trim();
+            string email = emailbox.Text.Trim();
+            string password = passwordbox.Text;
+            string confirmPassword = confirmpassbox.Text;
 
+            if (string.IsNullOrWhiteSpace(fullName) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
+            {
+                MessageBox.Show("Please complete every field.", "Sign Up", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (!IsValidEmail(email))
+            {
+                MessageBox.Show("Enter a valid email address.", "Sign Up", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (password.Length < 8)
+            {
+                MessageBox.Show("Password must be at least 8 characters.", "Sign Up", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (password != confirmPassword)
+            {
+                MessageBox.Show("Password and confirm password do not match.", "Sign Up", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-
+            string[] names = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (names.Length < 2)
+            {
+                MessageBox.Show("Enter both your first name and last name.", "Sign Up", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             try
             {
-                if (fullnamebox.Text == "" || emailbox.Text == "" || passwordbox.Text == "" || confirmpassbox.Text == "")
+                using MySqlConnection connection = new MySqlConnection(MysqlConnection);
+                using MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM teachers WHERE email = @email;", connection);
+                command.Parameters.AddWithValue("@email", email);
+                connection.Open();
+                if (Convert.ToInt32(command.ExecuteScalar()) > 0)
                 {
-                    MessageBox.Show("Please make sure you fill in all the fields.");
+                    MessageBox.Show("That email address is already registered.", "Sign Up", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else
-                {
-                    if (passwordbox.Text != confirmpassbox.Text)
-                    {
-                        MessageBox.Show("Password and confirm password do not match.");
-                    }
-                    else
-                    {
-                        try
-                        {
-                            conn.Open();
-                            string query = $"SELECT email FROM teachers WHERE email = '{email}'";
-                            MySqlCommand cmd = new MySqlCommand(query, conn);
-                            MySqlDataReader reader = cmd.ExecuteReader();
-
-                            if (reader.Read())
-                            {
-                                MessageBox.Show("The email address you entered is already associated with an existing account");
-                            }
-                            else
-                            {
-
-
-                                /*verification veriform = new verification(full_name, email, password);
-                                this.Hide();
-                                veriform.Show();*/
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                }
-
             }
-            catch (Exception ex)
+            catch (MySqlException)
             {
+                MessageBox.Show("Unable to connect to the school database. Please try again later.", "Sign Up", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            }
-            finally
-            {
-                conn.Close();
-            }
+            string firstName = names[0];
+            string lastName = string.Join(" ", names, 1, names.Length - 1);
+            Verification verificationForm = new Verification(firstName, lastName, email, password);
+            AuthWindowPlacement.Remember(this);
+            Hide();
+            verificationForm.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private static bool IsValidEmail(string email)
         {
-
+            try { _ = new MailAddress(email); return true; }
+            catch (FormatException) { return false; }
         }
 
         private void showpass_CheckedChanged(object sender, AntdUI.BoolEventArgs e)
         {
-            if (showpass.Checked)
-            {
-                passwordbox.PasswordChar = '\0';
-                confirmpassbox.PasswordChar = '\0';
-            }
-            else
-            {
-                passwordbox.PasswordChar = '*';
-                confirmpassbox.PasswordChar = '\0';
-            }
-        }
-
-        private void input2_TextChanged(object sender, EventArgs e)
-        {
-            full_name = fullnamebox.Text;
-        }
-
-        private void emailbox_TextChanged(object sender, EventArgs e)
-        {
-            email = emailbox.Text;
-        }
-
-        private void passwordbox_TextChanged_1(object sender, EventArgs e)
-        {
-            password = passwordbox.Text;
-        }
-
-        private void confirmpassbox_TextChanged(object sender, EventArgs e)
-        {
-            confirm = confirmpassbox.Text;
+            char mask = showpass.Checked ? '\0' : '*';
+            passwordbox.PasswordChar = mask;
+            confirmpassbox.PasswordChar = mask;
         }
     }
 }

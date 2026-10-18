@@ -1,325 +1,107 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System;
 using System.Data;
-using System.DirectoryServices.ActiveDirectory;
-using MySqlX.XDevAPI.Common;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace School_Attendance_System
 {
-    public partial class Students : Form
+    public partial class Students : UserControl
     {
-        private string oldStudentId;
-        string connectionString = "Server=localhost;Database=addstudent;Uid=root;Pwd=123456;";
-        public Students()
+        private const string Connection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
+        public int TeacherID { get; }
+
+        public Students(int teacherID)
         {
+            TeacherID = teacherID;
             InitializeComponent();
-
-            CustomizeStudentTable();
-            dgvStudents.CellPainting += dgvStudents_CellPainting;
-            dgvStudents.CellMouseClick += dgvStudents_CellMouseClick;
-            dgvStudents.CellBeginEdit += dgvStudents_CellBeginEdit;
-            dgvStudents.CellEndEdit += dgvStudents_CellEndEdit;
-            LoadStudents();
+            AppTheme.Input(searchtext, "Search name, number or email", "SearchOutlined");
+            AppTheme.Grid(studentlistcontent);
+            studentlist();
         }
-        private void LoadStudents()
-        {
-            string query = "SELECT * FROM addstudent ORDER BY last_name ASC";
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+      
+        private void studentlist()
+        {
+            const string query = @"
+                SELECT
+                    s.full_name AS `Student Name`,
+                    s.student_number AS `Student Number`,
+                    s.email AS Email,
+                    s.parent_email AS `Parent Email`,
+                    c.COURSE_NAME AS Course,
+                    sec.SECTION_NAME AS Section,
+                    COALESCE(t.Present, 0) AS Present,
+                    COALESCE(t.Late, 0) AS Late,
+                    COALESCE(t.Absent, 0) AS Absent
+                FROM students s
+                INNER JOIN class_codes cc ON JSON_CONTAINS(s.classcode, JSON_QUOTE(cc.CLASS_CODE))
+                INNER JOIN course c ON c.ID = cc.COURSE_ID
+                INNER JOIN section sec ON sec.ID = cc.SECTION_ID
+                LEFT JOIN (
+                    SELECT ar.STUDENT_ID, ar.CLASS_CODE_ID,
+                        SUM(ar.STATUS = 'Present') AS Present,
+                        SUM(ar.STATUS = 'Late') AS Late,
+                        SUM(ar.STATUS = 'Absent') AS Absent
+                    FROM attendance_records ar
+                    INNER JOIN class_codes own ON own.ID = ar.CLASS_CODE_ID AND own.TEACHER_ID = @TeacherID
+                    WHERE ar.ATTENDANCE_DATE >= DATE_FORMAT(CURDATE(), '%Y-%m-01') AND ar.ATTENDANCE_DATE <= CURDATE()
+                    GROUP BY ar.STUDENT_ID, ar.CLASS_CODE_ID
+                ) t ON t.STUDENT_ID = s.id AND t.CLASS_CODE_ID = cc.ID
+                WHERE cc.TEACHER_ID = @TeacherID
+                ORDER BY c.COURSE_NAME, sec.SECTION_NAME, s.full_name;";
+
+            try
             {
-                try
+                using MySqlConnection connection = new MySqlConnection(Connection);
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@TeacherID", TeacherID);
+
+                using MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                studentlistcontent.DataSource = new DataView(table);
+                if (studentlistcontent.Columns.Contains("Course"))
                 {
-                    conn.Open();
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        dgvStudents.Rows.Clear();
-
-                        while (reader.Read())
-                        {
-                            string studentId = reader["student_id"].ToString();
-                            string lastName = reader["last_name"].ToString();
-                            string firstName = reader["first_name"].ToString();
-                            string middleName = reader["middle_name"].ToString();
-                            string gradeSection = reader["grade_Section"].ToString();
-                            string parentEmail = reader["parent_email"].ToString();
-
-                            int newRowIndex = dgvStudents.Rows.Add();
-
-                            var row = dgvStudents.Rows[newRowIndex];
-
-                            row.Cells["ID"].Value = studentId;
-                            row.Cells["LastName"].Value = lastName;
-                            row.Cells["FirstName"].Value = firstName;
-                            row.Cells["MiddleName"].Value = middleName;
-                            row.Cells["GradeSection"].Value = gradeSection;
-                            row.Cells["ParentEmail"].Value = parentEmail;
-
-                            foreach (DataGridViewCell cell in row.Cells)
-                            {
-                                cell.ReadOnly = true;
-                            }
-                        }
-                    }
+                    studentlistcontent.Columns["Course"]!.FillWeight = 180;
                 }
-                catch (Exception ex)
+                if (studentlistcontent.Columns.Contains("Section"))
                 {
-                    MessageBox.Show("Error loading students: " + ex.Message);
+                    studentlistcontent.Columns["Section"]!.FillWeight = 80;
                 }
-            }
-        }
-        private void CustomizeStudentTable()
-        {
-            dgvStudents.CellBorderStyle = DataGridViewCellBorderStyle.Single;
-            dgvStudents.GridColor = Color.Gray;
-            dgvStudents.AllowUserToAddRows = false;
-            dgvStudents.ReadOnly = false;
-            dgvStudents.RowHeadersVisible = false;
 
-            dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                ApplyStudentFilter();
 
-            dgvStudents.MultiSelect = false;
-
-            dgvStudents.BorderStyle = BorderStyle.None;
-
-            dgvStudents.EnableHeadersVisualStyles = false;
-
-            dgvStudents.ColumnHeadersHeight = 40;
-
-            dgvStudents.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-
-            dgvStudents.RowTemplate.Height = 45;
-
-            dgvStudents.DefaultCellStyle.Font = new Font("Segoe UI", 10);
-
-            dgvStudents.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
-            dgvStudents.DefaultCellStyle.SelectionBackColor = Color.LightGray;
-
-            dgvStudents.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-            dgvStudents.AllowUserToResizeRows = false;
-
-            dgvStudents.Columns["ID"].Width = 100;
-            dgvStudents.Columns["LastName"].Width = 200;
-            dgvStudents.Columns["FirstName"].Width = 200;
-            dgvStudents.Columns["MiddleName"].Width = 200;
-            dgvStudents.Columns["GradeSection"].Width = 180;
-            dgvStudents.Columns["ParentEmail"].Width = 250;
-            dgvStudents.Columns["Actions"].Width = 120;
-
-            dgvStudents.Columns["Actions"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        }
-
-        private void dgvStudents_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.ColumnIndex == dgvStudents.Columns["Actions"].Index)
-            {
-                e.PaintBackground(e.CellBounds, true);
-
-                Image editIcon = Properties.Resources.edit_icon;
-                Image deleteIcon = Properties.Resources.delete_icon;
-
-                int iconSize = 20;
-                int spacing = 15;
-
-                int totalWidth = (iconSize * 2) + spacing;
-
-                int startX = e.CellBounds.X +
-                             (e.CellBounds.Width - totalWidth) / 2;
-
-                int startY = e.CellBounds.Y +
-                             (e.CellBounds.Height - iconSize) / 2;
-
-                Rectangle editRect = new Rectangle(
-                    startX, startY, iconSize, iconSize);
-
-                Rectangle deleteRect = new Rectangle(
-                    startX + iconSize + spacing,
-                    startY,
-                    iconSize,
-                    iconSize);
-
-                e.Graphics.DrawImage(editIcon, editRect);
-                e.Graphics.DrawImage(deleteIcon, deleteRect);
-
-                e.Paint(e.CellBounds, DataGridViewPaintParts.Border);
-
-                e.Handled = true;
-            }
-        }
-
-        private void dgvStudents_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-           if (e.RowIndex >= 0 && e.ColumnIndex == dgvStudents.Columns["Actions"].Index)
-            {
-                Rectangle cellBounds = dgvStudents.GetCellDisplayRectangle(e.ColumnIndex,e.RowIndex,false);
-                int iconSize = 20;
-                int spacing = 15;
-
-                int totalWidth = (iconSize * 2) + spacing;
-
-                int startX = cellBounds.X +
-                             (cellBounds.Width - totalWidth) / 2;
-
-                int startY = cellBounds.Y +
-                             (cellBounds.Height - iconSize) / 2;
-
-                Rectangle editRect = new Rectangle(
-                    startX, startY, iconSize, iconSize);
-
-                Rectangle deleteRect = new Rectangle(
-                    startX + iconSize + spacing,
-                    startY,
-                    iconSize,
-                    iconSize);
-
-                Point mousePosition = new Point(
-                    e.Location.X + cellBounds.X,
-                    e.Location.Y + cellBounds.Y
-);
-
-                if (editRect.Contains(mousePosition))
+               
+                foreach (string column in new[] { "Present", "Late", "Absent" })
                 {
-                    var row = dgvStudents.Rows[e.RowIndex];
-
-                   oldStudentId = row.Cells["ID"].Value.ToString();
-
-                    dgvStudents.ReadOnly = false;
-
-                    foreach (DataGridViewCell cell in row.Cells)
+                    if (studentlistcontent.Columns.Contains(column))
                     {
-                        cell.ReadOnly = true;
-
-                        if (cell.ColumnIndex != dgvStudents.Columns["Actions"].Index)
-                        {
-                            cell.ReadOnly = false;
-                        }
-                    }
-                    dgvStudents.CurrentCell = row.Cells["ID"];
-                    dgvStudents.BeginEdit(true);
-                    dgvStudents.Focus();
-                }
-                else if (deleteRect.Contains(mousePosition))
-                {
-                    string studentId = dgvStudents.Rows[e.RowIndex].Cells["ID"].Value.ToString();
-
-                    DialogResult result = MessageBox.Show("Are you sure you want to delete?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                    if (result == DialogResult.Yes)
-                    {
-                        string query = "DELETE FROM addstudent WHERE student_id = @StudentID";
-
-                        using (MySqlConnection conn = new MySqlConnection(connectionString))
-                        {
-                            try
-                            {
-                                conn.Open();
-
-                                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                                {
-                                    cmd.Parameters.AddWithValue("@StudentID", studentId);
-
-                                    cmd.ExecuteNonQuery();
-
-                                    MessageBox.Show("Student deleted successfully!");
-
-                                    LoadStudents();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Error deleting student: " + ex.Message);
-                            }
-                        }
+                        studentlistcontent.Columns[column]!.FillWeight = 90;
                     }
                 }
             }
-
-        }
-
-        private void dgvStudents_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            if (e.ColumnIndex == dgvStudents.Columns["Actions"].Index)
+            catch (MySqlException ex)
             {
-                e.Cancel = true;
+                MessageBox.Show("Failed to load website student data: " + ex.Message, "Students", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        private void dgvStudents_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+
+        
+        private void ApplyStudentFilter()
         {
-            var row = dgvStudents.Rows[e.RowIndex];
+            if (studentlistcontent.DataSource is not DataView view) return;
 
-            string newStudentId = row.Cells["ID"].Value.ToString();
-            string lastName = row.Cells["LastName"].Value.ToString();
-            string firstName = row.Cells["FirstName"].Value.ToString();
-            string middleName = row.Cells["MiddleName"].Value.ToString();
-            string gradeSection = row.Cells["GradeSection"].Value.ToString();
-            string parentEmail = row.Cells["ParentEmail"].Value.ToString();
-
-            string query = "UPDATE addstudent SET student_id = @NewID, last_name = @LastName, first_name = @FirstName, middle_name = @MiddleName, grade_section = @GradeSection, parent_email = @ParentEmail WHERE student_id = @OldID";
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    conn.Open();
-
-                    using (MySqlCommand cmd =  new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@NewID", newStudentId);
-                        cmd.Parameters.AddWithValue("@LastName", lastName);
-                        cmd.Parameters.AddWithValue("@FirstName", firstName);
-                        cmd.Parameters.AddWithValue("@MiddleName", middleName);
-                        cmd.Parameters.AddWithValue("@GradeSection", gradeSection);
-                        cmd.Parameters.AddWithValue("@ParentEmail", parentEmail);
-                        cmd.Parameters.AddWithValue("@OldID", oldStudentId);
-
-                       int rowsAffected = cmd.ExecuteNonQuery();
-
-                        oldStudentId = newStudentId;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error updating student: " + ex.Message);
-                }
-            }
-        }
-        private void Students_Load(object sender, EventArgs e)
-        {
-           
+            string term = SearchFilter.Literal(searchtext.Text.Trim());
+            view.RowFilter = term.Length == 0
+                ? string.Empty
+                : string.Join(" OR ", new[] { "[Student Name]", "[Student Number]", "Email", "[Parent Email]", "Course", "Section" }
+                    .Select(column => $"{column} LIKE '%{term}%'"));
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void searchtext_TextChanged(object sender, EventArgs e)
         {
-            
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void bntAddStudent_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
+            ApplyStudentFilter();
         }
     }
 }

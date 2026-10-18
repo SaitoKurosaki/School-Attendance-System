@@ -38,8 +38,6 @@ D:\School-Attendance-System\School Attendance System\School Attendance System\ob
 D:\School-Attendance-System\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\AntdUI.dll
 D:\School-Attendance-System\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\ReaLTaiizor.dll
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.csproj.AssemblyReference.cache
-D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.AttendanceForm.resources
-D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Dashboard.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Login.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Properties.Resources.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.SignUp.resources
@@ -78,7 +76,19 @@ D:\School-Attendance-System-main\School Attendance System\School Attendance Syst
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.MainDashboard.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.attendance.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.classcode.resources
-D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.manueldashboard.resources
-D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.manuelstudents.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.reports.resources
 D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School Attendance System.sourcelink.json
+D:\School-Attendance-System-main\School Attendance System\.build-check\Debug\net10.0-windows\School Attendance System.deps.json
+D:\School-Attendance-System-main\School Attendance System\.build-check\Debug\net10.0-windows\School Attendance System.runtimeconfig.json
+D:\School-Attendance-System-main\School Attendance System\.build-check\Debug\net10.0-windows\School Attendance System.dll
+D:\School-Attendance-System-main\School Attendance System\.build-check\Debug\net10.0-windows\School Attendance System.pdb
+D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Dashboard.resources
+D:\School-Attendance-System-main\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\School Attendance System.runtimeconfig.dev.json
+D:\School-Attendance-System-main\School Attendance System\School Attendance System\bin\Debug\net10.0-windows\BCrypt-Net-Next.dll
+D:\School-Attendance-System-main\School Attendance System\School Attendance System\obj\Debug\net10.0-windows\School_Attendance_System.Administrator.resources
+C:\Users\SaitoKurosaki\AppData\Local\Temp\outbuild\School Attendance System.exe
+C:\Users\SaitoKurosaki\AppData\Local\Temp\outbuild\School Attendance System.deps.json
+C:\Users\SaitoKurosaki\AppData\Local\Temp\outbuild\School Attendance System.runtimeconfig.json
+C:\Users\SaitoKurosaki\AppData\Local\Temp\outbuild\School Attendance System.runtimeconfig.dev.json
+C:\Users\SaitoKurosaki\AppData\Local\Temp\outbuild\School Attendance System.dll
+C:\Users\SaitoKurosaki\AppData\Local\Temp\outbuild\School Attendance System.pdb

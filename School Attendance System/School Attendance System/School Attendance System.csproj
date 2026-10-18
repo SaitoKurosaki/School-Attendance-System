@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="AntdUI" Version="2.4.12" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="MySql.Data" Version="9.7.0" />
     <PackageReference Include="ReaLTaiizor" Version="3.8.2.1" />
   </ItemGroup>
@@ -21,12 +22,48 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Students.Designer.cs">
+      <DependentUpon>Students.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Attendance.Designer.cs">
+      <DependentUpon>Attendance.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ClassCode.Designer.cs">
+      <DependentUpon>ClassCode.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Reports.Designer.cs">
+      <DependentUpon>Reports.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Verification.Designer.cs">
+      <DependentUpon>Verification.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Students.resx">
+      <DependentUpon>Students.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Attendance.resx">
+      <DependentUpon>Attendance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="ClassCode.resx">
+      <DependentUpon>ClassCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Reports.resx">
+      <DependentUpon>Reports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Verification.resx">
+      <DependentUpon>Verification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
 

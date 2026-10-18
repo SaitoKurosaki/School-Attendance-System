@@ -1,6 +1,6 @@
 ﻿namespace School_Attendance_System
 {
-    partial class verification
+    partial class Verification
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(verification));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Verification));
             pictureBox1 = new PictureBox();
             label1 = new Label();
             label2 = new Label();
@@ -72,7 +72,6 @@
             label1.Size = new Size(284, 25);
             label1.TabIndex = 1;
             label1.Text = "VERIFY YOUR EMAIL ADDRESS";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -92,7 +91,6 @@
             emaillabel.TabIndex = 3;
             emaillabel.Text = "manuellucioporcinculaxworld@gmail.com";
             emaillabel.TextAlign = ContentAlignment.MiddleCenter;
-            emaillabel.Click += label3_Click;
             // 
             // verificationbox
             // 
@@ -104,7 +102,6 @@
             verificationbox.PlaceholderText = "Enter 6-digit code";
             verificationbox.Size = new Size(305, 22);
             verificationbox.TabIndex = 26;
-            verificationbox.TextChanged += emailbox_TextChanged;
             // 
             // panel2
             // 
@@ -216,7 +213,7 @@
             linkLabel1.Text = "Back To Sign Up";
             linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
-            // verification
+            // Verification
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -236,9 +233,8 @@
             Controls.Add(pictureBox1);
             ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "verification";
+            Name = "Verification";
             Text = "School Attendance System - Email Verification";
-            Load += verification_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();

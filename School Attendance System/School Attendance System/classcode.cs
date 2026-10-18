@@ -6,29 +6,30 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using static Org.BouncyCastle.Asn1.Cmp.Challenge;
+using System.Security.Cryptography;
 
 namespace School_Attendance_System
 {
-    public partial class classcode : UserControl
+    public partial class ClassCode : UserControl
     {
         public int TeacherID { get; private set; }
-        private string classCode;
-        private Random random = new Random();
+        private string classCode = string.Empty;
 
-        public string Connection = "server=localhost;database=school;uid=school;password=Administrator";
-        public classcode(int teacherID)
+        public string Connection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
+        public ClassCode(int teacherID)
         {
+            TeacherID = teacherID;
             InitializeComponent();
+            AppTheme.Page(this);
+            AppTheme.Title(label1);
+            AppTheme.FieldLabel(label2);
+            AppTheme.FieldLabel(label3);
+            AppTheme.Action(codebtn, "PlusOutlined", primary: true);
+            AppTheme.Action(deletebtn, "DeleteOutlined");
+            AppTheme.Grid(listcodecontent);
             LoadCourse();
             LoadSection();
-            TeacherID = teacherID;
             codelist();
-
-        }
-
-        private void recentAttendanceGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
         }
 
@@ -141,7 +142,19 @@ namespace School_Attendance_System
                 {
                     column.SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
+                listcodecontent.Columns["ID"]!.Visible = false;
                 listcodecontent.Columns["COURSE_NAME"].FillWeight = 200;
+                foreach ((string column, string header) in new[]
+                {
+                    ("TEACHER_NAME", "Teacher"), ("COURSE_NAME", "Course"),
+                    ("SECTION_NAME", "Section"), ("CLASS_CODE", "Class Code")
+                })
+                {
+                    if (listcodecontent.Columns.Contains(column))
+                    {
+                        listcodecontent.Columns[column]!.HeaderText = header;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -161,15 +174,13 @@ namespace School_Attendance_System
         private void generateCode()
         {
             string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            char[] code = new char[6];
+            for (int index = 0; index < code.Length; index++)
+            {
+                code[index] = letters[RandomNumberGenerator.GetInt32(letters.Length)];
+            }
 
-            string char1 = letters[random.Next(letters.Length)].ToString();
-            string char2 = letters[random.Next(letters.Length)].ToString();
-            string char3 = letters[random.Next(letters.Length)].ToString();
-            string char4 = letters[random.Next(letters.Length)].ToString();
-            string char5 = letters[random.Next(letters.Length)].ToString();
-            string char6 = letters[random.Next(letters.Length)].ToString();
-
-            classCode = $"{char1}{char2}{char3}{char4}{char5}{char6}";
+            classCode = new string(code);
         }
 
         private void codebtn_Click(object sender, EventArgs e)
@@ -189,46 +200,60 @@ namespace School_Attendance_System
             int courseID = Convert.ToInt32(coursecombo.SelectedValue);
             int sectionID = Convert.ToInt32(sectioncombo.SelectedValue);
 
-            MySqlConnection conn = new MySqlConnection(Connection);
-
             try
             {
+                using MySqlConnection conn = new MySqlConnection(Connection);
                 conn.Open();
 
-                bool isUnique = false;
-
-                while (!isUnique)
+                const string existingCodeQuery = @"
+                    SELECT CLASS_CODE FROM class_codes
+                    WHERE TEACHER_ID = @teacherID AND COURSE_ID = @courseID AND SECTION_ID = @sectionID;";
+                using (MySqlCommand existingCodeCommand = new MySqlCommand(existingCodeQuery, conn))
                 {
-                    generateCode();
-
-                    string checkQuery =
-                        "SELECT COUNT(*) FROM class_codes WHERE CLASS_CODE = @code";
-
-                    MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn);
-                    checkCmd.Parameters.AddWithValue("@code", classCode);
-
-                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
-
-                    if (count == 0)
+                    existingCodeCommand.Parameters.AddWithValue("@teacherID", TeacherID);
+                    existingCodeCommand.Parameters.AddWithValue("@courseID", courseID);
+                    existingCodeCommand.Parameters.AddWithValue("@sectionID", sectionID);
+                    object? existingCode = existingCodeCommand.ExecuteScalar();
+                    if (existingCode != null)
                     {
-                        isUnique = true;
+                        MessageBox.Show(
+                            "A class code already exists for this course and section.\n\nClass Code: " + existingCode,
+                            "Existing Class Code",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                        return;
                     }
                 }
 
-                string insertQuery = @"
-            INSERT INTO class_codes
-            (TEACHER_ID, COURSE_ID, SECTION_ID, CLASS_CODE)
-            VALUES
-            (@teacherID, @courseID, @sectionID, @classCode)";
+                const string codeExistsQuery = "SELECT COUNT(*) FROM class_codes WHERE CLASS_CODE = @code;";
+                bool codeIsAvailable = false;
+                for (int attempt = 0; attempt < 20; attempt++)
+                {
+                    generateCode();
+                    using MySqlCommand codeExistsCommand = new MySqlCommand(codeExistsQuery, conn);
+                    codeExistsCommand.Parameters.AddWithValue("@code", classCode);
+                    if (Convert.ToInt32(codeExistsCommand.ExecuteScalar()) == 0)
+                    {
+                        codeIsAvailable = true;
+                        break;
+                    }
+                }
 
-                MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn);
+                if (!codeIsAvailable)
+                {
+                    throw new InvalidOperationException("Could not generate a unique class code. Please try again.");
+                }
 
-                insertCmd.Parameters.AddWithValue("@teacherID", TeacherID);
-                insertCmd.Parameters.AddWithValue("@courseID", courseID);
-                insertCmd.Parameters.AddWithValue("@sectionID", sectionID);
-                insertCmd.Parameters.AddWithValue("@classCode", classCode);
-
-                insertCmd.ExecuteNonQuery();
+                const string insertQuery = @"
+                    INSERT INTO class_codes (TEACHER_ID, COURSE_ID, SECTION_ID, CLASS_CODE)
+                    VALUES (@teacherID, @courseID, @sectionID, @classCode);";
+                using MySqlCommand insertCommand = new MySqlCommand(insertQuery, conn);
+                insertCommand.Parameters.AddWithValue("@teacherID", TeacherID);
+                insertCommand.Parameters.AddWithValue("@courseID", courseID);
+                insertCommand.Parameters.AddWithValue("@sectionID", sectionID);
+                insertCommand.Parameters.AddWithValue("@classCode", classCode);
+                insertCommand.ExecuteNonQuery();
+                codelist();
 
                 MessageBox.Show(
                     "Class code generated successfully!\n\n" +
@@ -241,9 +266,70 @@ namespace School_Attendance_System
             {
                 MessageBox.Show("Failed to generate class code: " + ex.Message);
             }
-            finally
+        }
+
+        private void deletebtn_Click(object sender, EventArgs e)
+        {
+            if (listcodecontent.CurrentRow == null)
             {
-                conn.Dispose();
+                MessageBox.Show("Select a class code to remove.", "Class Code", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            int classCodeId = Convert.ToInt32(listcodecontent.CurrentRow.Cells["ID"].Value);
+            string classCode = listcodecontent.CurrentRow.Cells["CLASS_CODE"].Value?.ToString() ?? string.Empty;
+
+            DialogResult confirm = MessageBox.Show(
+                "Remove class code " + classCode + "?\n\nStudents enrolled with this code will be unenrolled and its attendance records will be deleted.",
+                "Remove Class Code",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
+            const string unenrollQuery = @"
+                UPDATE students
+                SET classcode = JSON_REMOVE(classcode, JSON_UNQUOTE(JSON_SEARCH(classcode, 'one', @code)))
+                WHERE JSON_CONTAINS(classcode, JSON_QUOTE(@code));";
+            const string deleteQuery = "DELETE FROM class_codes WHERE ID = @id AND TEACHER_ID = @teacherID;";
+
+            try
+            {
+                using MySqlConnection conn = new MySqlConnection(Connection);
+                conn.Open();
+                using MySqlTransaction transaction = conn.BeginTransaction();
+
+                using (MySqlCommand unenroll = new MySqlCommand(unenrollQuery, conn, transaction))
+                {
+                    unenroll.Parameters.AddWithValue("@code", classCode);
+                    unenroll.ExecuteNonQuery();
+                }
+
+                int affected;
+                using (MySqlCommand delete = new MySqlCommand(deleteQuery, conn, transaction))
+                {
+                    delete.Parameters.AddWithValue("@id", classCodeId);
+                    delete.Parameters.AddWithValue("@teacherID", TeacherID);
+                    affected = delete.ExecuteNonQuery();
+                }
+
+                if (affected == 0)
+                {
+                    transaction.Rollback();
+                    codelist();
+                    MessageBox.Show("That class code no longer belongs to you.", "Remove Class Code", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                transaction.Commit();
+                codelist();
+                MessageBox.Show("Class code " + classCode + " removed.", "Remove Class Code", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to remove class code: " + ex.Message);
             }
         }
     }

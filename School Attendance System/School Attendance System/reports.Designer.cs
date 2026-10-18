@@ -1,6 +1,6 @@
 ﻿namespace School_Attendance_System
 {
-    partial class reports
+    partial class Reports
     {
         /// <summary> 
         /// Required designer variable.
@@ -40,12 +40,10 @@
             label4 = new AntdUI.Label();
             label5 = new AntdUI.Label();
             aloneComboBox2 = new ReaLTaiizor.Controls.AloneComboBox();
-            btnDashboard = new AntdUI.ButtonShadow();
+            label6 = new AntdUI.Label();
+            studentcombo = new ReaLTaiizor.Controls.AloneComboBox();
+            exportbtn = new AntdUI.Button();
             recentAttendanceGrid = new ReaLTaiizor.Controls.PoisonDataGridView();
-            colNo = new DataGridViewTextBoxColumn();
-            colStudentName = new DataGridViewTextBoxColumn();
-            colSection = new DataGridViewTextBoxColumn();
-            colStatus = new DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)recentAttendanceGrid).BeginInit();
             SuspendLayout();
             // 
@@ -60,7 +58,7 @@
             // 
             // label3
             // 
-            label3.Location = new Point(230, 54);
+            label3.Location = new Point(330, 54);
             label3.Name = "label3";
             label3.Size = new Size(93, 23);
             label3.TabIndex = 21;
@@ -83,7 +81,7 @@
             aloneComboBox1.ItemHeight = 20;
             aloneComboBox1.Location = new Point(17, 83);
             aloneComboBox1.Name = "aloneComboBox1";
-            aloneComboBox1.Size = new Size(186, 26);
+            aloneComboBox1.Size = new Size(293, 26);
             aloneComboBox1.TabIndex = 22;
             // 
             // poisonDateTime1
@@ -91,7 +89,7 @@
             poisonDateTime1.CustomFormat = "MMMM dd, yyyy";
             poisonDateTime1.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Small;
             poisonDateTime1.Format = DateTimePickerFormat.Custom;
-            poisonDateTime1.Location = new Point(437, 83);
+            poisonDateTime1.Location = new Point(550, 83);
             poisonDateTime1.MinimumSize = new Size(0, 25);
             poisonDateTime1.Name = "poisonDateTime1";
             poisonDateTime1.Size = new Size(118, 26);
@@ -103,7 +101,7 @@
             poisonDateTime2.CustomFormat = "MMMM dd, yyyy";
             poisonDateTime2.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Small;
             poisonDateTime2.Format = DateTimePickerFormat.Custom;
-            poisonDateTime2.Location = new Point(582, 83);
+            poisonDateTime2.Location = new Point(695, 83);
             poisonDateTime2.MinimumSize = new Size(0, 25);
             poisonDateTime2.Name = "poisonDateTime2";
             poisonDateTime2.Size = new Size(118, 26);
@@ -112,7 +110,7 @@
             // 
             // label4
             // 
-            label4.Location = new Point(437, 54);
+            label4.Location = new Point(550, 54);
             label4.Name = "label4";
             label4.Size = new Size(93, 23);
             label4.TabIndex = 25;
@@ -120,7 +118,7 @@
             // 
             // label5
             // 
-            label5.Location = new Point(582, 54);
+            label5.Location = new Point(695, 54);
             label5.Name = "label5";
             label5.Size = new Size(93, 23);
             label5.TabIndex = 26;
@@ -133,18 +131,10 @@
             aloneComboBox2.EnabledCalc = true;
             aloneComboBox2.FormattingEnabled = true;
             aloneComboBox2.ItemHeight = 20;
-            aloneComboBox2.Location = new Point(230, 83);
+            aloneComboBox2.Location = new Point(330, 83);
             aloneComboBox2.Name = "aloneComboBox2";
             aloneComboBox2.Size = new Size(186, 26);
             aloneComboBox2.TabIndex = 28;
-            // 
-            // btnDashboard
-            // 
-            btnDashboard.Location = new Point(719, 67);
-            btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(194, 42);
-            btnDashboard.TabIndex = 29;
-            btnDashboard.Text = "Create Class Code";
             // 
             // recentAttendanceGrid
             // 
@@ -166,7 +156,6 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             recentAttendanceGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             recentAttendanceGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            recentAttendanceGrid.Columns.AddRange(new DataGridViewColumn[] { colNo, colStudentName, colSection, colStatus });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -193,44 +182,51 @@
             recentAttendanceGrid.RowHeadersVisible = false;
             recentAttendanceGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             recentAttendanceGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            recentAttendanceGrid.Size = new Size(892, 450);
+            recentAttendanceGrid.Size = new Size(1126, 620);
             recentAttendanceGrid.TabIndex = 30;
+            recentAttendanceGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             recentAttendanceGrid.UseCustomBackColor = true;
             recentAttendanceGrid.UseCustomForeColor = true;
             recentAttendanceGrid.UseStyleColors = true;
             // 
-            // colNo
+            // label6
             // 
-            colNo.HeaderText = "#";
-            colNo.Name = "colNo";
-            colNo.ReadOnly = true;
+            label6.Location = new Point(830, 54);
+            label6.Name = "label6";
+            label6.Size = new Size(93, 23);
+            label6.TabIndex = 31;
+            label6.Text = "Student";
             // 
-            // colStudentName
+            // studentcombo
             // 
-            colStudentName.HeaderText = "Student Name";
-            colStudentName.Name = "colStudentName";
-            colStudentName.ReadOnly = true;
+            studentcombo.DrawMode = DrawMode.OwnerDrawFixed;
+            studentcombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            studentcombo.EnabledCalc = true;
+            studentcombo.FormattingEnabled = true;
+            studentcombo.ItemHeight = 20;
+            studentcombo.Location = new Point(830, 83);
+            studentcombo.Name = "studentcombo";
+            studentcombo.Size = new Size(180, 26);
+            studentcombo.TabIndex = 32;
             // 
-            // colSection
+            // exportbtn
             // 
-            colSection.HeaderText = "Grade / Section";
-            colSection.Name = "colSection";
-            colSection.ReadOnly = true;
+            exportbtn.Location = new Point(1060, 72);
+            exportbtn.Name = "exportbtn";
+            exportbtn.Size = new Size(83, 42);
+            exportbtn.TabIndex = 20;
+            exportbtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            exportbtn.Text = "Export";
+            exportbtn.Click += exportbtn_Click;
             // 
-            // colStatus
-            // 
-            colStatus.HeaderText = "Status";
-            colStatus.Name = "colStatus";
-            colStatus.ReadOnly = true;
-            colStatus.Resizable = DataGridViewTriState.True;
-            colStatus.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // reports
+            // Reports
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(exportbtn);
+            Controls.Add(studentcombo);
+            Controls.Add(label6);
             Controls.Add(recentAttendanceGrid);
-            Controls.Add(btnDashboard);
             Controls.Add(aloneComboBox2);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -240,8 +236,8 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Name = "reports";
-            Size = new Size(926, 586);
+            Name = "Reports";
+            Size = new Size(1160, 760);
             ((System.ComponentModel.ISupportInitialize)recentAttendanceGrid).EndInit();
             ResumeLayout(false);
         }
@@ -257,11 +253,9 @@
         private AntdUI.Label label4;
         private AntdUI.Label label5;
         private ReaLTaiizor.Controls.AloneComboBox aloneComboBox2;
-        private AntdUI.ButtonShadow btnDashboard;
+        private AntdUI.Button exportbtn;
         private ReaLTaiizor.Controls.PoisonDataGridView recentAttendanceGrid;
-        private DataGridViewTextBoxColumn colNo;
-        private DataGridViewTextBoxColumn colStudentName;
-        private DataGridViewTextBoxColumn colSection;
-        private DataGridViewComboBoxColumn colStatus;
+        private AntdUI.Label label6;
+        private ReaLTaiizor.Controls.AloneComboBox studentcombo;
     }
 }

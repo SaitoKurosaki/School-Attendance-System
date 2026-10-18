@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.Win32.SafeHandles;
 using MySql.Data.MySqlClient;
 
 
@@ -15,31 +15,20 @@ namespace School_Attendance_System
 {
     public partial class Login : Form
     {
-        public string MysqlConnection = "server=localhost;database=school;uid=school;password=Administrator";
-        public string email;
-        public string password;
+        private const string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
+        public string email = string.Empty;
+        public string password = string.Empty;
         public Login()
         {
             InitializeComponent();
-            CenterToScreen();
-
-
+            AuthWindowPlacement.Apply(this);
         }
 
 
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void mainform_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            AuthWindowPlacement.Remember(this);
             this.Hide();
             SignUp SignUp = new SignUp();
             SignUp.Show();
@@ -48,9 +37,23 @@ namespace School_Attendance_System
 
 
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        internal static void ShowLogin()
         {
+            Login login = Application.OpenForms.OfType<Login>().FirstOrDefault() ?? new Login();
+            login.ResetForNewSignIn();
+            login.Show();
+            login.BringToFront();
+            login.Activate();
+        }
 
+        private void ResetForNewSignIn()
+        {
+            email = string.Empty;
+            password = string.Empty;
+            emailbox.Text = string.Empty;
+            passwordbox.Text = string.Empty;
+            showpass.Checked = false;
+            passwordbox.PasswordChar = '*';
         }
 
         private void emailbox_TextChanged_1(object sender, EventArgs e)
@@ -65,63 +68,74 @@ namespace School_Attendance_System
 
         private void loginbtn_Click(object sender, EventArgs e)
         {
+            email = emailbox.Text.Trim();
+            password = passwordbox.Text;
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Enter both your email and password.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
             using (MySqlConnection conn = new MySqlConnection(MysqlConnection))
             {
-
                 try
                 {
                     conn.Open();
-                    string querycmd = $"SELECT email FROM teachers WHERE email = '{email}'";
-                    MySqlCommand cmd = new MySqlCommand(querycmd, conn);
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    const string query = @"
+                        SELECT t.ID, t.password, r.ROLE_NAME
+                        FROM teachers t INNER JOIN roles r ON r.ID = t.ROLE_ID
+                        WHERE t.email = @email LIMIT 1;";
+                    using MySqlCommand command = new MySqlCommand(query, conn);
+                    command.Parameters.AddWithValue("@email", email);
 
-                    if (reader.Read())
+                    int teacherId;
+                    string storedHash;
+                    string role;
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        reader.Close();
-
-                        string emailandpass = "SELECT ID, email FROM teachers WHERE email = @email AND password = @password";
-
-                        cmd = new MySqlCommand(emailandpass, conn);
-                        cmd.Parameters.AddWithValue("@email", email);
-                        cmd.Parameters.AddWithValue("@password", password);
-
-                        reader = cmd.ExecuteReader();
-
-                        if (reader.Read())
+                        if (!reader.Read())
                         {
-                            int teacherID = Convert.ToInt32(reader["ID"]);
-
-                            reader.Close();
-
-                            MessageBox.Show("Success");
-
-                            MainDashboard mainDashboard = new MainDashboard(teacherID);
-                            mainDashboard.Show();
-
-                            this.Hide();
+                            MessageBox.Show("Invalid email or password.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
                         }
-                        else
-                        {
-                            reader.Close();
-                            MessageBox.Show("Wrong password");
-                        }
+
+                        teacherId = reader.GetInt32(0);
+                        storedHash = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                        role = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
                     }
-                    else
+
+                    if (!VerifyPassword(password, storedHash))
                     {
-                        MessageBox.Show("Email not found");
+                        MessageBox.Show("Invalid email or password.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
-                }
 
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    MainDashboard mainDashboard = new MainDashboard(teacherId, role, email);
+                    mainDashboard.Show();
+                    Hide();
                 }
-                finally
+                catch (MySqlException)
                 {
-                    conn.Close();
+                    MessageBox.Show("Unable to connect to the school database. Please try again later.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
 
-                }
+        private static bool VerifyPassword(string password, string storedHash)
+        {
+            if (string.IsNullOrEmpty(storedHash))
+            {
+                return false;
+            }
+
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(password, storedHash);
+            }
+            catch (BCrypt.Net.SaltParseException)
+            {
+                
+                return false;
             }
         }
 

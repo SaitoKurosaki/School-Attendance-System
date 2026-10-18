@@ -173,9 +173,9 @@
             // 
             confirmpassbox.Location = new Point(54, 470);
             confirmpassbox.Name = "confirmpassbox";
+            confirmpassbox.PasswordChar = '*';
             confirmpassbox.Size = new Size(374, 47);
             confirmpassbox.TabIndex = 33;
-            confirmpassbox.TextChanged += confirmpassbox_TextChanged;
             // 
             // fullnamebox
             // 
@@ -183,7 +183,6 @@
             fullnamebox.Name = "fullnamebox";
             fullnamebox.Size = new Size(374, 47);
             fullnamebox.TabIndex = 34;
-            fullnamebox.TextChanged += input2_TextChanged;
             // 
             // emailbox
             // 
@@ -191,17 +190,16 @@
             emailbox.Name = "emailbox";
             emailbox.Size = new Size(374, 47);
             emailbox.TabIndex = 35;
-            emailbox.TextChanged += emailbox_TextChanged;
             // 
             // passwordbox
             // 
             passwordbox.Location = new Point(54, 395);
             passwordbox.Name = "passwordbox";
+            passwordbox.PasswordChar = '*';
             passwordbox.Size = new Size(374, 47);
             passwordbox.TabIndex = 36;
-            passwordbox.TextChanged += passwordbox_TextChanged_1;
             // 
-            // SignUpform
+            // SignUp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -223,7 +221,7 @@
             Controls.Add(label6);
             Controls.Add(label4);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "SignUpform";
+            Name = "SignUp";
             Text = "School Attendance System - Sign Up";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

@@ -171,7 +171,6 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Login";
             Text = "School Attendance System - Login";
-            Load += mainform_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

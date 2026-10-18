@@ -1,208 +1,125 @@
-﻿using System;
+using AntdUI;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml.XPath;
+
 
 namespace School_Attendance_System
 {
-    public partial class Dashboard : Form
+    public partial class Dashboard : UserControl
     {
-        private Button currentButton = null;
-        private bool sidebarCollapse = false;
+        private const string MysqlConnection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
+        private readonly int teacherId;
 
-        private void OpenForm(Form form)
+        public Dashboard(int teacherId)
         {
-            Content.Controls.Clear();
-
-            form.TopLevel = false;
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.Dock = DockStyle.Fill;
-
-            Content.Controls.Add(form);
-            form.Show();
-        }
-
-        public Dashboard()
-        {
+            this.teacherId = teacherId;
             InitializeComponent();
-            sidebar.BackColor = Color.FromArgb(243, 246, 250);
-            SelectButton(btnDashboard);
-            btnDashboard.Image = new Bitmap(btnDashboard.Image!, new Size(50, 50));
-            btnDashboard.ImageAlign = ContentAlignment.MiddleLeft;
-            btnStudents.Image = new Bitmap(btnStudents.Image!, new Size(50, 50));
-            btnStudents.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAttendance.Image = new Bitmap(btnAttendance.Image!, new Size(50, 50));
-            btnAttendance.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLogout.Image = new Bitmap(btnLogout.Image!, new Size(50, 50));
-            btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
-
-            btnDashboard.BackColor = Color.FromArgb(243, 246, 250);
-            btnDashboard.ForeColor = Color.FromArgb(38, 50, 56);
-            btnStudents.BackColor = Color.FromArgb(243, 246, 250);
-            btnStudents.ForeColor = Color.FromArgb(38, 50, 56);
-            btnAttendance.BackColor = Color.FromArgb(243, 246, 250);
-            btnAttendance.ForeColor = Color.FromArgb(38, 50, 56);
-            btnCollapse.Image = new Bitmap(btnCollapse.Image!, new Size(50, 50));
-
-            DSBHeader.BackColor = Color.FromArgb(23, 37, 84);
-            Content.BackColor = Color.FromArgb(244, 247, 251);
+            AppTheme.Grid(recentAttendanceGrid);
+            colStudentName.FillWeight = 170;
+            colCourse.FillWeight = 80;
+            colSection.FillWeight = 60;
+            colStatus.FillWeight = 70;
+            colTime.FillWeight = 80;
+            colRemarks.FillWeight = 100;
+            LoadDashboard();
         }
-        private void SelectButton(Button btn)
-        {
 
-            if (currentButton != null)
+        internal static string Abbreviate(string courseName)
+        {
+            string[] skip = { "of", "in", "and", "the" };
+            string initials = string.Concat(courseName.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Where(word => !skip.Contains(word.ToLowerInvariant()))
+                .Select(word => char.ToUpperInvariant(word[0])));
+            return initials.Length > 1 ? initials : courseName;
+        }
+
+       
+        public void LoadDashboard()
+        {
+            
+            const string totalsQuery = @"
+                SELECT
+                    COUNT(DISTINCT CONCAT(s.id, '-', cc.ID)) AS TotalStudents,
+                    COUNT(DISTINCT CASE WHEN ar.STATUS = 'Present' THEN CONCAT(s.id, '-', cc.ID) END) AS PresentToday,
+                    COUNT(DISTINCT CASE WHEN ar.STATUS = 'Late' THEN CONCAT(s.id, '-', cc.ID) END) AS LateToday,
+                    COUNT(DISTINCT CASE WHEN ar.STATUS = 'Absent' THEN CONCAT(s.id, '-', cc.ID) END) AS AbsentToday
+                FROM students s
+                INNER JOIN class_codes cc
+                    ON JSON_CONTAINS(s.classcode, JSON_QUOTE(cc.CLASS_CODE))
+                LEFT JOIN attendance_records ar
+                    ON ar.STUDENT_ID = s.id
+                    AND ar.CLASS_CODE_ID = cc.ID
+                    AND ar.ATTENDANCE_DATE = CURDATE()
+                WHERE cc.TEACHER_ID = @TeacherID;";
+
+            const string recentAttendanceQuery = @"
+                SELECT
+                    s.full_name AS StudentName,
+                    c.COURSE_NAME AS CourseName,
+                    sec.SECTION_NAME AS SectionName,
+                    ar.STATUS AS AttendanceStatus,
+                    DATE_FORMAT(COALESCE(ar.TIME_IN, ar.CREATED_AT), '%h:%i %p') AS AttendanceTime,
+                    ar.REMARKS AS Remarks
+                FROM attendance_records ar
+                INNER JOIN students s ON s.id = ar.STUDENT_ID
+                INNER JOIN class_codes cc ON cc.ID = ar.CLASS_CODE_ID
+                INNER JOIN course c ON c.ID = cc.COURSE_ID
+                INNER JOIN section sec ON sec.ID = cc.SECTION_ID
+                WHERE cc.TEACHER_ID = @TeacherID
+                    AND ar.ATTENDANCE_DATE = CURDATE()
+                ORDER BY COALESCE(ar.TIME_IN, ar.CREATED_AT) DESC, ar.ID DESC;";
+
+            try
             {
-                currentButton.BackColor = Color.FromArgb(243, 246, 250);
-                currentButton.ForeColor = Color.FromArgb(38, 50, 56);
+                using MySqlConnection connection = new MySqlConnection(MysqlConnection);
+                connection.Open();
+
+                using (MySqlCommand command = new MySqlCommand(totalsQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@TeacherID", teacherId);
+
+                    using MySqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        label7.Text = reader["TotalStudents"].ToString();
+                        label5.Text = reader["PresentToday"].ToString();
+                        label4.Text = reader["LateToday"].ToString();
+                        label6.Text = reader["AbsentToday"].ToString();
+                    }
+                }
+
+                using MySqlCommand recentCommand = new MySqlCommand(recentAttendanceQuery, connection);
+                recentCommand.Parameters.AddWithValue("@TeacherID", teacherId);
+
+                using (MySqlDataReader recentReader = recentCommand.ExecuteReader())
+                {
+                    recentAttendanceGrid.Rows.Clear();
+                    while (recentReader.Read())
+                    {
+                       
+                        recentAttendanceGrid.Rows.Add(
+                            recentReader["StudentName"],
+                            Abbreviate(recentReader["CourseName"].ToString() ?? string.Empty),
+                            recentReader["SectionName"],
+                            recentReader["AttendanceStatus"],
+                            recentReader["AttendanceTime"],
+                            recentReader["Remarks"]);
+                    }
+                }
             }
-
-            currentButton = btn;
-            currentButton.BackColor = Color.FromArgb(210, 231, 255);
-            currentButton.ForeColor = Color.FromArgb(0, 74, 143);
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Dashboard_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            SelectButton(btnDashboard);
-        }
-
-        private void btnDashboard_MouseEnter(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-
-            if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(227, 240, 255);
-            btn.ForeColor = Color.FromArgb(0, 87, 168);
-        }
-
-        private void btnDashboard_MouseLeave(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-
-            if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(243, 246, 250);
-            btn.ForeColor = Color.FromArgb(38, 50, 56);
-        }
-
-        private void btnStudents_MouseEnter(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-
-            if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(227, 240, 255);
-            btn.ForeColor = Color.FromArgb(0, 87, 168);
-        }
-
-        private void btnStudents_MouseLeave(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-
-            if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(243, 246, 250);
-            btn.ForeColor = Color.FromArgb(38, 50, 56);
-        }
-
-        private void btnAttendance_Click(object sender, EventArgs e)
-        {
-            OpenForm(new AttendanceForm());
-            SelectButton(btnAttendance);
-        }
-
-        private void btnAttendance_MouseEnter(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-
-            if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(227, 240, 255);
-            btn.ForeColor = Color.FromArgb(0, 87, 168);
-        }
-
-        private void btnAttendance_MouseLeave(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-
-            if (btn != currentButton)
-                btn.BackColor = Color.FromArgb(243, 246, 250);
-            btn.ForeColor = Color.FromArgb(38, 50, 56);
-        }
-
-        private void btnStudents_Click(object sender, EventArgs e)
-        {
-            OpenForm(new Students());
-            SelectButton(btnStudents);
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (btnCollapse.Image != null)
+            catch (MySqlException ex)
             {
-                Bitmap flipped = new Bitmap(btnCollapse.Image);
-                flipped.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                btnCollapse.Image = flipped;
-            }
-            if (sidebarCollapse)
-            {
-                sidebar.Width = 214;
-                btnAttendance.Text = "Attendance";
-                btnStudents.Text = "Students";
-                btnDashboard.Text = "Dashboard";
-                btnLogout.Text = "Logout";
-                btnCollapse.Location = new Point(166, 6);
-                sidebarCollapse = false;
-                Content.Width = 871;
-                Content.Location = new Point(213, 53);
-            }
-            else
-            {
-                sidebar.Width = 65;
-                btnAttendance.Text = "";
-                btnStudents.Text = "";
-                btnDashboard.Text = "";
-                btnLogout.Text = "";
-                btnCollapse.Location = new Point(15,6);
-                sidebarCollapse = true;
-                Content.Width = 1020;
-                Content.Location = new Point(64, 53);
+                MessageBox.Show(
+                    "Unable to load dashboard data: " + ex.Message,
+                    "Dashboard",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
     }

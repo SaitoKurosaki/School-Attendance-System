@@ -4,107 +4,82 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Net;
-using System.Net.Mail;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 namespace School_Attendance_System
 {
 
-    public partial class verification : Form
+    public partial class Verification : Form
     {
-        public string Connection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
-        public string otp;
-        public string firstname;
-        public string lastname;
-        public string email;
-        public string password;
+        private const string Connection = "server=165.140.202.88;database=school;uid=school;password=Administrator";
+        public string otp = string.Empty;
+        public string firstname = string.Empty;
+        public string lastname = string.Empty;
+        public string email = string.Empty;
+        public string password = string.Empty;
+        private DateTime otpExpiresAt;
 
-        public verification(string firstname, string lastname, string email, string password)
+       
+        private volatile string? mailError;
+
+        public Verification(string firstname, string lastname, string email, string password)
         {
             InitializeComponent();
+            AuthWindowPlacement.Apply(this);
             this.firstname = firstname;
             this.lastname = lastname;
             this.email = email;
             this.password = password;
 
+            Shown += (_, _) => ReportMailError();
             generateotp();
             smtpgmail();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void verification_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void emailbox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlConnection conn = new MySqlConnection(Connection);
-            MySqlCommand cmd = new MySqlCommand();
-
             try
             {
-                conn.Open();
-
-                if (verificationbox.Text == otp)
+                if (DateTime.UtcNow > otpExpiresAt)
                 {
-
-                    string querycmd = $"INSERT INTO teachers(first_name,last_name,email,password,register_date) VALUES ('{firstname}','{lastname}','{email}','{password}',now())";
-
-                    cmd = new MySqlCommand(querycmd, conn);
-
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Registration successful");
-                    Login mainform = new Login();
-                    this.Hide();
-                    mainform.Show();
-
+                    MessageBox.Show("This verification code has expired. Request a new code and try again.", "Verification", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else
+                if (!string.Equals(verificationbox.Text.Trim(), otp, StringComparison.Ordinal))
                 {
                     MessageBox.Show("The OTP you entered is incorrect. Please try again.", "Invalid OTP", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
+                using MySqlConnection conn = new MySqlConnection(Connection);
+                conn.Open();
+                const string query = @"INSERT INTO teachers(first_name, last_name, email, password, register_date)
+                    VALUES (@firstName, @lastName, @email, @password, NOW());";
+                using MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@firstName", firstname);
+                cmd.Parameters.AddWithValue("@lastName", lastname);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@password", BCrypt.Net.BCrypt.HashPassword(password));
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Registration successful.", "Verification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AuthWindowPlacement.Remember(this);
+                Hide();
+                Login.ShowLogin();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void generateotp()
         {
-            Random random = new Random();
-            string num1 = random.Next(1, 9).ToString();
-            string num2 = random.Next(1, 9).ToString(); ;
-            string num3 = random.Next(1, 9).ToString(); ;
-            string num4 = random.Next(1, 9).ToString(); ;
-            string num5 = random.Next(1, 9).ToString(); ;
-            string num6 = random.Next(1, 9).ToString(); ;
-
-            otp = $"{num1}{num2}{num3}{num4}{num5}{num6}";
+            otp = RandomNumberGenerator.GetInt32(100000, 1000000).ToString();
+            otpExpiresAt = DateTime.UtcNow.AddMinutes(10);
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -121,14 +96,7 @@ namespace School_Attendance_System
             mail.To.Add(email);
             mail.Subject = "Email Verification";
             mail.IsBodyHtml = true;
-            
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-            smtp.Credentials = new NetworkCredential(
-                "saitoxworld@gmail.com",
-                "rhbxxnbfhvrftxik"
 
-                );
-            smtp.EnableSsl = true;
             mail.Body = $@"<!doctype html>
 <html>
   <head>
@@ -267,19 +235,43 @@ namespace School_Attendance_System
   </body>
 </html>
 ";
-            try
+           
+            _ = Task.Run(() =>
             {
-                smtp.Send(mail);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+                try
+                {
+                    using SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
+                    {
+                        Credentials = new NetworkCredential("saitoxworld@gmail.com", "rhbxxnbfhvrftxik"),
+                        EnableSsl = true
+                    };
+                    smtp.Send(mail);
+                }
+                catch (Exception ex)
+                {
+                    mailError = ex.Message;
+                    if (IsHandleCreated) BeginInvoke(new Action(ReportMailError));
+                }
+                finally
+                {
+                    mail.Dispose();
+                }
+            });
+        }
+
+        private void ReportMailError()
+        {
+            string? error = mailError;
+            if (error == null) return;
+            mailError = null;
+            MessageBox.Show(this, "The verification email could not be sent: " + error, "Verification",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             SignUp signupform = new SignUp();
+            AuthWindowPlacement.Remember(this);
             this.Hide();
             signupform.Show();
 

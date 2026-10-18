@@ -1,6 +1,6 @@
 ﻿namespace School_Attendance_System
 {
-    partial class classcode
+    partial class ClassCode
     {
         /// <summary> 
         /// Required designer variable.
@@ -34,7 +34,8 @@
             label1 = new AntdUI.Label();
             coursecombo = new ReaLTaiizor.Controls.AloneComboBox();
             sectioncombo = new ReaLTaiizor.Controls.AloneComboBox();
-            codebtn = new AntdUI.ButtonShadow();
+            codebtn = new AntdUI.Button();
+            deletebtn = new AntdUI.Button();
             label2 = new AntdUI.Label();
             label3 = new AntdUI.Label();
             listcodecontent = new ReaLTaiizor.Controls.PoisonDataGridView();
@@ -76,12 +77,23 @@
             // 
             // codebtn
             // 
-            codebtn.Location = new Point(692, 63);
+            codebtn.Location = new Point(926, 21);
             codebtn.Name = "codebtn";
             codebtn.Size = new Size(217, 42);
             codebtn.TabIndex = 15;
+            codebtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             codebtn.Text = "Create Class Code";
             codebtn.Click += codebtn_Click;
+            // 
+            // deletebtn
+            // 
+            deletebtn.Location = new Point(926, 69);
+            deletebtn.Name = "deletebtn";
+            deletebtn.Size = new Size(217, 42);
+            deletebtn.TabIndex = 18;
+            deletebtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            deletebtn.Text = "Remove Class Code";
+            deletebtn.Click += deletebtn_Click;
             // 
             // label2
             // 
@@ -130,7 +142,7 @@
             listcodecontent.EnableHeadersVisualStyles = false;
             listcodecontent.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             listcodecontent.GridColor = Color.FromArgb(255, 255, 255);
-            listcodecontent.Location = new Point(17, 124);
+            listcodecontent.Location = new Point(17, 117);
             listcodecontent.Name = "listcodecontent";
             listcodecontent.ReadOnly = true;
             listcodecontent.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -145,26 +157,27 @@
             listcodecontent.RowHeadersVisible = false;
             listcodecontent.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             listcodecontent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            listcodecontent.Size = new Size(892, 450);
+            listcodecontent.Size = new Size(1126, 627);
             listcodecontent.TabIndex = 12;
+            listcodecontent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listcodecontent.UseCustomBackColor = true;
             listcodecontent.UseCustomForeColor = true;
             listcodecontent.UseStyleColors = true;
-            listcodecontent.CellContentClick += recentAttendanceGrid_CellContentClick;
             // 
-            // classcode
+            // ClassCode
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(codebtn);
+            Controls.Add(deletebtn);
             Controls.Add(sectioncombo);
             Controls.Add(coursecombo);
             Controls.Add(listcodecontent);
             Controls.Add(label1);
-            Name = "classcode";
-            Size = new Size(926, 586);
+            Name = "ClassCode";
+            Size = new Size(1160, 760);
             ((System.ComponentModel.ISupportInitialize)listcodecontent).EndInit();
             ResumeLayout(false);
         }
@@ -174,7 +187,8 @@
         private AntdUI.Label label1;
         private ReaLTaiizor.Controls.AloneComboBox coursecombo;
         private ReaLTaiizor.Controls.AloneComboBox sectioncombo;
-        private AntdUI.ButtonShadow codebtn;
+        private AntdUI.Button codebtn;
+        private AntdUI.Button deletebtn;
         private AntdUI.Label label2;
         private AntdUI.Label label3;
         private ReaLTaiizor.Controls.PoisonDataGridView listcodecontent;
