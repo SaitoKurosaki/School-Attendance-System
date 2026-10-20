@@ -211,9 +211,19 @@ namespace School_Attendance_System
         /// </summary>
         private static void TidyColumns(DataGridView grid)
         {
+            int visibleColumnCount = 0;
+            foreach (DataGridViewColumn column in grid.Columns)
+                if (column.Visible) visibleColumnCount++;
+
+            // Keep short read-only lists full-width, but give each visible column the
+            // same share so one column cannot create a disproportionate gap.
+            bool evenlySpaced = grid.ReadOnly && visibleColumnCount <= 8;
+
             foreach (DataGridViewColumn column in grid.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                if (evenlySpaced && column.Visible) column.FillWeight = 100;
+
                 if (column is not DataGridViewCheckBoxColumn && !IsNumeric(column)) continue;
                 // Counts and ticks read as floating left of their words unless they share the header's centre.
                 column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;

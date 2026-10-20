@@ -77,33 +77,82 @@ namespace School_Attendance_System
 
         private void LoadCourses()
         {
-            const string query = "SELECT ID, COURSE_NAME FROM course WHERE IS_ARCHIVED = 0 ORDER BY COURSE_NAME;";
-            LoadComboBox(coursecombo, query);
+            const string query = @"
+                SELECT DISTINCT c.ID, c.COURSE_NAME
+                FROM course c
+                INNER JOIN class_codes cc ON cc.COURSE_ID = c.ID AND cc.TEACHER_ID = @TeacherID
+                INNER JOIN section sec ON sec.ID = cc.SECTION_ID
+                    AND sec.IS_ARCHIVED = 0 AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                WHERE c.IS_ARCHIVED = 0
+                ORDER BY c.COURSE_NAME;";
+            LoadComboBox(coursecombo, query, null, ("@TeacherID", teacherId));
         }
 
         private void LoadSections()
         {
-            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year) ||
+            if (!AppTheme.TryGetIntValue(coursecombo.SelectedValue, out int courseId) ||
+                !AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year) ||
                 !AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int semester))
             {
                 sectioncombo.DataSource = null;
                 return;
             }
-            const string query = "SELECT ID, SECTION_NAME FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' AND YEAR_LEVEL = @year AND SEMESTER = @semester ORDER BY SECTION_NAME;";
-            LoadComboBox(sectioncombo, query, ("@year", year), ("@semester", semester));
+            const string query = @"
+                SELECT DISTINCT sec.ID, sec.SECTION_NAME
+                FROM section sec
+                INNER JOIN class_codes cc ON cc.SECTION_ID = sec.ID
+                    AND cc.TEACHER_ID = @TeacherID AND cc.COURSE_ID = @CourseID
+                WHERE sec.IS_ARCHIVED = 0 AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                    AND sec.YEAR_LEVEL = @Year AND sec.SEMESTER = @Semester
+                ORDER BY sec.SECTION_NAME;";
+            LoadComboBox(sectioncombo, query, "SECTION_NAME",
+                ("@TeacherID", teacherId), ("@CourseID", courseId), ("@Year", year), ("@Semester", semester));
         }
 
         private void LoadYears()
         {
-            LoadComboBox(yearcombo, "SELECT DISTINCT CAST(YEAR_LEVEL AS SIGNED) AS ID, CONCAT('Year ', YEAR_LEVEL) AS LABEL FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY ID;", "LABEL");
+            if (!AppTheme.TryGetIntValue(coursecombo.SelectedValue, out int courseId))
+            {
+                yearcombo.DataSource = null;
+                semestercombo.DataSource = null;
+                sectioncombo.DataSource = null;
+                return;
+            }
+
+            const string query = @"
+                SELECT DISTINCT CAST(sec.YEAR_LEVEL AS SIGNED) AS ID,
+                    CONCAT('Year ', sec.YEAR_LEVEL) AS LABEL
+                FROM section sec
+                INNER JOIN class_codes cc ON cc.SECTION_ID = sec.ID
+                    AND cc.TEACHER_ID = @TeacherID AND cc.COURSE_ID = @CourseID
+                WHERE sec.IS_ARCHIVED = 0 AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                ORDER BY ID;";
+            LoadComboBox(yearcombo, query, "LABEL", ("@TeacherID", teacherId), ("@CourseID", courseId));
             semestercombo.DataSource = null;
             sectioncombo.DataSource = null;
         }
 
         private void LoadSemesters()
         {
-            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year)) { semestercombo.DataSource = null; return; }
-            LoadComboBox(semestercombo, "SELECT DISTINCT CAST(SEMESTER AS SIGNED) AS ID, CONCAT('Semester ', SEMESTER) AS LABEL FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' AND YEAR_LEVEL = @year ORDER BY ID;", "LABEL", ("@year", year));
+            if (!AppTheme.TryGetIntValue(coursecombo.SelectedValue, out int courseId) ||
+                !AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year))
+            {
+                semestercombo.DataSource = null;
+                sectioncombo.DataSource = null;
+                return;
+            }
+
+            const string query = @"
+                SELECT DISTINCT CAST(sec.SEMESTER AS SIGNED) AS ID,
+                    CONCAT('Semester ', sec.SEMESTER) AS LABEL
+                FROM section sec
+                INNER JOIN class_codes cc ON cc.SECTION_ID = sec.ID
+                    AND cc.TEACHER_ID = @TeacherID AND cc.COURSE_ID = @CourseID
+                WHERE sec.IS_ARCHIVED = 0 AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                    AND sec.YEAR_LEVEL = @Year
+                ORDER BY ID;";
+            LoadComboBox(semestercombo, query, "LABEL",
+                ("@TeacherID", teacherId), ("@CourseID", courseId), ("@Year", year));
             sectioncombo.DataSource = null;
         }
 
@@ -147,7 +196,9 @@ namespace School_Attendance_System
             }
             ClearAttendanceGrid();
             selectedClassCodeId = 0;
-            lastCourseId = coursecombo.SelectedValue as int?;
+            lastCourseId = AppTheme.TryGetIntValue(coursecombo.SelectedValue, out int selectedCourseId)
+                ? selectedCourseId
+                : null;
             lastSectionId = null;
             LoadYears();
         }
@@ -183,7 +234,8 @@ namespace School_Attendance_System
             }
             ClearAttendanceGrid();
             selectedClassCodeId = 0;
-            if (coursecombo.SelectedValue is int courseId && sectioncombo.SelectedValue is int sectionId)
+            if (AppTheme.TryGetIntValue(coursecombo.SelectedValue, out int courseId) &&
+                AppTheme.TryGetIntValue(sectioncombo.SelectedValue, out int sectionId))
                 LoadStudents(courseId, sectionId);
         }
 
@@ -203,7 +255,8 @@ namespace School_Attendance_System
                 return;
             }
             selectedClassCodeId = 0;
-            if (coursecombo.SelectedValue is int courseId && sectioncombo.SelectedValue is int sectionId)
+            if (AppTheme.TryGetIntValue(coursecombo.SelectedValue, out int courseId) &&
+                AppTheme.TryGetIntValue(sectioncombo.SelectedValue, out int sectionId))
                 LoadStudents(courseId, sectionId);
             else
             {

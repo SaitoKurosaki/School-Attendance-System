@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,6 +27,7 @@ namespace School_Attendance_System
             AppTheme.FieldLabel(label4);
             AppTheme.FieldLabel(label5);
             AppTheme.Action(codebtn, "PlusOutlined", primary: true);
+            AppTheme.Action(copybtn, "CopyOutlined");
             AppTheme.Action(deletebtn, "DeleteOutlined");
             AppTheme.Grid(listcodecontent);
             LoadCourse();
@@ -161,8 +162,6 @@ namespace School_Attendance_System
                     column.SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
                 listcodecontent.Columns["ID"]!.Visible = false;
-                if (listcodecontent.Columns["COURSE_NAME"] is DataGridViewColumn courseColumn)
-                    courseColumn.FillWeight = 200;
                 foreach ((string column, string header) in new[]
                 {
                     ("TEACHER_NAME", "Teacher"), ("COURSE_NAME", "Course"),
@@ -350,6 +349,30 @@ namespace School_Attendance_System
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to remove class code: " + ex.Message);
+            }
+        }
+
+        private void copybtn_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow? selectedRow = listcodecontent.SelectedRows.Count > 0
+                ? listcodecontent.SelectedRows[0]
+                : listcodecontent.CurrentRow;
+            string selectedCode = selectedRow?.Cells["CLASS_CODE"].Value?.ToString()?.Trim() ?? string.Empty;
+
+            if (selectedCode.Length == 0)
+            {
+                MessageBox.Show("Select a class code in the table first.", "Class Code", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                Clipboard.SetText(selectedCode);
+                MessageBox.Show("Class code copied to clipboard.", "Class Code", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to copy the class code: " + ex.Message, "Class Code", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

@@ -37,6 +37,7 @@
             semestercombo = new ReaLTaiizor.Controls.AloneComboBox();
             sectioncombo = new ReaLTaiizor.Controls.AloneComboBox();
             codebtn = new AntdUI.Button();
+            copybtn = new AntdUI.Button();
             deletebtn = new AntdUI.Button();
             label2 = new AntdUI.Label();
             label3 = new AntdUI.Label();
@@ -109,9 +110,18 @@
             codebtn.Text = "Create Class Code";
             codebtn.Click += codebtn_Click;
             // 
+            // copybtn
+            copybtn.Location = new Point(926, 69);
+            copybtn.Name = "copybtn";
+            copybtn.Size = new Size(217, 42);
+            copybtn.TabIndex = 17;
+            copybtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            copybtn.Text = "Copy Code";
+            copybtn.Click += copybtn_Click;
+            //
             // deletebtn
             // 
-            deletebtn.Location = new Point(926, 69);
+            deletebtn.Location = new Point(926, 117);
             deletebtn.Name = "deletebtn";
             deletebtn.Size = new Size(217, 42);
             deletebtn.TabIndex = 18;
@@ -176,7 +186,7 @@
             listcodecontent.EnableHeadersVisualStyles = false;
             listcodecontent.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             listcodecontent.GridColor = Color.FromArgb(255, 255, 255);
-            listcodecontent.Location = new Point(17, 117);
+            listcodecontent.Location = new Point(17, 165);
             listcodecontent.Name = "listcodecontent";
             listcodecontent.ReadOnly = true;
             listcodecontent.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -191,7 +201,7 @@
             listcodecontent.RowHeadersVisible = false;
             listcodecontent.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             listcodecontent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            listcodecontent.Size = new Size(1126, 627);
+            listcodecontent.Size = new Size(1126, 579);
             listcodecontent.TabIndex = 12;
             listcodecontent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listcodecontent.UseCustomBackColor = true;
@@ -207,6 +217,7 @@
             Controls.Add(label4);
             Controls.Add(label2);
             Controls.Add(codebtn);
+            Controls.Add(copybtn);
             Controls.Add(deletebtn);
             Controls.Add(sectioncombo);
             Controls.Add(semestercombo);
@@ -228,6 +239,7 @@
         private ReaLTaiizor.Controls.AloneComboBox semestercombo;
         private ReaLTaiizor.Controls.AloneComboBox sectioncombo;
         private AntdUI.Button codebtn;
+        private AntdUI.Button copybtn;
         private AntdUI.Button deletebtn;
         private AntdUI.Label label2;
         private AntdUI.Label label3;

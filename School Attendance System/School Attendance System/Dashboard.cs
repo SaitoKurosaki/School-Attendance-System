@@ -21,13 +21,13 @@ namespace School_Attendance_System
             this.teacherId = teacherId;
             InitializeComponent();
             AppTheme.Grid(recentAttendanceGrid);
-            colStudentName.FillWeight = 170;
-            colCourse.FillWeight = 80;
-            colYear.FillWeight = 45;
-            colSemester.FillWeight = 65;
-            colSection.FillWeight = 55;
-            colStatus.FillWeight = 70;
-            colTime.FillWeight = 80;
+            colStudentName.FillWeight = 100;
+            colCourse.FillWeight = 100;
+            colYear.FillWeight = 100;
+            colSemester.FillWeight = 100;
+            colSection.FillWeight = 100;
+            colStatus.FillWeight = 100;
+            colTime.FillWeight = 100;
             colRemarks.FillWeight = 100;
             LoadDashboard();
         }

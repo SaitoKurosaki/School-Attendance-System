@@ -317,7 +317,7 @@ namespace School_Attendance_System
                 string action = archived ? "archive" : "restore";
                 string prompt = archived
                     ? $"Archive \"{name}\"? It will leave active selectors, but its class codes, students, and attendance history will be kept."
-                    : $"Restore \"{name}\" only?";
+                    : $"Restore \"{name}\" ";
                 if (MessageBox.Show(prompt,
                     "Administrator", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {

@@ -237,7 +237,7 @@ namespace School_Attendance_System
       
         private void RenderDetailed(List<ReportRow> rows)
         {
-            ResetColumns(("Student Name", 180), ("Course", 220), ("Year", 55), ("Semester", 70), ("Section", 60), ("Date", 120), ("Status", 80));
+            ResetColumns("Student Name", "Course", "Year", "Semester", "Section", "Date", "Status");
             foreach (ReportRow row in rows)
             {
                 recentAttendanceGrid.Rows.Add(row.Student, row.Course, row.Year, row.Semester, row.Section,
@@ -245,11 +245,11 @@ namespace School_Attendance_System
             }
         }
 
-        private void ResetColumns(params (string Header, int FillWeight)[] columns)
+        private void ResetColumns(params string[] headers)
         {
             recentAttendanceGrid.Columns.Clear();
-            foreach ((string header, int fillWeight) in columns)
-                recentAttendanceGrid.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = header, FillWeight = fillWeight });
+            foreach (string header in headers)
+                recentAttendanceGrid.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = header, FillWeight = 100 });
         }
     }
 }
