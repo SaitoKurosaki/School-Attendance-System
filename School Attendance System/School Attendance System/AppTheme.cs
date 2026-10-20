@@ -1,4 +1,5 @@
 using System.Drawing;
+using System;
 using System.Windows.Forms;
 
 namespace School_Attendance_System
@@ -26,6 +27,26 @@ namespace School_Attendance_System
         internal static readonly Font BodyFont = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
         internal static readonly Font CaptionFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
         internal static readonly Font FieldLabelFont = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+
+        internal static bool TryGetIntValue(object? value, out int result)
+        {
+            try
+            {
+                if (value is null || value == DBNull.Value)
+                {
+                    result = 0;
+                    return false;
+                }
+
+                result = Convert.ToInt32(value);
+                return true;
+            }
+            catch (Exception ex) when (ex is FormatException or InvalidCastException or OverflowException)
+            {
+                result = 0;
+                return false;
+            }
+        }
 
         /// <summary>Every screen sits on the same pale canvas the login card is drawn on.</summary>
         internal static void Page(Control page)

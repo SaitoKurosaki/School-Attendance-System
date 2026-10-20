@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\School-Attendance-System-main\\School Attendance System\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{30423E1F-98ED-4FB1-FDE3-D62A5CC47659}|School Attendance System\\School Attendance System.csproj|d:\\school-attendance-system-main\\school attendance system\\school attendance system\\attendance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{30423E1F-98ED-4FB1-FDE3-D62A5CC47659}|School Attendance System\\School Attendance System.csproj|solutionrelative:school attendance system\\attendance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{30423E1F-98ED-4FB1-FDE3-D62A5CC47659}|School Attendance System\\School Attendance System.csproj|d:\\school-attendance-system-main\\school attendance system\\school attendance system\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30423E1F-98ED-4FB1-FDE3-D62A5CC47659}|School Attendance System\\School Attendance System.csproj|solutionrelative:school attendance system\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -90,11 +94,23 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "attendance.cs [Design]",
+              "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\attendance.cs",
+              "RelativeDocumentMoniker": "School Attendance System\\attendance.cs",
+              "ToolTip": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\attendance.cs [Design]",
+              "RelativeToolTip": "School Attendance System\\attendance.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-20T16:01:02.79Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Teachers.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Teachers.cs",
               "RelativeDocumentMoniker": "School Attendance System\\Teachers.cs",
@@ -106,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Students.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Students.cs",
               "RelativeDocumentMoniker": "School Attendance System\\Students.cs",
@@ -119,7 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "reports.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\reports.cs",
               "RelativeDocumentMoniker": "School Attendance System\\reports.cs",
@@ -131,7 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Dashboard.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Dashboard.cs",
               "RelativeDocumentMoniker": "School Attendance System\\Dashboard.cs",
@@ -143,7 +159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "classcode.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\classcode.cs",
               "RelativeDocumentMoniker": "School Attendance System\\classcode.cs",
@@ -156,7 +172,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "attendance.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\attendance.cs",
               "RelativeDocumentMoniker": "School Attendance System\\attendance.cs",
@@ -164,11 +180,12 @@
               "RelativeToolTip": "School Attendance System\\attendance.cs",
               "ViewState": "AgIAAFoBAAAAAAAAAAAAwGkBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-18T16:45:28.251Z"
+              "WhenOpened": "2026-10-18T16:45:28.251Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Administrator.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Administrator.cs",
               "RelativeDocumentMoniker": "School Attendance System\\Administrator.cs",
@@ -180,7 +197,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "SignUp.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\SignUp.cs",
               "RelativeDocumentMoniker": "School Attendance System\\SignUp.cs",
@@ -193,7 +210,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "verification.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\verification.cs",
               "RelativeDocumentMoniker": "School Attendance System\\verification.cs",
@@ -206,20 +223,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Login.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Login.cs",
               "RelativeDocumentMoniker": "School Attendance System\\Login.cs",
               "ToolTip": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Login.cs",
               "RelativeToolTip": "School Attendance System\\Login.cs",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAkwI4AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-18T16:23:22.715Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "SignUp.cs [Design]",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\SignUp.cs",
               "RelativeDocumentMoniker": "School Attendance System\\SignUp.cs",
@@ -230,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Login.cs [Design]",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Login.cs",
               "RelativeDocumentMoniker": "School Attendance System\\Login.cs",
@@ -241,7 +258,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "MainDashboard.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\MainDashboard.cs",
               "RelativeDocumentMoniker": "School Attendance System\\MainDashboard.cs",
@@ -254,7 +271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "Verification.cs [Design]",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Verification.cs",
               "RelativeDocumentMoniker": "School Attendance System\\Verification.cs",
@@ -265,7 +282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "MainDashboard.cs [Design]",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\MainDashboard.cs",
               "RelativeDocumentMoniker": "School Attendance System\\MainDashboard.cs",
@@ -276,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ClassCode.cs [Design]",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\ClassCode.cs",
               "RelativeDocumentMoniker": "School Attendance System\\ClassCode.cs",
@@ -287,7 +304,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "Students.cs [Design]",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\Students.cs",
               "RelativeDocumentMoniker": "School Attendance System\\Students.cs",
@@ -298,7 +315,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "AppTheme.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\AppTheme.cs",
               "RelativeDocumentMoniker": "School Attendance System\\AppTheme.cs",
@@ -310,7 +327,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "SearchFilter.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\SearchFilter.cs",
               "RelativeDocumentMoniker": "School Attendance System\\SearchFilter.cs",
@@ -322,7 +339,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "ParentNotifier.cs",
               "DocumentMoniker": "D:\\School-Attendance-System-main\\School Attendance System\\School Attendance System\\ParentNotifier.cs",
               "RelativeDocumentMoniker": "School Attendance System\\ParentNotifier.cs",

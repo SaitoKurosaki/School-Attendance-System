@@ -37,15 +37,30 @@ namespace School_Attendance_System
             label4 = new AntdUI.Label();
             coursetext = new ReaLTaiizor.Controls.SmallTextBox();
             sectiontext = new ReaLTaiizor.Controls.SmallTextBox();
+            yearcombo = new ReaLTaiizor.Controls.AloneComboBox();
+            semestercombo = new ReaLTaiizor.Controls.AloneComboBox();
             addcoursebtn = new AntdUI.Button();
             addsectionbtn = new AntdUI.Button();
             coursecombo = new ReaLTaiizor.Controls.AloneComboBox();
             sectioncombo = new ReaLTaiizor.Controls.AloneComboBox();
-            deletecoursebtn = new AntdUI.Button();
+            archivecoursebtn = new AntdUI.Button();
             renamecoursebtn = new AntdUI.Button();
-            deletesectionbtn = new AntdUI.Button();
+            archivesectionbtn = new AntdUI.Button();
+            archivedcoursecombo = new ReaLTaiizor.Controls.AloneComboBox();
+            archivedsectioncombo = new ReaLTaiizor.Controls.AloneComboBox();
+            restorecoursebtn = new AntdUI.Button();
+            restoresectionbtn = new AntdUI.Button();
+            label9 = new AntdUI.Label();
+            label10 = new AntdUI.Label();
+            sectionyearlabel = new AntdUI.Label();
+            sectionsemesterlabel = new AntdUI.Label();
+            sectionnamelabel = new AntdUI.Label();
+            newsemesterlabel = new AntdUI.Label();
+            newsectionlabel = new AntdUI.Label();
+            sectionyearcombo = new ReaLTaiizor.Controls.AloneComboBox();
+            sectionsemestercombo = new ReaLTaiizor.Controls.AloneComboBox();
             renamesectionbtn = new AntdUI.Button();
-            searchtext = new ReaLTaiizor.Controls.SmallTextBox();
+            searchtext = new AntdUI.Input();
             label5 = new AntdUI.Label();
             label6 = new AntdUI.Label();
             label7 = new AntdUI.Label();
@@ -107,9 +122,9 @@ namespace School_Attendance_System
             // 
             label3.Location = new Point(620, 50);
             label3.Name = "label3";
-            label3.Size = new Size(120, 23);
+            label3.Size = new Size(90, 23);
             label3.TabIndex = 4;
-            label3.Text = "New Section";
+            label3.Text = "Year";
             // 
             // sectiontext
             // 
@@ -118,12 +133,12 @@ namespace School_Attendance_System
             sectiontext.CustomBGColor = Color.White;
             sectiontext.Font = new Font("Tahoma", 11F);
             sectiontext.ForeColor = Color.DimGray;
-            sectiontext.Location = new Point(620, 79);
-            sectiontext.MaxLength = 2;
+            sectiontext.Location = new Point(900, 79);
+            sectiontext.MaxLength = 10;
             sectiontext.Multiline = false;
             sectiontext.Name = "sectiontext";
             sectiontext.ReadOnly = false;
-            sectiontext.Size = new Size(254, 28);
+            sectiontext.Size = new Size(52, 28);
             sectiontext.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             sectiontext.TabIndex = 5;
             sectiontext.TextAlignment = HorizontalAlignment.Left;
@@ -131,7 +146,7 @@ namespace School_Attendance_System
             // 
             // addsectionbtn
             // 
-            addsectionbtn.Location = new Point(945, 72);
+            addsectionbtn.Location = new Point(970, 72);
             addsectionbtn.Name = "addsectionbtn";
             addsectionbtn.Size = new Size(140, 42);
             addsectionbtn.TabIndex = 6;
@@ -160,14 +175,14 @@ namespace School_Attendance_System
             renamecoursebtn.Text = "Rename";
             renamecoursebtn.Click += renamecoursebtn_Click;
             // 
-            // deletecoursebtn
+            // archivecoursebtn
             // 
-            deletecoursebtn.Location = new Point(423, 119);
-            deletecoursebtn.Name = "deletecoursebtn";
-            deletecoursebtn.Size = new Size(88, 42);
-            deletecoursebtn.TabIndex = 11;
-            deletecoursebtn.Text = "Delete";
-            deletecoursebtn.Click += deletecoursebtn_Click;
+            archivecoursebtn.Location = new Point(423, 119);
+            archivecoursebtn.Name = "archivecoursebtn";
+            archivecoursebtn.Size = new Size(88, 42);
+            archivecoursebtn.TabIndex = 11;
+            archivecoursebtn.Text = "Archive";
+            archivecoursebtn.Click += archivecoursebtn_Click;
             // 
             // sectioncombo
             // 
@@ -176,54 +191,127 @@ namespace School_Attendance_System
             sectioncombo.EnabledCalc = true;
             sectioncombo.FormattingEnabled = true;
             sectioncombo.ItemHeight = 20;
-            sectioncombo.Location = new Point(620, 127);
+            sectioncombo.Location = new Point(840, 139);
             sectioncombo.Name = "sectioncombo";
-            sectioncombo.Size = new Size(293, 26);
+            sectioncombo.Size = new Size(75, 26);
             sectioncombo.TabIndex = 12;
             sectioncombo.SelectedIndexChanged += sectioncombo_SelectedIndexChanged;
+            yearcombo.DrawMode = DrawMode.OwnerDrawFixed;
+            yearcombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            yearcombo.EnabledCalc = true;
+            yearcombo.FormattingEnabled = true;
+            yearcombo.ItemHeight = 20;
+            yearcombo.Location = new Point(620, 79);
+            yearcombo.Name = "yearcombo";
+            yearcombo.Size = new Size(115, 26);
+            yearcombo.TabIndex = 25;
+            semestercombo.DrawMode = DrawMode.OwnerDrawFixed;
+            semestercombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            semestercombo.EnabledCalc = true;
+            semestercombo.FormattingEnabled = true;
+            semestercombo.ItemHeight = 20;
+            semestercombo.Location = new Point(750, 79);
+            semestercombo.Name = "semestercombo";
+            semestercombo.Size = new Size(135, 26);
+            semestercombo.TabIndex = 26;
+            newsemesterlabel.Location = new Point(750, 50);
+            newsemesterlabel.Name = "newsemesterlabel";
+            newsemesterlabel.Size = new Size(100, 23);
+            newsemesterlabel.Text = "Semester";
+            newsectionlabel.Location = new Point(900, 50);
+            newsectionlabel.Name = "newsectionlabel";
+            newsectionlabel.Size = new Size(75, 23);
+            newsectionlabel.Text = "Section";
+            sectionyearlabel.Location = new Point(620, 116);
+            sectionyearlabel.Name = "sectionyearlabel";
+            sectionyearlabel.Size = new Size(90, 23);
+            sectionyearlabel.Text = "Year";
+            sectionsemesterlabel.Location = new Point(725, 116);
+            sectionsemesterlabel.Name = "sectionsemesterlabel";
+            sectionsemesterlabel.Size = new Size(100, 23);
+            sectionsemesterlabel.Text = "Semester";
+            sectionnamelabel.Location = new Point(840, 116);
+            sectionnamelabel.Name = "sectionnamelabel";
+            sectionnamelabel.Size = new Size(75, 23);
+            sectionnamelabel.Text = "Section";
+            sectionyearcombo.DrawMode = DrawMode.OwnerDrawFixed;
+            sectionyearcombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            sectionyearcombo.EnabledCalc = true;
+            sectionyearcombo.FormattingEnabled = true;
+            sectionyearcombo.ItemHeight = 20;
+            sectionyearcombo.Location = new Point(620, 139);
+            sectionyearcombo.Name = "sectionyearcombo";
+            sectionyearcombo.Size = new Size(95, 26);
+            sectionyearcombo.TabIndex = 27;
+            sectionsemestercombo.DrawMode = DrawMode.OwnerDrawFixed;
+            sectionsemestercombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            sectionsemestercombo.EnabledCalc = true;
+            sectionsemestercombo.FormattingEnabled = true;
+            sectionsemestercombo.ItemHeight = 20;
+            sectionsemestercombo.Location = new Point(725, 139);
+            sectionsemestercombo.Name = "sectionsemestercombo";
+            sectionsemestercombo.Size = new Size(105, 26);
+            sectionsemestercombo.TabIndex = 28;
+            sectionyearcombo.SelectedIndexChanged += sectionfilter_SelectedIndexChanged;
+            sectionsemestercombo.SelectedIndexChanged += sectionfilter_SelectedIndexChanged;
             // 
             // renamesectionbtn
             // 
-            renamesectionbtn.Location = new Point(928, 119);
+            renamesectionbtn.Location = new Point(925, 131);
             renamesectionbtn.Name = "renamesectionbtn";
             renamesectionbtn.Size = new Size(88, 42);
             renamesectionbtn.TabIndex = 13;
             renamesectionbtn.Text = "Rename";
             renamesectionbtn.Click += renamesectionbtn_Click;
-            // 
-            // deletesectionbtn
-            // 
-            deletesectionbtn.Location = new Point(1026, 119);
-            deletesectionbtn.Name = "deletesectionbtn";
-            deletesectionbtn.Size = new Size(88, 42);
-            deletesectionbtn.TabIndex = 14;
-            deletesectionbtn.Text = "Delete";
-            deletesectionbtn.Click += deletesectionbtn_Click;
+            // archivesectionbtn
+            archivesectionbtn.Location = new Point(1023, 131);
+            archivesectionbtn.Name = "archivesectionbtn";
+            archivesectionbtn.Size = new Size(88, 42);
+            archivesectionbtn.TabIndex = 14;
+            archivesectionbtn.Text = "Archive";
+            archivesectionbtn.Click += archivesectionbtn_Click;
+            // Archived catalog controls
+            label9.Location = new Point(17, 185);
+            label9.Name = "label9";
+            label9.Size = new Size(220, 23);
+            label9.Text = "Archived Courses";
+            archivedcoursecombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            archivedcoursecombo.Location = new Point(17, 209);
+            archivedcoursecombo.Name = "archivedcoursecombo";
+            archivedcoursecombo.Size = new Size(250, 26);
+            restorecoursebtn.Location = new Point(277, 202);
+            restorecoursebtn.Name = "restorecoursebtn";
+            restorecoursebtn.Size = new Size(110, 40);
+            restorecoursebtn.Text = "Restore";
+            restorecoursebtn.Click += restorecoursebtn_Click;
+            label10.Location = new Point(620, 185);
+            label10.Name = "label10";
+            label10.Size = new Size(220, 23);
+            label10.Text = "Archived Sections";
+            archivedsectioncombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            archivedsectioncombo.Location = new Point(620, 209);
+            archivedsectioncombo.Name = "archivedsectioncombo";
+            archivedsectioncombo.Size = new Size(290, 26);
+            restoresectionbtn.Location = new Point(920, 202);
+            restoresectionbtn.Name = "restoresectionbtn";
+            restoresectionbtn.Size = new Size(110, 40);
+            restoresectionbtn.Text = "Restore";
+            restoresectionbtn.Click += restoresectionbtn_Click;
             // 
             // searchtext
             // 
-            searchtext.BackColor = Color.Transparent;
-            searchtext.BorderColor = Color.FromArgb(180, 180, 180);
-            searchtext.CustomBGColor = Color.White;
-            searchtext.Font = new Font("Tahoma", 11F);
-            searchtext.ForeColor = Color.DimGray;
-            searchtext.Location = new Point(811, 170);
-            searchtext.MaxLength = 255;
-            searchtext.Multiline = false;
+            searchtext.AllowClear = true;
+            searchtext.Location = new Point(811, 255);
             searchtext.Name = "searchtext";
-            searchtext.ReadOnly = false;
-            searchtext.Size = new Size(332, 28);
-            searchtext.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            searchtext.Size = new Size(332, 36);
             searchtext.TabIndex = 15;
-            searchtext.TextAlignment = HorizontalAlignment.Left;
-            searchtext.UseSystemPasswordChar = false;
             searchtext.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             searchtext.TextChanged += searchtext_TextChanged;
             // 
             // label4
             // 
             label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(17, 174);
+            label4.Location = new Point(17, 259);
             label4.Name = "label4";
             label4.Size = new Size(160, 26);
             label4.TabIndex = 7;
@@ -260,7 +348,7 @@ namespace School_Attendance_System
             studentlistcontent.EnableHeadersVisualStyles = false;
             studentlistcontent.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             studentlistcontent.GridColor = Color.FromArgb(255, 255, 255);
-            studentlistcontent.Location = new Point(17, 270);
+            studentlistcontent.Location = new Point(17, 355);
             studentlistcontent.Name = "studentlistcontent";
             studentlistcontent.ReadOnly = true;
             studentlistcontent.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -275,7 +363,7 @@ namespace School_Attendance_System
             studentlistcontent.RowHeadersVisible = false;
             studentlistcontent.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             studentlistcontent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            studentlistcontent.Size = new Size(1126, 474);
+            studentlistcontent.Size = new Size(1126, 409);
             studentlistcontent.TabIndex = 8;
             studentlistcontent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             studentlistcontent.UseCustomBackColor = true;
@@ -285,7 +373,7 @@ namespace School_Attendance_System
             // label5
             // 
             label5.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(17, 204);
+            label5.Location = new Point(17, 289);
             label5.Name = "label5";
             label5.Size = new Size(120, 23);
             label5.TabIndex = 16;
@@ -294,7 +382,7 @@ namespace School_Attendance_System
             // label6
             // 
             label6.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(287, 204);
+            label6.Location = new Point(287, 289);
             label6.Name = "label6";
             label6.Size = new Size(140, 23);
             label6.TabIndex = 17;
@@ -303,7 +391,7 @@ namespace School_Attendance_System
             // label7
             // 
             label7.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(437, 204);
+            label7.Location = new Point(437, 289);
             label7.Name = "label7";
             label7.Size = new Size(120, 23);
             label7.TabIndex = 18;
@@ -312,7 +400,7 @@ namespace School_Attendance_System
             // label8
             // 
             label8.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(687, 204);
+            label8.Location = new Point(687, 289);
             label8.Name = "label8";
             label8.Size = new Size(140, 23);
             label8.TabIndex = 19;
@@ -325,7 +413,7 @@ namespace School_Attendance_System
             nametext.CustomBGColor = Color.White;
             nametext.Font = new Font("Tahoma", 11F);
             nametext.ForeColor = Color.DimGray;
-            nametext.Location = new Point(17, 229);
+            nametext.Location = new Point(17, 314);
             nametext.MaxLength = 255;
             nametext.Multiline = false;
             nametext.Name = "nametext";
@@ -343,7 +431,7 @@ namespace School_Attendance_System
             numtext.CustomBGColor = Color.White;
             numtext.Font = new Font("Tahoma", 11F);
             numtext.ForeColor = Color.DimGray;
-            numtext.Location = new Point(287, 229);
+            numtext.Location = new Point(287, 314);
             numtext.MaxLength = 255;
             numtext.Multiline = false;
             numtext.Name = "numtext";
@@ -361,7 +449,7 @@ namespace School_Attendance_System
             emailtext.CustomBGColor = Color.White;
             emailtext.Font = new Font("Tahoma", 11F);
             emailtext.ForeColor = Color.DimGray;
-            emailtext.Location = new Point(437, 229);
+            emailtext.Location = new Point(437, 314);
             emailtext.MaxLength = 255;
             emailtext.Multiline = false;
             emailtext.Name = "emailtext";
@@ -379,7 +467,7 @@ namespace School_Attendance_System
             parenttext.CustomBGColor = Color.White;
             parenttext.Font = new Font("Tahoma", 11F);
             parenttext.ForeColor = Color.DimGray;
-            parenttext.Location = new Point(687, 229);
+            parenttext.Location = new Point(687, 314);
             parenttext.MaxLength = 255;
             parenttext.Multiline = false;
             parenttext.Name = "parenttext";
@@ -392,7 +480,7 @@ namespace School_Attendance_System
             // 
             // updatestudentbtn
             // 
-            updatestudentbtn.Location = new Point(1003, 222);
+            updatestudentbtn.Location = new Point(1003, 307);
             updatestudentbtn.Name = "updatestudentbtn";
             updatestudentbtn.Size = new Size(140, 42);
             updatestudentbtn.TabIndex = 24;
@@ -415,15 +503,30 @@ namespace School_Attendance_System
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(searchtext);
+            Controls.Add(label9);
+            Controls.Add(archivedcoursecombo);
+            Controls.Add(restorecoursebtn);
+            Controls.Add(label10);
+            Controls.Add(archivedsectioncombo);
+            Controls.Add(restoresectionbtn);
+            Controls.Add(sectionyearlabel);
+            Controls.Add(sectionsemesterlabel);
+            Controls.Add(sectionnamelabel);
+            Controls.Add(newsemesterlabel);
+            Controls.Add(newsectionlabel);
+            Controls.Add(sectionyearcombo);
+            Controls.Add(sectionsemestercombo);
             Controls.Add(renamesectionbtn);
-            Controls.Add(deletesectionbtn);
+            Controls.Add(archivesectionbtn);
             Controls.Add(sectioncombo);
             Controls.Add(renamecoursebtn);
-            Controls.Add(deletecoursebtn);
+            Controls.Add(archivecoursebtn);
             Controls.Add(coursecombo);
             Controls.Add(label4);
             Controls.Add(addsectionbtn);
             Controls.Add(sectiontext);
+            Controls.Add(yearcombo);
+            Controls.Add(semestercombo);
             Controls.Add(label3);
             Controls.Add(addcoursebtn);
             Controls.Add(coursetext);
@@ -443,15 +546,17 @@ namespace School_Attendance_System
         private AntdUI.Label label4;
         private ReaLTaiizor.Controls.SmallTextBox coursetext;
         private ReaLTaiizor.Controls.SmallTextBox sectiontext;
+        private ReaLTaiizor.Controls.AloneComboBox yearcombo;
+        private ReaLTaiizor.Controls.AloneComboBox semestercombo;
         private AntdUI.Button addcoursebtn;
         private AntdUI.Button addsectionbtn;
         private ReaLTaiizor.Controls.AloneComboBox coursecombo;
         private ReaLTaiizor.Controls.AloneComboBox sectioncombo;
-        private AntdUI.Button deletecoursebtn;
+        private AntdUI.Button archivecoursebtn;
         private AntdUI.Button renamecoursebtn;
-        private AntdUI.Button deletesectionbtn;
+        private AntdUI.Button archivesectionbtn;
         private AntdUI.Button renamesectionbtn;
-        private ReaLTaiizor.Controls.SmallTextBox searchtext;
+        private AntdUI.Input searchtext;
         private AntdUI.Label label5;
         private AntdUI.Label label6;
         private AntdUI.Label label7;
@@ -462,5 +567,18 @@ namespace School_Attendance_System
         private ReaLTaiizor.Controls.SmallTextBox parenttext;
         private AntdUI.Button updatestudentbtn;
         private ReaLTaiizor.Controls.PoisonDataGridView studentlistcontent;
+        private ReaLTaiizor.Controls.AloneComboBox archivedcoursecombo;
+        private ReaLTaiizor.Controls.AloneComboBox archivedsectioncombo;
+        private AntdUI.Button restorecoursebtn;
+        private AntdUI.Button restoresectionbtn;
+        private AntdUI.Label label9;
+        private AntdUI.Label label10;
+        private AntdUI.Label sectionyearlabel;
+        private AntdUI.Label sectionsemesterlabel;
+        private AntdUI.Label sectionnamelabel;
+        private AntdUI.Label newsemesterlabel;
+        private AntdUI.Label newsectionlabel;
+        private ReaLTaiizor.Controls.AloneComboBox sectionyearcombo;
+        private ReaLTaiizor.Controls.AloneComboBox sectionsemestercombo;
     }
 }

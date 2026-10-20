@@ -49,6 +49,8 @@ namespace School_Attendance_System
             recentAttendanceGrid = new ReaLTaiizor.Controls.PoisonDataGridView();
             colStudentName = new DataGridViewTextBoxColumn();
             colCourse = new DataGridViewTextBoxColumn();
+            colYear = new DataGridViewTextBoxColumn();
+            colSemester = new DataGridViewTextBoxColumn();
             colSection = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colTime = new DataGridViewTextBoxColumn();
@@ -60,9 +62,9 @@ namespace School_Attendance_System
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)recentAttendanceGrid).BeginInit();
             SuspendLayout();
-            // 
+            //
             // label1
-            // 
+            //
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = AppTheme.Navy;
             label1.Location = new Point(16, 12);
@@ -70,9 +72,9 @@ namespace School_Attendance_System
             label1.Size = new Size(200, 32);
             label1.TabIndex = 0;
             label1.Text = "Dashboard";
-            // 
+            //
             // tlstudents
-            // 
+            //
             tlstudents.BackColor = AppTheme.Tint;
             tlstudents.Back = AppTheme.Tint;
             tlstudents.BorderColor = AppTheme.TintStrong;
@@ -287,7 +289,7 @@ namespace School_Attendance_System
             recentAttendanceGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             recentAttendanceGrid.ColumnHeadersHeight = 38;
             recentAttendanceGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            recentAttendanceGrid.Columns.AddRange(new DataGridViewColumn[] { colStudentName, colCourse, colSection, colStatus, colTime, colRemarks });
+            recentAttendanceGrid.Columns.AddRange(new DataGridViewColumn[] { colStudentName, colCourse, colYear, colSemester, colSection, colStatus, colTime, colRemarks });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.White;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -331,13 +333,18 @@ namespace School_Attendance_System
             colCourse.HeaderText = "Course";
             colCourse.Name = "colCourse";
             colCourse.ReadOnly = true;
-            // 
+            // colYear
+            colYear.HeaderText = "Year";
+            colYear.Name = "colYear";
+            colYear.ReadOnly = true;
+            // colSemester
+            colSemester.HeaderText = "Semester";
+            colSemester.Name = "colSemester";
+            colSemester.ReadOnly = true;
             // colSection
-            // 
             colSection.HeaderText = "Section";
             colSection.Name = "colSection";
             colSection.ReadOnly = true;
-            // 
             // colStatus
             // 
             colStatus.HeaderText = "Status";
@@ -398,6 +405,8 @@ namespace School_Attendance_System
         private ReaLTaiizor.Controls.PoisonDataGridView recentAttendanceGrid;
         private DataGridViewTextBoxColumn colStudentName;
         private DataGridViewTextBoxColumn colCourse;
+        private DataGridViewTextBoxColumn colYear;
+        private DataGridViewTextBoxColumn colSemester;
         private DataGridViewTextBoxColumn colSection;
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colTime;

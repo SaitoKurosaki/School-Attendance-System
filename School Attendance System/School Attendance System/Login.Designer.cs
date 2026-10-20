@@ -157,6 +157,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(500, 601);
+            MinimumSize = Size;
             Controls.Add(showpass);
             Controls.Add(loginbtn);
             Controls.Add(emailbox);

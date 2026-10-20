@@ -26,9 +26,16 @@ namespace School_Attendance_System
             AppTheme.FieldLabel(label6);
             AppTheme.FieldLabel(label7);
             AppTheme.FieldLabel(label8);
+            AppTheme.FieldLabel(label9);
+            AppTheme.FieldLabel(label10);
+            AppTheme.FieldLabel(sectionyearlabel);
+            AppTheme.FieldLabel(sectionsemesterlabel);
+            AppTheme.FieldLabel(sectionnamelabel);
+            AppTheme.FieldLabel(newsemesterlabel);
+            AppTheme.FieldLabel(newsectionlabel);
             AppTheme.Field(coursetext);
             AppTheme.Field(sectiontext);
-            AppTheme.Field(searchtext);
+            AppTheme.Input(searchtext, string.Empty, "SearchOutlined");
             AppTheme.Field(nametext);
             AppTheme.Field(numtext);
             AppTheme.Field(emailtext);
@@ -36,9 +43,11 @@ namespace School_Attendance_System
             AppTheme.Action(addcoursebtn, "PlusOutlined", primary: true);
             AppTheme.Action(addsectionbtn, "PlusOutlined", primary: true);
             AppTheme.Action(renamecoursebtn, "EditOutlined");
-            AppTheme.Action(deletecoursebtn, "DeleteOutlined");
+            AppTheme.Action(archivecoursebtn, "FolderOutlined");
             AppTheme.Action(renamesectionbtn, "EditOutlined");
-            AppTheme.Action(deletesectionbtn, "DeleteOutlined");
+            AppTheme.Action(archivesectionbtn, "FolderOutlined");
+            AppTheme.Action(restorecoursebtn, "RollbackOutlined");
+            AppTheme.Action(restoresectionbtn, "RollbackOutlined");
             AppTheme.Action(updatestudentbtn, "SaveOutlined", primary: true);
             AppTheme.Grid(studentlistcontent);
             studentlistcontent.SelectionChanged += studentlistcontent_SelectionChanged;
@@ -76,8 +85,15 @@ namespace School_Attendance_System
 
         private void LoadCatalogs()
         {
-            LoadComboBox(coursecombo, "SELECT ID, COURSE_NAME FROM course ORDER BY COURSE_NAME;", "COURSE_NAME");
-            LoadComboBox(sectioncombo, "SELECT ID, SECTION_NAME FROM section ORDER BY SECTION_NAME;", "SECTION_NAME");
+            LoadComboBox(coursecombo, "SELECT ID, COURSE_NAME FROM course WHERE IS_ARCHIVED = 0 ORDER BY COURSE_NAME;", "COURSE_NAME");
+            LoadComboBox(archivedcoursecombo, "SELECT ID, COURSE_NAME FROM course WHERE IS_ARCHIVED = 1 ORDER BY COURSE_NAME;", "COURSE_NAME");
+            LoadComboBox(yearcombo, "SELECT DISTINCT CAST(YEAR_LEVEL AS SIGNED) AS ID, CONCAT('Year ', YEAR_LEVEL) AS LABEL FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY ID;", "LABEL");
+            LoadComboBox(semestercombo, "SELECT CAST(1 AS SIGNED) AS ID, 'Semester 1' AS LABEL UNION ALL SELECT CAST(2 AS SIGNED), 'Semester 2';", "LABEL");
+            LoadComboBox(sectionyearcombo, "SELECT DISTINCT CAST(YEAR_LEVEL AS SIGNED) AS ID, CONCAT('Year ', YEAR_LEVEL) AS LABEL FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY ID;", "LABEL");
+            LoadComboBox(sectionsemestercombo, "SELECT CAST(1 AS SIGNED) AS ID, 'Semester 1' AS LABEL UNION ALL SELECT CAST(2 AS SIGNED), 'Semester 2';", "LABEL");
+            sectioncombo.DataSource = null;
+            sectiontext.Text = string.Empty;
+            LoadComboBox(archivedsectioncombo, "SELECT ID, CONCAT('Year ', YEAR_LEVEL, ' • Semester ', SEMESTER, ' • Section ', SECTION_NAME) AS SECTION_LABEL FROM section WHERE IS_ARCHIVED = 1 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY YEAR_LEVEL, SEMESTER, SECTION_NAME;", "SECTION_LABEL");
             coursetext.Text = string.Empty;
             sectiontext.Text = string.Empty;
         }
@@ -89,7 +105,40 @@ namespace School_Attendance_System
 
         private void sectioncombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            sectiontext.Text = sectioncombo.Text;
+            if (sectioncombo.SelectedItem is DataRowView row) sectiontext.Text = row["SECTION_NAME"]?.ToString() ?? string.Empty;
+        }
+
+        private void sectionfilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!AppTheme.TryGetIntValue(sectionyearcombo.SelectedValue, out int year) ||
+                !AppTheme.TryGetIntValue(sectionsemestercombo.SelectedValue, out int semester))
+            {
+                sectioncombo.DataSource = null;
+                sectiontext.Text = string.Empty;
+                return;
+            }
+
+            try
+            {
+                using MySqlConnection connection = new MySqlConnection(Connection);
+                using MySqlCommand command = new MySqlCommand(
+                    "SELECT ID, SECTION_NAME FROM section WHERE IS_ARCHIVED = 0 AND YEAR_LEVEL = @year AND SEMESTER = @semester AND SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY SECTION_NAME;",
+                    connection);
+                command.Parameters.AddWithValue("@year", year);
+                command.Parameters.AddWithValue("@semester", semester);
+                using MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                sectioncombo.DataSource = table;
+                sectioncombo.DisplayMember = "SECTION_NAME";
+                sectioncombo.ValueMember = "ID";
+                sectioncombo.SelectedIndex = -1;
+                sectiontext.Text = string.Empty;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Unable to load sections: " + ex.Message, "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private static void LoadComboBox(ComboBox comboBox, string query, string displayMember)
@@ -140,14 +189,33 @@ namespace School_Attendance_System
             }
 
             string newName = sectiontext.Text.Trim().ToUpperInvariant();
-            if (!Regex.IsMatch(newName, "^[A-Z][1-4]$"))
+            if (!Regex.IsMatch(newName, "^[A-Z]$"))
             {
-                MessageBox.Show("Section must be a letter followed by the year level 1-4 (e.g. B1).", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Section must be one letter (for example A or B).", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (newName.Equals(sectioncombo.Text, StringComparison.OrdinalIgnoreCase)) return;
-            if (!UpdateName("section", "SECTION_NAME", sectionId, newName, "section")) return;
+            string selectedName = sectioncombo.SelectedItem is DataRowView selected ? selected["SECTION_NAME"]?.ToString() ?? string.Empty : string.Empty;
+            if (newName.Equals(selectedName, StringComparison.OrdinalIgnoreCase)) return;
+            try
+            {
+                using MySqlConnection connection = new MySqlConnection(Connection);
+                connection.Open();
+                using MySqlCommand update = new MySqlCommand("UPDATE section SET SECTION_NAME = @name WHERE ID = @id;", connection);
+                update.Parameters.AddWithValue("@name", newName);
+                update.Parameters.AddWithValue("@id", sectionId);
+                update.ExecuteNonQuery();
+            }
+            catch (MySqlException ex) when (ex.Number == 1062)
+            {
+                MessageBox.Show("That section already exists for the same year and semester.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Unable to rename section: " + ex.Message, "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             RefreshAll();
         }
 
@@ -184,32 +252,52 @@ namespace School_Attendance_System
             }
         }
 
-        private void deletecoursebtn_Click(object sender, EventArgs e)
+        private void archivecoursebtn_Click(object sender, EventArgs e)
         {
             if (coursecombo.SelectedValue is not int courseId)
             {
-                MessageBox.Show("Select a course to delete.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Select a course to archive.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (DeleteCatalogItem("course", "COURSE_ID", courseId, coursecombo.Text))
+            if (SetCatalogArchived("course", courseId, true, coursecombo.Text))
             {
                 RefreshAll();
             }
         }
 
-        private void deletesectionbtn_Click(object sender, EventArgs e)
+        private void archivesectionbtn_Click(object sender, EventArgs e)
         {
             if (sectioncombo.SelectedValue is not int sectionId)
             {
-                MessageBox.Show("Select a section to delete.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Select a section to archive.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (DeleteCatalogItem("section", "SECTION_ID", sectionId, sectioncombo.Text))
+            if (SetCatalogArchived("section", sectionId, true, sectioncombo.Text))
             {
                 RefreshAll();
             }
+        }
+
+        private void restorecoursebtn_Click(object sender, EventArgs e)
+        {
+            if (archivedcoursecombo.SelectedValue is not int courseId)
+            {
+                MessageBox.Show("Select an archived course to restore.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (SetCatalogArchived("course", courseId, false, archivedcoursecombo.Text)) RefreshAll();
+        }
+
+        private void restoresectionbtn_Click(object sender, EventArgs e)
+        {
+            if (archivedsectioncombo.SelectedValue is not int sectionId)
+            {
+                MessageBox.Show("Select an archived section to restore.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (SetCatalogArchived("section", sectionId, false, archivedsectioncombo.Text)) RefreshAll();
         }
 
         private void RefreshAll()
@@ -219,62 +307,35 @@ namespace School_Attendance_System
         }
 
        
-        private static bool DeleteCatalogItem(string table, string fkColumn, int id, string name)
+        private static bool SetCatalogArchived(string table, int id, bool archived, string name)
         {
+            if (table is not ("course" or "section")) throw new ArgumentOutOfRangeException(nameof(table));
             try
             {
                 using MySqlConnection connection = new MySqlConnection(Connection);
                 connection.Open();
-
-                List<string> codes = new List<string>();
-                using (MySqlCommand find = new MySqlCommand($"SELECT CLASS_CODE FROM class_codes WHERE {fkColumn} = @id;", connection))
-                {
-                    find.Parameters.AddWithValue("@id", id);
-                    using MySqlDataReader reader = find.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        codes.Add(reader.GetString(0));
-                    }
-                }
-
-                string warning = codes.Count == 0
-                    ? $"Delete \"{name}\"?"
-                    : $"\"{name}\" is used by {codes.Count} class code(s). Deleting it will also remove those class codes, unenroll their students, and delete their attendance records.\n\nContinue?";
-                if (MessageBox.Show(warning, "Administrator", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                string action = archived ? "archive" : "restore";
+                string prompt = archived
+                    ? $"Archive \"{name}\"? It will leave active selectors, but its class codes, students, and attendance history will be kept."
+                    : $"Restore \"{name}\" only?";
+                if (MessageBox.Show(prompt,
+                    "Administrator", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
                     return false;
                 }
-
-                using MySqlTransaction transaction = connection.BeginTransaction();
-                const string unenrollQuery = @"
-                    UPDATE students
-                    SET classcode = JSON_REMOVE(classcode, JSON_UNQUOTE(JSON_SEARCH(classcode, 'one', @code)))
-                    WHERE JSON_CONTAINS(classcode, JSON_QUOTE(@code));";
-                foreach (string code in codes)
+                using (MySqlCommand update = new MySqlCommand($"UPDATE {table} SET IS_ARCHIVED = @archived WHERE ID = @id;", connection))
                 {
-                    using MySqlCommand unenroll = new MySqlCommand(unenrollQuery, connection, transaction);
-                    unenroll.Parameters.AddWithValue("@code", code);
-                    unenroll.ExecuteNonQuery();
+                    update.Parameters.AddWithValue("@archived", archived ? 1 : 0);
+                    update.Parameters.AddWithValue("@id", id);
+                    if (update.ExecuteNonQuery() == 0) return false;
                 }
-
-                using (MySqlCommand deleteCodes = new MySqlCommand($"DELETE FROM class_codes WHERE {fkColumn} = @id;", connection, transaction))
-                {
-                    deleteCodes.Parameters.AddWithValue("@id", id);
-                    deleteCodes.ExecuteNonQuery();
-                }
-
-                using (MySqlCommand deleteItem = new MySqlCommand($"DELETE FROM {table} WHERE ID = @id;", connection, transaction))
-                {
-                    deleteItem.Parameters.AddWithValue("@id", id);
-                    deleteItem.ExecuteNonQuery();
-                }
-
-                transaction.Commit();
+                MessageBox.Show($"{char.ToUpperInvariant(action[0]) + action.Substring(1)}d \"{name}\" successfully.",
+                    "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Unable to delete: " + ex.Message, "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to update archive status: " + ex.Message, "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -299,17 +360,34 @@ namespace School_Attendance_System
         private void addsectionbtn_Click(object sender, EventArgs e)
         {
             string sectionName = sectiontext.Text.Trim().ToUpperInvariant();
-            if (!Regex.IsMatch(sectionName, "^[A-Z][1-4]$"))
+            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year) ||
+                !AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int semester) ||
+                !Regex.IsMatch(sectionName, "^[A-Z]$"))
             {
-                MessageBox.Show("Section must be a letter followed by the year level 1-4 (e.g. B1).", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Choose a year and semester, then enter one section letter (for example A).", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (AddName("section", "SECTION_NAME", sectionName))
+            try
             {
+                using MySqlConnection connection = new MySqlConnection(Connection);
+                connection.Open();
+                using MySqlCommand insert = new MySqlCommand("INSERT INTO section (YEAR_LEVEL, SEMESTER, SECTION_NAME) VALUES (@year, @semester, @name);", connection);
+                insert.Parameters.AddWithValue("@year", year);
+                insert.Parameters.AddWithValue("@semester", semester);
+                insert.Parameters.AddWithValue("@name", sectionName);
+                insert.ExecuteNonQuery();
                 sectiontext.Text = string.Empty;
                 LoadCatalogs();
-                MessageBox.Show($"Section \"{sectionName}\" added.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Year {year}, Semester {semester}, Section {sectionName} added.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (MySqlException ex) when (ex.Number == 1062)
+            {
+                MessageBox.Show("That section already exists for the selected year and semester.", "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Unable to add section: " + ex.Message, "Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -353,7 +431,9 @@ namespace School_Attendance_System
                     s.email AS Email,
                     s.parent_email AS `Parent Email`,
                     GROUP_CONCAT(DISTINCT c.COURSE_NAME ORDER BY c.COURSE_NAME SEPARATOR ', ') AS Course,
-                    GROUP_CONCAT(DISTINCT sec.SECTION_NAME ORDER BY sec.SECTION_NAME SEPARATOR ', ') AS Section
+                    GROUP_CONCAT(DISTINCT sec.YEAR_LEVEL ORDER BY sec.YEAR_LEVEL SEPARATOR ', ') AS Year,
+                    GROUP_CONCAT(DISTINCT sec.SEMESTER ORDER BY sec.SEMESTER SEPARATOR ', ') AS Semester,
+                    GROUP_CONCAT(DISTINCT sec.SECTION_NAME ORDER BY sec.YEAR_LEVEL, sec.SEMESTER, sec.SECTION_NAME SEPARATOR ', ') AS Section
                 FROM students s
                 LEFT JOIN class_codes cc ON JSON_CONTAINS(s.classcode, JSON_QUOTE(cc.CLASS_CODE))
                 LEFT JOIN course c ON c.ID = cc.COURSE_ID

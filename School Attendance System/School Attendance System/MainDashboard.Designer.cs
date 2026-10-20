@@ -180,7 +180,7 @@ namespace School_Attendance_System
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1360, 760);
+            ClientSize = new Size(1400, 800);
             Controls.Add(contentPanel);
             Controls.Add(sidebar);
             Icon = (Icon)resources.GetObject("$this.Icon");

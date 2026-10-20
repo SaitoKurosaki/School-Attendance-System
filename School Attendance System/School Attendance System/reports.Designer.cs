@@ -35,13 +35,15 @@
             label3 = new AntdUI.Label();
             label2 = new AntdUI.Label();
             aloneComboBox1 = new ReaLTaiizor.Controls.AloneComboBox();
+            yearcombo = new ReaLTaiizor.Controls.AloneComboBox();
+            semestercombo = new ReaLTaiizor.Controls.AloneComboBox();
             poisonDateTime1 = new ReaLTaiizor.Controls.PoisonDateTime();
             poisonDateTime2 = new ReaLTaiizor.Controls.PoisonDateTime();
             label4 = new AntdUI.Label();
             label5 = new AntdUI.Label();
             aloneComboBox2 = new ReaLTaiizor.Controls.AloneComboBox();
-            label6 = new AntdUI.Label();
-            studentcombo = new ReaLTaiizor.Controls.AloneComboBox();
+            label7 = new AntdUI.Label();
+            label8 = new AntdUI.Label();
             exportbtn = new AntdUI.Button();
             recentAttendanceGrid = new ReaLTaiizor.Controls.PoisonDataGridView();
             ((System.ComponentModel.ISupportInitialize)recentAttendanceGrid).BeginInit();
@@ -58,11 +60,19 @@
             // 
             // label3
             // 
-            label3.Location = new Point(330, 54);
+            label3.Location = new Point(500, 54);
             label3.Name = "label3";
             label3.Size = new Size(93, 23);
             label3.TabIndex = 21;
             label3.Text = "Section";
+            label7.Location = new Point(238, 54);
+            label7.Name = "label7";
+            label7.Size = new Size(93, 23);
+            label7.Text = "Year";
+            label8.Location = new Point(354, 54);
+            label8.Name = "label8";
+            label8.Size = new Size(93, 23);
+            label8.Text = "Semester";
             // 
             // label2
             // 
@@ -81,18 +91,34 @@
             aloneComboBox1.ItemHeight = 20;
             aloneComboBox1.Location = new Point(17, 83);
             aloneComboBox1.Name = "aloneComboBox1";
-            aloneComboBox1.Size = new Size(293, 26);
+            aloneComboBox1.Size = new Size(205, 26);
             aloneComboBox1.TabIndex = 22;
+            yearcombo.DrawMode = DrawMode.OwnerDrawFixed;
+            yearcombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            yearcombo.EnabledCalc = true;
+            yearcombo.FormattingEnabled = true;
+            yearcombo.ItemHeight = 20;
+            yearcombo.Location = new Point(238, 83);
+            yearcombo.Name = "yearcombo";
+            yearcombo.Size = new Size(100, 26);
+            semestercombo.DrawMode = DrawMode.OwnerDrawFixed;
+            semestercombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            semestercombo.EnabledCalc = true;
+            semestercombo.FormattingEnabled = true;
+            semestercombo.ItemHeight = 20;
+            semestercombo.Location = new Point(354, 83);
+            semestercombo.Name = "semestercombo";
+            semestercombo.Size = new Size(130, 26);
             // 
             // poisonDateTime1
             // 
             poisonDateTime1.CustomFormat = "MMMM dd, yyyy";
             poisonDateTime1.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Small;
             poisonDateTime1.Format = DateTimePickerFormat.Custom;
-            poisonDateTime1.Location = new Point(550, 83);
+            poisonDateTime1.Location = new Point(630, 83);
             poisonDateTime1.MinimumSize = new Size(0, 25);
             poisonDateTime1.Name = "poisonDateTime1";
-            poisonDateTime1.Size = new Size(118, 26);
+            poisonDateTime1.Size = new Size(150, 26);
             poisonDateTime1.TabIndex = 23;
             poisonDateTime1.Value = new DateTime(2026, 10, 14, 0, 0, 0, 0);
             // 
@@ -101,16 +127,16 @@
             poisonDateTime2.CustomFormat = "MMMM dd, yyyy";
             poisonDateTime2.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Small;
             poisonDateTime2.Format = DateTimePickerFormat.Custom;
-            poisonDateTime2.Location = new Point(695, 83);
+            poisonDateTime2.Location = new Point(795, 83);
             poisonDateTime2.MinimumSize = new Size(0, 25);
             poisonDateTime2.Name = "poisonDateTime2";
-            poisonDateTime2.Size = new Size(118, 26);
+            poisonDateTime2.Size = new Size(150, 26);
             poisonDateTime2.TabIndex = 24;
             poisonDateTime2.Value = new DateTime(2026, 10, 14, 0, 0, 0, 0);
             // 
             // label4
             // 
-            label4.Location = new Point(550, 54);
+            label4.Location = new Point(630, 54);
             label4.Name = "label4";
             label4.Size = new Size(93, 23);
             label4.TabIndex = 25;
@@ -118,7 +144,7 @@
             // 
             // label5
             // 
-            label5.Location = new Point(695, 54);
+            label5.Location = new Point(795, 54);
             label5.Name = "label5";
             label5.Size = new Size(93, 23);
             label5.TabIndex = 26;
@@ -131,9 +157,9 @@
             aloneComboBox2.EnabledCalc = true;
             aloneComboBox2.FormattingEnabled = true;
             aloneComboBox2.ItemHeight = 20;
-            aloneComboBox2.Location = new Point(330, 83);
+            aloneComboBox2.Location = new Point(500, 83);
             aloneComboBox2.Name = "aloneComboBox2";
-            aloneComboBox2.Size = new Size(186, 26);
+            aloneComboBox2.Size = new Size(115, 26);
             aloneComboBox2.TabIndex = 28;
             // 
             // recentAttendanceGrid
@@ -189,31 +215,12 @@
             recentAttendanceGrid.UseCustomForeColor = true;
             recentAttendanceGrid.UseStyleColors = true;
             // 
-            // label6
-            // 
-            label6.Location = new Point(830, 54);
-            label6.Name = "label6";
-            label6.Size = new Size(93, 23);
-            label6.TabIndex = 31;
-            label6.Text = "Student";
-            // 
-            // studentcombo
-            // 
-            studentcombo.DrawMode = DrawMode.OwnerDrawFixed;
-            studentcombo.DropDownStyle = ComboBoxStyle.DropDownList;
-            studentcombo.EnabledCalc = true;
-            studentcombo.FormattingEnabled = true;
-            studentcombo.ItemHeight = 20;
-            studentcombo.Location = new Point(830, 83);
-            studentcombo.Name = "studentcombo";
-            studentcombo.Size = new Size(180, 26);
-            studentcombo.TabIndex = 32;
             // 
             // exportbtn
             // 
-            exportbtn.Location = new Point(1060, 72);
+            exportbtn.Location = new Point(970, 75);
             exportbtn.Name = "exportbtn";
-            exportbtn.Size = new Size(83, 42);
+            exportbtn.Size = new Size(173, 42);
             exportbtn.TabIndex = 20;
             exportbtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             exportbtn.Text = "Export";
@@ -224,8 +231,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(exportbtn);
-            Controls.Add(studentcombo);
-            Controls.Add(label6);
+            Controls.Add(label7);
+            Controls.Add(label8);
             Controls.Add(recentAttendanceGrid);
             Controls.Add(aloneComboBox2);
             Controls.Add(label5);
@@ -233,6 +240,8 @@
             Controls.Add(poisonDateTime2);
             Controls.Add(poisonDateTime1);
             Controls.Add(aloneComboBox1);
+            Controls.Add(yearcombo);
+            Controls.Add(semestercombo);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -248,6 +257,8 @@
         private AntdUI.Label label3;
         private AntdUI.Label label2;
         private ReaLTaiizor.Controls.AloneComboBox aloneComboBox1;
+        private ReaLTaiizor.Controls.AloneComboBox yearcombo;
+        private ReaLTaiizor.Controls.AloneComboBox semestercombo;
         private ReaLTaiizor.Controls.PoisonDateTime poisonDateTime1;
         private ReaLTaiizor.Controls.PoisonDateTime poisonDateTime2;
         private AntdUI.Label label4;
@@ -255,7 +266,7 @@
         private ReaLTaiizor.Controls.AloneComboBox aloneComboBox2;
         private AntdUI.Button exportbtn;
         private ReaLTaiizor.Controls.PoisonDataGridView recentAttendanceGrid;
-        private AntdUI.Label label6;
-        private ReaLTaiizor.Controls.AloneComboBox studentcombo;
+        private AntdUI.Label label7;
+        private AntdUI.Label label8;
     }
 }

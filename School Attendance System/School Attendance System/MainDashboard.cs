@@ -24,7 +24,10 @@ namespace School_Attendance_System
             TeacherID = teacherID;
             RoleName = role;
             InitializeComponent();
-            MinimumSize = Size;
+            // Every dashboard page uses a fixed 1160 px design surface. Keep enough
+            // client width for that surface plus the sidebar so anchored controls
+            // (especially the attendance date and Save button) cannot collide.
+            MinimumSize = new Size(1420, 840);
 
             AppTheme.Menu(navMenu);
             AppTheme.Menu(adminMenu);

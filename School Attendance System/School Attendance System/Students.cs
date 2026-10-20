@@ -15,7 +15,7 @@ namespace School_Attendance_System
         {
             TeacherID = teacherID;
             InitializeComponent();
-            AppTheme.Input(searchtext, "Search name, number or email", "SearchOutlined");
+            AppTheme.Input(searchtext, string.Empty, "SearchOutlined");
             AppTheme.Grid(studentlistcontent);
             studentlist();
         }
@@ -30,10 +30,14 @@ namespace School_Attendance_System
                     s.email AS Email,
                     s.parent_email AS `Parent Email`,
                     c.COURSE_NAME AS Course,
+                    sec.YEAR_LEVEL AS Year,
+                    sec.SEMESTER AS Semester,
                     sec.SECTION_NAME AS Section,
                     COALESCE(t.Present, 0) AS Present,
                     COALESCE(t.Late, 0) AS Late,
-                    COALESCE(t.Absent, 0) AS Absent
+                    COALESCE(t.Absent, 0) AS Absent,
+                    CASE WHEN COALESCE(f.UnexcusedAbsents, 0) + FLOOR(COALESCE(f.LateCount, 0) / 3) >= 3
+                        THEN 'FDA' ELSE '' END AS Status
                 FROM students s
                 INNER JOIN class_codes cc ON JSON_CONTAINS(s.classcode, JSON_QUOTE(cc.CLASS_CODE))
                 INNER JOIN course c ON c.ID = cc.COURSE_ID
@@ -48,6 +52,14 @@ namespace School_Attendance_System
                     WHERE ar.ATTENDANCE_DATE >= DATE_FORMAT(CURDATE(), '%Y-%m-01') AND ar.ATTENDANCE_DATE <= CURDATE()
                     GROUP BY ar.STUDENT_ID, ar.CLASS_CODE_ID
                 ) t ON t.STUDENT_ID = s.id AND t.CLASS_CODE_ID = cc.ID
+                LEFT JOIN (
+                    SELECT ar.STUDENT_ID, ar.CLASS_CODE_ID,
+                        SUM(ar.STATUS = 'Late') AS LateCount,
+                        SUM(ar.STATUS = 'Absent' AND ar.IS_EXCUSED = 0) AS UnexcusedAbsents
+                    FROM attendance_records ar
+                    INNER JOIN class_codes own ON own.ID = ar.CLASS_CODE_ID AND own.TEACHER_ID = @TeacherID
+                    GROUP BY ar.STUDENT_ID, ar.CLASS_CODE_ID
+                ) f ON f.STUDENT_ID = s.id AND f.CLASS_CODE_ID = cc.ID
                 WHERE cc.TEACHER_ID = @TeacherID
                 ORDER BY c.COURSE_NAME, sec.SECTION_NAME, s.full_name;";
 
@@ -69,11 +81,13 @@ namespace School_Attendance_System
                 {
                     studentlistcontent.Columns["Section"]!.FillWeight = 80;
                 }
+                if (studentlistcontent.Columns.Contains("Year")) studentlistcontent.Columns["Year"]!.FillWeight = 55;
+                if (studentlistcontent.Columns.Contains("Semester")) studentlistcontent.Columns["Semester"]!.FillWeight = 70;
 
                 ApplyStudentFilter();
 
                
-                foreach (string column in new[] { "Present", "Late", "Absent" })
+                foreach (string column in new[] { "Present", "Late", "Absent", "Status" })
                 {
                     if (studentlistcontent.Columns.Contains(column))
                     {
@@ -95,7 +109,7 @@ namespace School_Attendance_System
             string term = SearchFilter.Literal(searchtext.Text.Trim());
             view.RowFilter = term.Length == 0
                 ? string.Empty
-                : string.Join(" OR ", new[] { "[Student Name]", "[Student Number]", "Email", "[Parent Email]", "Course", "Section" }
+                : string.Join(" OR ", new[] { "[Student Name]", "[Student Number]", "Email", "[Parent Email]", "Course", "Year", "Semester", "Section" }
                     .Select(column => $"{column} LIKE '%{term}%'"));
         }
 

@@ -15,6 +15,8 @@ namespace School_Attendance_System
         private bool gridDirty;
         private bool revertingSelection;
         private int? lastCourseId;
+        private int? lastYearId;
+        private int? lastSemesterId;
         private int? lastSectionId;
 
         private sealed record StudentRow(int Id, string Name, string ParentEmail);
@@ -28,8 +30,9 @@ namespace School_Attendance_System
             AppTheme.FieldLabel(label2);
             AppTheme.FieldLabel(label3);
             AppTheme.FieldLabel(label4);
+            AppTheme.FieldLabel(label5);
+            AppTheme.FieldLabel(label6);
             AppTheme.Action(btnDashboard, "CheckOutlined", primary: true);
-            AppTheme.Action(markallbtn, "SelectOutlined");
             ConfigureGrid();
             AppTheme.Grid(recentAttendanceGrid);
             attendanceDate.Value = DateTime.Today;
@@ -39,6 +42,8 @@ namespace School_Attendance_System
 
             btnDashboard.Click += saveAttendanceButton_Click;
             coursecombo.SelectedIndexChanged += coursecombo_SelectedIndexChanged;
+            yearcombo.SelectedIndexChanged += yearcombo_SelectedIndexChanged;
+            semestercombo.SelectedIndexChanged += semestercombo_SelectedIndexChanged;
             sectioncombo.SelectedIndexChanged += sectioncombo_SelectedIndexChanged;
             attendanceDate.ValueChanged += attendanceDate_ValueChanged;
             recentAttendanceGrid.EditingControlShowing += recentAttendanceGrid_EditingControlShowing;
@@ -52,17 +57,18 @@ namespace School_Attendance_System
             recentAttendanceGrid.ReadOnly = false;
             colStudentName.Width = 160;
             colTimeIn.Width = 90;
-            colTimeOut.Width = 90;
             colPresent.Width = 75;
             colLate.Width = 65;
             colAbsent.Width = 75;
+            colExcused.Width = 90;
             colRemarks.Width = 130;
+            colExcused.ReadOnly = true;
             colStudentName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             foreach (DataGridViewColumn column in recentAttendanceGrid.Columns)
                 column.ReadOnly = column == colStudentName;
 
-            foreach (DataGridViewColumn column in new DataGridViewColumn[] { colPresent, colLate, colAbsent })
+            foreach (DataGridViewColumn column in new DataGridViewColumn[] { colPresent, colLate, colAbsent, colExcused })
             {
                 column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -71,30 +77,53 @@ namespace School_Attendance_System
 
         private void LoadCourses()
         {
-            const string query = "SELECT ID, COURSE_NAME FROM course ORDER BY COURSE_NAME;";
+            const string query = "SELECT ID, COURSE_NAME FROM course WHERE IS_ARCHIVED = 0 ORDER BY COURSE_NAME;";
             LoadComboBox(coursecombo, query);
         }
 
         private void LoadSections()
         {
-            const string query = "SELECT ID, SECTION_NAME FROM section ORDER BY SECTION_NAME;";
-            LoadComboBox(sectioncombo, query);
+            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year) ||
+                !AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int semester))
+            {
+                sectioncombo.DataSource = null;
+                return;
+            }
+            const string query = "SELECT ID, SECTION_NAME FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' AND YEAR_LEVEL = @year AND SEMESTER = @semester ORDER BY SECTION_NAME;";
+            LoadComboBox(sectioncombo, query, ("@year", year), ("@semester", semester));
         }
 
-        private void LoadComboBox(ComboBox comboBox, string query)
+        private void LoadYears()
         {
-            
+            LoadComboBox(yearcombo, "SELECT DISTINCT CAST(YEAR_LEVEL AS SIGNED) AS ID, CONCAT('Year ', YEAR_LEVEL) AS LABEL FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY ID;", "LABEL");
+            semestercombo.DataSource = null;
+            sectioncombo.DataSource = null;
+        }
+
+        private void LoadSemesters()
+        {
+            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year)) { semestercombo.DataSource = null; return; }
+            LoadComboBox(semestercombo, "SELECT DISTINCT CAST(SEMESTER AS SIGNED) AS ID, CONCAT('Semester ', SEMESTER) AS LABEL FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' AND YEAR_LEVEL = @year ORDER BY ID;", "LABEL", ("@year", year));
+            sectioncombo.DataSource = null;
+        }
+
+        private void LoadComboBox(ComboBox comboBox, string query, params (string Name, object Value)[] parameters)
+            => LoadComboBox(comboBox, query, null, parameters);
+
+        private void LoadComboBox(ComboBox comboBox, string query, string? displayMember = null, params (string Name, object Value)[] parameters)
+        {
             revertingSelection = true;
             try
             {
                 using MySqlConnection connection = new MySqlConnection(Connection);
                 using MySqlCommand command = new MySqlCommand(query, connection);
+                foreach ((string name, object value) in parameters) command.Parameters.AddWithValue(name, value);
 
                 using MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 comboBox.DataSource = table;
-                comboBox.DisplayMember = table.Columns.Contains("COURSE_NAME") ? "COURSE_NAME" : "SECTION_NAME";
+                comboBox.DisplayMember = displayMember ?? (table.Columns.Contains("COURSE_NAME") ? "COURSE_NAME" : "SECTION_NAME");
                 comboBox.ValueMember = "ID";
                 comboBox.SelectedIndex = -1;
             }
@@ -120,6 +149,27 @@ namespace School_Attendance_System
             selectedClassCodeId = 0;
             lastCourseId = coursecombo.SelectedValue as int?;
             lastSectionId = null;
+            LoadYears();
+        }
+
+        private void yearcombo_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (revertingSelection) return;
+            if (!ConfirmDiscardEdits()) { RestoreSelection(nameof(yearcombo)); return; }
+            lastYearId = AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int selectedYear) ? selectedYear : null;
+            lastSemesterId = null;
+            ClearAttendanceGrid();
+            selectedClassCodeId = 0;
+            LoadSemesters();
+        }
+
+        private void semestercombo_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (revertingSelection) return;
+            if (!ConfirmDiscardEdits()) { RestoreSelection(nameof(semestercombo)); return; }
+            lastSemesterId = AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int selectedSemester) ? selectedSemester : null;
+            ClearAttendanceGrid();
+            selectedClassCodeId = 0;
             LoadSections();
         }
 
@@ -162,12 +212,6 @@ namespace School_Attendance_System
             }
         }
 
-        private void markallbtn_Click(object? sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in recentAttendanceGrid.Rows)
-                row.Cells["colPresent"].Value = true;
-        }
-
        
         internal bool ConfirmDiscardEdits() => !gridDirty || MessageBox.Show(
                 "Discard the attendance you have entered but not saved?",
@@ -187,6 +231,12 @@ namespace School_Attendance_System
                 case nameof(sectioncombo) when lastSectionId is int sectionId:
                     sectioncombo.SelectedValue = sectionId;
                     break;
+                case nameof(yearcombo) when lastYearId is int yearId:
+                    yearcombo.SelectedValue = yearId;
+                    break;
+                case nameof(semestercombo) when lastSemesterId is int semesterId:
+                    semestercombo.SelectedValue = semesterId;
+                    break;
                 case nameof(attendanceDate):
                     attendanceDate.Value = selectedDate;
                     break;
@@ -199,6 +249,8 @@ namespace School_Attendance_System
             ClearAttendanceGrid();
             selectedDate = attendanceDate.Value.Date;
             lastCourseId = courseId;
+            lastYearId = AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int selectedYear) ? selectedYear : null;
+            lastSemesterId = AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int selectedSemester) ? selectedSemester : null;
             lastSectionId = sectionId;
 
             const string classCodeQuery = @"
@@ -207,8 +259,8 @@ namespace School_Attendance_System
             const string studentsQuery = @"
                 SELECT s.id AS StudentId, s.student_number AS StudentNumber, s.full_name AS StudentName,
                     s.parent_email AS ParentEmail,
-                    ar.STATUS, DATE_FORMAT(ar.TIME_IN, '%h:%i %p') AS TimeIn,
-                    DATE_FORMAT(ar.TIME_OUT, '%h:%i %p') AS TimeOut, ar.REMARKS AS Remarks
+                    ar.STATUS, ar.IS_EXCUSED AS IsExcused,
+                    DATE_FORMAT(ar.TIME_IN, '%h:%i %p') AS TimeIn, ar.REMARKS AS Remarks
                 FROM students s
                 INNER JOIN class_codes cc ON JSON_CONTAINS(s.classcode, JSON_QUOTE(cc.CLASS_CODE))
                 LEFT JOIN attendance_records ar ON ar.STUDENT_ID = s.id AND ar.CLASS_CODE_ID = cc.ID
@@ -239,9 +291,10 @@ namespace School_Attendance_System
                     int rowIndex = recentAttendanceGrid.Rows.Add(
                         reader["StudentName"],
                         reader["TimeIn"] == DBNull.Value ? string.Empty : reader["TimeIn"],
-                        reader["TimeOut"] == DBNull.Value ? string.Empty : reader["TimeOut"],
                         status == "Present", status == "Late", status == "Absent",
+                        status == "Absent" && reader["IsExcused"] != DBNull.Value && Convert.ToBoolean(reader["IsExcused"]),
                         reader["Remarks"] == DBNull.Value ? string.Empty : reader["Remarks"]);
+                    recentAttendanceGrid.Rows[rowIndex].Cells["colExcused"].ReadOnly = status != "Absent";
                     recentAttendanceGrid.Rows[rowIndex].Tag = new StudentRow(
                         Convert.ToInt32(reader["StudentId"]),
                         reader["StudentName"]?.ToString() ?? string.Empty,
@@ -262,7 +315,7 @@ namespace School_Attendance_System
         {
             if (selectedClassCodeId == 0 || recentAttendanceGrid.Rows.Count == 0)
             {
-                MessageBox.Show("Select a course and section with students before saving.", "Attendance", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Select a course, year, semester, and section with students before saving.", "Attendance", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             foreach (DataGridViewRow row in recentAttendanceGrid.Rows)
@@ -273,13 +326,13 @@ namespace School_Attendance_System
                 }
 
             const string saveQuery = @"
-                INSERT INTO attendance_records (STUDENT_ID, CLASS_CODE_ID, ATTENDANCE_DATE, STATUS, TIME_IN, TIME_OUT, REMARKS)
-                VALUES (@StudentID, @ClassCodeID, @Date, @Status, @TimeIn, @TimeOut, @Remarks)
+                INSERT INTO attendance_records (STUDENT_ID, CLASS_CODE_ID, ATTENDANCE_DATE, STATUS, IS_EXCUSED, TIME_IN, REMARKS)
+                VALUES (@StudentID, @ClassCodeID, @Date, @Status, @IsExcused, @TimeIn, @Remarks)
                 ON DUPLICATE KEY UPDATE STATUS = VALUES(STATUS), TIME_IN = VALUES(TIME_IN),
-                    TIME_OUT = VALUES(TIME_OUT), REMARKS = VALUES(REMARKS);";
+                    IS_EXCUSED = VALUES(IS_EXCUSED), REMARKS = VALUES(REMARKS);";
             List<AttendanceNotice> notices = new List<AttendanceNotice>();
             string courseName = coursecombo.Text;
-            string sectionName = sectioncombo.Text;
+            string sectionName = $"{yearcombo.Text}, {semestercombo.Text}, Section {sectioncombo.Text}";
             try
             {
                 using MySqlConnection connection = new MySqlConnection(Connection);
@@ -290,8 +343,8 @@ namespace School_Attendance_System
                 command.Parameters.Add("@ClassCodeID", MySqlDbType.Int32);
                 command.Parameters.Add("@Date", MySqlDbType.Date).Value = selectedDate;
                 command.Parameters.Add("@Status", MySqlDbType.VarChar);
+                command.Parameters.Add("@IsExcused", MySqlDbType.Int32);
                 command.Parameters.Add("@TimeIn", MySqlDbType.DateTime);
-                command.Parameters.Add("@TimeOut", MySqlDbType.DateTime);
                 command.Parameters.Add("@Remarks", MySqlDbType.VarChar);
 
                 foreach (DataGridViewRow row in recentAttendanceGrid.Rows)
@@ -302,14 +355,14 @@ namespace School_Attendance_System
                     command.Parameters["@StudentID"].Value = student.Id;
                     command.Parameters["@ClassCodeID"].Value = selectedClassCodeId;
                     command.Parameters["@Status"].Value = status;
+                    command.Parameters["@IsExcused"].Value = status == "Absent" && IsChecked(row, "colExcused") ? 1 : 0;
                     command.Parameters["@TimeIn"].Value = ParseTime(row.Cells["colTimeIn"].Value?.ToString(), selectedDate) ?? (object)DBNull.Value;
-                    command.Parameters["@TimeOut"].Value = ParseTime(row.Cells["colTimeOut"].Value?.ToString(), selectedDate) ?? (object)DBNull.Value;
                     command.Parameters["@Remarks"].Value = remarks.Length == 0 ? DBNull.Value : remarks;
                     command.ExecuteNonQuery();
 
                     
                     if (student.ParentEmail.Length > 0)
-                        notices.Add(new AttendanceNotice(student.Id, selectedClassCodeId, selectedDate,
+                        notices.Add(new AttendanceNotice(selectedDate,
                             student.ParentEmail, student.Name, status, courseName, sectionName, remarks));
                 }
                 transaction.Commit();
@@ -355,7 +408,7 @@ namespace School_Attendance_System
 
         private void recentAttendanceGrid_EditingControlShowing(object? sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (recentAttendanceGrid.CurrentCell?.OwningColumn?.Name is "colTimeIn" or "colTimeOut" && e.Control is TextBox textBox)
+            if (recentAttendanceGrid.CurrentCell?.OwningColumn?.Name == "colTimeIn" && e.Control is TextBox textBox)
             {
                 textBox.KeyPress -= Time_KeyPress;
                 textBox.KeyPress += Time_KeyPress;
@@ -369,7 +422,7 @@ namespace School_Attendance_System
 
         private void recentAttendanceGrid_CellValidating(object? sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (recentAttendanceGrid.Columns[e.ColumnIndex].Name is not ("colTimeIn" or "colTimeOut") || string.IsNullOrWhiteSpace(e.FormattedValue?.ToString())) return;
+            if (recentAttendanceGrid.Columns[e.ColumnIndex].Name != "colTimeIn" || string.IsNullOrWhiteSpace(e.FormattedValue?.ToString())) return;
             if (ParseTime(e.FormattedValue?.ToString()) == null)
             {
                 MessageBox.Show("Enter a valid time, such as 7:30 AM or 5:00 PM.", "Invalid Time", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -389,17 +442,29 @@ namespace School_Attendance_System
             if (recentAttendanceGrid.Columns[e.ColumnIndex].Name is not ("colPresent" or "colLate" or "colAbsent")) return;
             DataGridViewRow row = recentAttendanceGrid.Rows[e.RowIndex];
             string selectedColumn = recentAttendanceGrid.Columns[e.ColumnIndex].Name;
-            if (!IsChecked(row, selectedColumn)) return;
+            if (!IsChecked(row, selectedColumn))
+            {
+                if (GetStatus(row) == null)
+                {
+                    row.Cells["colExcused"].Value = false;
+                    row.Cells["colExcused"].ReadOnly = true;
+                }
+                return;
+            }
             foreach (string columnName in new[] { "colPresent", "colLate", "colAbsent" })
                 if (columnName != selectedColumn) row.Cells[columnName].Value = false;
 
             if (selectedColumn == "colAbsent")
             {
-                row.Cells["colTimeIn"].Value = string.Empty;
-                row.Cells["colTimeOut"].Value = string.Empty;
+                row.Cells["colExcused"].ReadOnly = false;
             }
-           
-            else if (selectedDate == DateTime.Today && string.IsNullOrWhiteSpace(row.Cells["colTimeIn"].Value?.ToString()))
+            else
+            {
+                row.Cells["colExcused"].Value = false;
+                row.Cells["colExcused"].ReadOnly = true;
+            }
+
+            if (selectedColumn != "colAbsent" && selectedDate == DateTime.Today && string.IsNullOrWhiteSpace(row.Cells["colTimeIn"].Value?.ToString()))
                 row.Cells["colTimeIn"].Value = DateTime.Now.ToString("h:mm tt", CultureInfo.InvariantCulture);
         }
     }

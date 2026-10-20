@@ -33,6 +33,8 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             label1 = new AntdUI.Label();
             coursecombo = new ReaLTaiizor.Controls.AloneComboBox();
+            yearcombo = new ReaLTaiizor.Controls.AloneComboBox();
+            semestercombo = new ReaLTaiizor.Controls.AloneComboBox();
             sectioncombo = new ReaLTaiizor.Controls.AloneComboBox();
             codebtn = new AntdUI.Button();
             deletebtn = new AntdUI.Button();
@@ -41,18 +43,18 @@
             listcodecontent = new ReaLTaiizor.Controls.PoisonDataGridView();
             ((System.ComponentModel.ISupportInitialize)listcodecontent).BeginInit();
             SuspendLayout();
-            // 
+            //
             // label1
-            // 
+            //
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(17, 12);
             label1.Name = "label1";
             label1.Size = new Size(117, 35);
             label1.TabIndex = 3;
             label1.Text = "Class Code";
-            // 
+            //
             // coursecombo
-            // 
+            //
             coursecombo.DrawMode = DrawMode.OwnerDrawFixed;
             coursecombo.DropDownStyle = ComboBoxStyle.DropDownList;
             coursecombo.EnabledCalc = true;
@@ -62,6 +64,28 @@
             coursecombo.Name = "coursecombo";
             coursecombo.Size = new Size(293, 26);
             coursecombo.TabIndex = 13;
+            //
+            // yearcombo
+            yearcombo.DrawMode = DrawMode.OwnerDrawFixed;
+            yearcombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            yearcombo.EnabledCalc = true;
+            yearcombo.FormattingEnabled = true;
+            yearcombo.ItemHeight = 20;
+            yearcombo.Location = new Point(342, 79);
+            yearcombo.Name = "yearcombo";
+            yearcombo.Size = new Size(120, 26);
+            yearcombo.TabIndex = 19;
+            //
+            // semestercombo
+            semestercombo.DrawMode = DrawMode.OwnerDrawFixed;
+            semestercombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            semestercombo.EnabledCalc = true;
+            semestercombo.FormattingEnabled = true;
+            semestercombo.ItemHeight = 20;
+            semestercombo.Location = new Point(480, 79);
+            semestercombo.Name = "semestercombo";
+            semestercombo.Size = new Size(150, 26);
+            semestercombo.TabIndex = 20;
             // 
             // sectioncombo
             // 
@@ -70,7 +94,7 @@
             sectioncombo.EnabledCalc = true;
             sectioncombo.FormattingEnabled = true;
             sectioncombo.ItemHeight = 20;
-            sectioncombo.Location = new Point(342, 79);
+            sectioncombo.Location = new Point(648, 79);
             sectioncombo.Name = "sectioncombo";
             sectioncombo.Size = new Size(217, 26);
             sectioncombo.TabIndex = 14;
@@ -105,11 +129,21 @@
             // 
             // label3
             // 
-            label3.Location = new Point(342, 50);
+            label3.Location = new Point(648, 50);
             label3.Name = "label3";
             label3.Size = new Size(93, 23);
             label3.TabIndex = 17;
             label3.Text = "Section";
+            label4 = new AntdUI.Label();
+            label4.Location = new Point(342, 50);
+            label4.Name = "label4";
+            label4.Size = new Size(93, 23);
+            label4.Text = "Year";
+            label5 = new AntdUI.Label();
+            label5.Location = new Point(480, 50);
+            label5.Name = "label5";
+            label5.Size = new Size(93, 23);
+            label5.Text = "Semester";
             // 
             // listcodecontent
             // 
@@ -169,10 +203,14 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label3);
+            Controls.Add(label5);
+            Controls.Add(label4);
             Controls.Add(label2);
             Controls.Add(codebtn);
             Controls.Add(deletebtn);
             Controls.Add(sectioncombo);
+            Controls.Add(semestercombo);
+            Controls.Add(yearcombo);
             Controls.Add(coursecombo);
             Controls.Add(listcodecontent);
             Controls.Add(label1);
@@ -186,11 +224,15 @@
 
         private AntdUI.Label label1;
         private ReaLTaiizor.Controls.AloneComboBox coursecombo;
+        private ReaLTaiizor.Controls.AloneComboBox yearcombo;
+        private ReaLTaiizor.Controls.AloneComboBox semestercombo;
         private ReaLTaiizor.Controls.AloneComboBox sectioncombo;
         private AntdUI.Button codebtn;
         private AntdUI.Button deletebtn;
         private AntdUI.Label label2;
         private AntdUI.Label label3;
+        private AntdUI.Label label4;
+        private AntdUI.Label label5;
         private ReaLTaiizor.Controls.PoisonDataGridView listcodecontent;
     }
 }

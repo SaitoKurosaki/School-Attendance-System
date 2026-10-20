@@ -24,11 +24,16 @@ namespace School_Attendance_System
             AppTheme.Title(label1);
             AppTheme.FieldLabel(label2);
             AppTheme.FieldLabel(label3);
+            AppTheme.FieldLabel(label4);
+            AppTheme.FieldLabel(label5);
             AppTheme.Action(codebtn, "PlusOutlined", primary: true);
             AppTheme.Action(deletebtn, "DeleteOutlined");
             AppTheme.Grid(listcodecontent);
             LoadCourse();
-            LoadSection();
+            LoadYears();
+            coursecombo.SelectedIndexChanged += (_, _) => LoadYears();
+            yearcombo.SelectedIndexChanged += (_, _) => LoadSemesters();
+            semestercombo.SelectedIndexChanged += (_, _) => LoadSections();
             codelist();
 
         }
@@ -36,50 +41,61 @@ namespace School_Attendance_System
 
 
 
-        private void LoadSection()
+        private void LoadYears()
         {
-            MySqlConnection conn = new MySqlConnection(Connection);
-            MySqlDataAdapter adapter = null;
+            LoadOptions(yearcombo, "SELECT DISTINCT CAST(YEAR_LEVEL AS SIGNED) AS ID, CONCAT('Year ', YEAR_LEVEL) AS LABEL FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY ID;", "LABEL");
+            semestercombo.DataSource = null;
+            sectioncombo.DataSource = null;
+        }
 
+        private void LoadSemesters()
+        {
+            sectioncombo.DataSource = null;
+            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year)) { semestercombo.DataSource = null; return; }
+            LoadOptions(semestercombo, "SELECT DISTINCT CAST(SEMESTER AS SIGNED) AS ID, CONCAT('Semester ', SEMESTER) AS LABEL FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' AND YEAR_LEVEL = @year ORDER BY ID;", "LABEL", ("@year", year));
+        }
+
+        private void LoadSections()
+        {
+            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year) ||
+                !AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int semester))
+            {
+                sectioncombo.DataSource = null;
+                return;
+            }
+
+            LoadOptions(sectioncombo, "SELECT ID, SECTION_NAME FROM section WHERE IS_ARCHIVED = 0 AND SECTION_NAME NOT LIKE 'ARCHIVED-%' AND YEAR_LEVEL = @year AND SEMESTER = @semester ORDER BY SECTION_NAME;", "SECTION_NAME", ("@year", year), ("@semester", semester));
+        }
+
+        private static void LoadOptions(ComboBox comboBox, string query, string displayMember, params (string Name, object Value)[] parameters)
+        {
             try
             {
-                string query = "SELECT * FROM section";
-
-                adapter = new MySqlDataAdapter(query, conn);
-
-                DataTable dt = new DataTable();
-
-                adapter.Fill(dt);
-
-                sectioncombo.DataSource = dt;
-                sectioncombo.DisplayMember = "SECTION_NAME";
-                sectioncombo.ValueMember = "ID";
-                sectioncombo.SelectedIndex = -1;
+                using MySqlConnection connection = new MySqlConnection("server=165.140.202.88;database=school;uid=school;password=Administrator");
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                foreach ((string name, object value) in parameters) command.Parameters.AddWithValue(name, value);
+                using MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                comboBox.DataSource = table;
+                comboBox.DisplayMember = displayMember;
+                comboBox.ValueMember = "ID";
+                comboBox.SelectedIndex = -1;
             }
-            catch (Exception ex)
+            catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to load courses: " + ex.Message);
+                MessageBox.Show("Unable to load academic options: " + ex.Message, "Class Code", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            finally
-            {
-                if (adapter != null)
-                {
-                    adapter.Dispose();
-                }
-
-                conn.Dispose();
-            }
-
         }
 
         private void LoadCourse()
         {
             MySqlConnection conn = new MySqlConnection(Connection);
-            MySqlDataAdapter adapter = null;
+            MySqlDataAdapter? adapter = null;
 
             try
             {
-                string query = "SELECT * FROM Course";
+                string query = "SELECT * FROM Course WHERE IS_ARCHIVED = 0 ORDER BY COURSE_NAME";
 
                 adapter = new MySqlDataAdapter(query, conn);
 
@@ -110,8 +126,8 @@ namespace School_Attendance_System
         private void codelist()
         {
             MySqlConnection conn = new MySqlConnection(Connection);
-            MySqlDataAdapter adapter = null;
-            MySqlCommand cmd = null;
+            MySqlDataAdapter? adapter = null;
+            MySqlCommand? cmd = null;
 
             try
             {
@@ -120,6 +136,8 @@ namespace School_Attendance_System
                 cc.ID,
                 CONCAT(t.FIRST_NAME, ' ', t.LAST_NAME) AS TEACHER_NAME,
                 c.COURSE_NAME,
+                CONCAT('Year ', s.YEAR_LEVEL) AS YEAR_LEVEL,
+                CONCAT('Semester ', s.SEMESTER) AS SEMESTER,
                 s.SECTION_NAME,
                 cc.CLASS_CODE
             FROM class_codes cc
@@ -143,10 +161,12 @@ namespace School_Attendance_System
                     column.SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
                 listcodecontent.Columns["ID"]!.Visible = false;
-                listcodecontent.Columns["COURSE_NAME"].FillWeight = 200;
+                if (listcodecontent.Columns["COURSE_NAME"] is DataGridViewColumn courseColumn)
+                    courseColumn.FillWeight = 200;
                 foreach ((string column, string header) in new[]
                 {
                     ("TEACHER_NAME", "Teacher"), ("COURSE_NAME", "Course"),
+                    ("YEAR_LEVEL", "Year"), ("SEMESTER", "Semester"),
                     ("SECTION_NAME", "Section"), ("CLASS_CODE", "Class Code")
                 })
                 {
@@ -191,7 +211,7 @@ namespace School_Attendance_System
                 return;
             }
 
-            if (sectioncombo.SelectedIndex == -1)
+            if (yearcombo.SelectedIndex == -1 || semestercombo.SelectedIndex == -1 || sectioncombo.SelectedIndex == -1)
             {
                 MessageBox.Show("Please select a section.");
                 return;

@@ -36,40 +36,43 @@
             recentAttendanceGrid = new ReaLTaiizor.Controls.PoisonDataGridView();
             colStudentName = new DataGridViewTextBoxColumn();
             colTimeIn = new DataGridViewTextBoxColumn();
-            colTimeOut = new DataGridViewTextBoxColumn();
             colPresent = new DataGridViewCheckBoxColumn();
             colLate = new DataGridViewCheckBoxColumn();
             colAbsent = new DataGridViewCheckBoxColumn();
+            colExcused = new DataGridViewCheckBoxColumn();
             colRemarks = new DataGridViewTextBoxColumn();
             btnDashboard = new AntdUI.Button();
-            markallbtn = new AntdUI.Button();
             label3 = new AntdUI.Label();
             label2 = new AntdUI.Label();
+            label5 = new AntdUI.Label();
+            label6 = new AntdUI.Label();
             label4 = new AntdUI.Label();
             attendanceDate = new ReaLTaiizor.Controls.PoisonDateTime();
+            yearcombo = new ReaLTaiizor.Controls.AloneComboBox();
+            semestercombo = new ReaLTaiizor.Controls.AloneComboBox();
             sectioncombo = new ReaLTaiizor.Controls.AloneComboBox();
             coursecombo = new ReaLTaiizor.Controls.AloneComboBox();
             ((System.ComponentModel.ISupportInitialize)recentAttendanceGrid).BeginInit();
             SuspendLayout();
-            // 
+            //
             // label1
-            // 
+            //
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 3);
+            label1.Location = new Point(17, 3);
             label1.Name = "label1";
             label1.Size = new Size(117, 35);
             label1.TabIndex = 2;
             label1.Text = "Attendance";
-            // 
+            //
             // mySqlCommand1
-            // 
+            //
             mySqlCommand1.CacheAge = 0;
             mySqlCommand1.Connection = null;
             mySqlCommand1.EnableCaching = false;
             mySqlCommand1.Transaction = null;
-            // 
+            //
             // recentAttendanceGrid
-            // 
+            //
             recentAttendanceGrid.AllowUserToAddRows = false;
             recentAttendanceGrid.AllowUserToDeleteRows = false;
             recentAttendanceGrid.AllowUserToResizeColumns = false;
@@ -88,7 +91,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             recentAttendanceGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             recentAttendanceGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            recentAttendanceGrid.Columns.AddRange(new DataGridViewColumn[] { colStudentName, colTimeIn, colTimeOut, colPresent, colLate, colAbsent, colRemarks });
+            recentAttendanceGrid.Columns.AddRange(new DataGridViewColumn[] { colStudentName, colTimeIn, colPresent, colLate, colAbsent, colExcused, colRemarks });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -137,12 +140,6 @@
             colTimeIn.Name = "colTimeIn";
             colTimeIn.ReadOnly = true;
             // 
-            // colTimeOut
-            // 
-            colTimeOut.HeaderText = "Time Out";
-            colTimeOut.MinimumWidth = 6;
-            colTimeOut.Name = "colTimeOut";
-            colTimeOut.ReadOnly = true;
             // 
             // colPresent
             // 
@@ -164,7 +161,11 @@
             colAbsent.MinimumWidth = 6;
             colAbsent.Name = "colAbsent";
             colAbsent.ReadOnly = true;
-            // 
+            // colExcused
+            colExcused.HeaderText = "Excused";
+            colExcused.MinimumWidth = 6;
+            colExcused.Name = "colExcused";
+            colExcused.ReadOnly = true;
             // colRemarks
             // 
             colRemarks.HeaderText = "Remarks";
@@ -174,38 +175,41 @@
             // 
             // btnDashboard
             // 
-            btnDashboard.Location = new Point(926, 21);
+            btnDashboard.Location = new Point(926, 57);
             btnDashboard.Name = "btnDashboard";
             btnDashboard.Size = new Size(217, 42);
             btnDashboard.TabIndex = 12;
             btnDashboard.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnDashboard.Text = "Save Attendance";
             // 
-            // markallbtn
-            // 
-            markallbtn.Location = new Point(926, 69);
-            markallbtn.Name = "markallbtn";
-            markallbtn.Size = new Size(217, 42);
-            markallbtn.TabIndex = 22;
-            markallbtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            markallbtn.Text = "Mark All Present";
-            markallbtn.Click += markallbtn_Click;
             // 
             // label3
             // 
-            label3.Location = new Point(328, 36);
+            label3.Location = new Point(570, 36);
             label3.Name = "label3";
             label3.Size = new Size(93, 23);
             label3.TabIndex = 21;
             label3.Text = "Section";
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // label2
             // 
-            label2.Location = new Point(12, 36);
+            label2.Location = new Point(17, 36);
             label2.Name = "label2";
             label2.Size = new Size(93, 23);
             label2.TabIndex = 20;
             label2.Text = "Course";
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            label5.Location = new Point(270, 36);
+            label5.Name = "label5";
+            label5.Size = new Size(93, 23);
+            label5.Text = "Year";
+            label5.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            label6.Location = new Point(410, 36);
+            label6.Name = "label6";
+            label6.Size = new Size(93, 23);
+            label6.Text = "Semester";
+            label6.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // sectioncombo
             // 
@@ -214,10 +218,11 @@
             sectioncombo.EnabledCalc = true;
             sectioncombo.FormattingEnabled = true;
             sectioncombo.ItemHeight = 20;
-            sectioncombo.Location = new Point(328, 65);
+            sectioncombo.Location = new Point(580, 65);
             sectioncombo.Name = "sectioncombo";
-            sectioncombo.Size = new Size(217, 26);
+            sectioncombo.Size = new Size(150, 26);
             sectioncombo.TabIndex = 19;
+            sectioncombo.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // coursecombo
             // 
@@ -226,29 +231,52 @@
             coursecombo.EnabledCalc = true;
             coursecombo.FormattingEnabled = true;
             coursecombo.ItemHeight = 20;
-            coursecombo.Location = new Point(12, 65);
+            coursecombo.Location = new Point(17, 65);
             coursecombo.Name = "coursecombo";
-            coursecombo.Size = new Size(293, 26);
+            coursecombo.Size = new Size(230, 26);
             coursecombo.TabIndex = 18;
+            coursecombo.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            yearcombo.DrawMode = DrawMode.OwnerDrawFixed;
+            yearcombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            yearcombo.EnabledCalc = true;
+            yearcombo.FormattingEnabled = true;
+            yearcombo.ItemHeight = 20;
+            yearcombo.Location = new Point(270, 65);
+            yearcombo.Name = "yearcombo";
+            yearcombo.Size = new Size(120, 26);
+            yearcombo.TabIndex = 25;
+            yearcombo.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            semestercombo.DrawMode = DrawMode.OwnerDrawFixed;
+            semestercombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            semestercombo.EnabledCalc = true;
+            semestercombo.FormattingEnabled = true;
+            semestercombo.ItemHeight = 20;
+            semestercombo.Location = new Point(410, 65);
+            semestercombo.Name = "semestercombo";
+            semestercombo.Size = new Size(150, 26);
+            semestercombo.TabIndex = 26;
+            semestercombo.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // label4
             // 
-            label4.Location = new Point(620, 36);
+            label4.Location = new Point(750, 36);
             label4.Name = "label4";
             label4.Size = new Size(93, 23);
             label4.TabIndex = 23;
             label4.Text = "Date";
+            label4.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // attendanceDate
             // 
             attendanceDate.CustomFormat = "MMMM dd, yyyy";
             attendanceDate.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Small;
             attendanceDate.Format = DateTimePickerFormat.Custom;
-            attendanceDate.Location = new Point(620, 65);
+            attendanceDate.Location = new Point(750, 65);
             attendanceDate.MinimumSize = new Size(0, 25);
             attendanceDate.Name = "attendanceDate";
-            attendanceDate.Size = new Size(200, 26);
+            attendanceDate.Size = new Size(170, 26);
             attendanceDate.TabIndex = 24;
+            attendanceDate.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // Attendance
             // 
@@ -256,10 +284,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label3);
             Controls.Add(label2);
+            Controls.Add(label5);
+            Controls.Add(label6);
             Controls.Add(sectioncombo);
+            Controls.Add(yearcombo);
+            Controls.Add(semestercombo);
             Controls.Add(coursecombo);
             Controls.Add(btnDashboard);
-            Controls.Add(markallbtn);
             Controls.Add(attendanceDate);
             Controls.Add(label4);
             Controls.Add(recentAttendanceGrid);
@@ -278,16 +309,19 @@
         private AntdUI.Button btnDashboard;
         private AntdUI.Label label3;
         private AntdUI.Label label2;
+        private AntdUI.Label label5;
+        private AntdUI.Label label6;
         private ReaLTaiizor.Controls.AloneComboBox sectioncombo;
         private ReaLTaiizor.Controls.AloneComboBox coursecombo;
+        private ReaLTaiizor.Controls.AloneComboBox yearcombo;
+        private ReaLTaiizor.Controls.AloneComboBox semestercombo;
         private DataGridViewTextBoxColumn colStudentName;
         private DataGridViewTextBoxColumn colTimeIn;
-        private DataGridViewTextBoxColumn colTimeOut;
         private DataGridViewCheckBoxColumn colPresent;
         private DataGridViewCheckBoxColumn colLate;
         private DataGridViewCheckBoxColumn colAbsent;
+        private DataGridViewCheckBoxColumn colExcused;
         private DataGridViewTextBoxColumn colRemarks;
-        private AntdUI.Button markallbtn;
         private AntdUI.Label label4;
         private ReaLTaiizor.Controls.PoisonDateTime attendanceDate;
     }

@@ -15,7 +15,7 @@ namespace School_Attendance_System
         private DateTime rangeTo = DateTime.Today;
         private bool loadingFilters;
 
-        private sealed record ReportRow(string Student, string Course, string Section, DateTime Date, string Status);
+        private sealed record ReportRow(string Student, string Course, int Year, int Semester, string Section, DateTime Date, string Status);
 
         public Reports(int teacherId)
         {
@@ -27,7 +27,8 @@ namespace School_Attendance_System
             AppTheme.FieldLabel(label3);
             AppTheme.FieldLabel(label4);
             AppTheme.FieldLabel(label5);
-            AppTheme.FieldLabel(label6);
+            AppTheme.FieldLabel(label7);
+            AppTheme.FieldLabel(label8);
             AppTheme.Action(exportbtn, "DownloadOutlined", primary: true);
             AppTheme.Grid(recentAttendanceGrid);
             poisonDateTime1.Value = DateTime.Today;
@@ -35,12 +36,14 @@ namespace School_Attendance_System
 
           
             LoadCourses();
+            LoadYears();
+            LoadSemesters();
             LoadSections();
-            LoadStudents();
 
             aloneComboBox1.SelectedIndexChanged += courseCombo_SelectedIndexChanged;
+            yearcombo.SelectedIndexChanged += academicFilterChanged;
+            semestercombo.SelectedIndexChanged += academicFilterChanged;
             aloneComboBox2.SelectedIndexChanged += filterChanged;
-            studentcombo.SelectedIndexChanged += filterChanged;
             poisonDateTime1.ValueChanged += filterChanged;
             poisonDateTime2.ValueChanged += filterChanged;
             LoadReport();
@@ -54,23 +57,31 @@ namespace School_Attendance_System
 
         private void LoadSections()
         {
-            const string query = "SELECT ID, SECTION_NAME FROM section ORDER BY SECTION_NAME;";
-            LoadComboBox(aloneComboBox2, query, "SECTION_NAME");
+            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year) ||
+                !AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int semester))
+            {
+                bool wasLoading = loadingFilters;
+                loadingFilters = true;
+                aloneComboBox2.DataSource = null;
+                loadingFilters = wasLoading;
+                return;
+            }
+
+            const string query = @"SELECT ID, SECTION_NAME FROM section
+                WHERE SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                  AND YEAR_LEVEL = @YearLevel
+                  AND SEMESTER = @Semester
+                ORDER BY SECTION_NAME;";
+            LoadComboBox(aloneComboBox2, query, "SECTION_NAME",
+                ("@YearLevel", year),
+                ("@Semester", semester));
         }
 
-        private void LoadStudents()
-        {
-            const string query = @"
-                SELECT 0 AS ID, 'All Students' AS StudentLabel
-                UNION ALL
-                SELECT DISTINCT s.id AS ID,
-                    CONCAT(s.full_name, IF(s.student_number IS NULL, '', CONCAT(' (', s.student_number, ')'))) AS StudentLabel
-                FROM students s
-                INNER JOIN class_codes cc ON JSON_CONTAINS(s.classcode, JSON_QUOTE(cc.CLASS_CODE))
-                WHERE cc.TEACHER_ID = @TeacherID
-                ORDER BY ID <> 0, StudentLabel;";
-            LoadComboBox(studentcombo, query, "StudentLabel", ("@TeacherID", teacherId));
-        }
+        private void LoadYears() => LoadComboBox(yearcombo,
+            "SELECT DISTINCT CAST(YEAR_LEVEL AS SIGNED) AS ID, CONCAT('Year ', YEAR_LEVEL) AS Label FROM section WHERE SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY ID;", "Label");
+
+        private void LoadSemesters() => LoadComboBox(semestercombo,
+            "SELECT CAST(1 AS SIGNED) AS ID, 'Semester 1' AS Label UNION ALL SELECT CAST(2 AS SIGNED), 'Semester 2';", "Label");
 
         private void LoadComboBox(ComboBox comboBox, string query, string displayMember,
             params (string Name, object Value)[] parameters)
@@ -111,6 +122,13 @@ namespace School_Attendance_System
         private void filterChanged(object? sender, EventArgs e)
         {
             if (loadingFilters) return;
+            LoadReport();
+        }
+
+        private void academicFilterChanged(object? sender, EventArgs e)
+        {
+            if (loadingFilters) return;
+            LoadSections();
             LoadReport();
         }
 
@@ -166,7 +184,8 @@ namespace School_Attendance_System
             if (rangeFrom > rangeTo) (rangeFrom, rangeTo) = (rangeTo, rangeFrom);
 
             const string query = @"
-                SELECT s.full_name AS StudentName, c.COURSE_NAME AS Course, sec.SECTION_NAME AS Section,
+                SELECT s.full_name AS StudentName, c.COURSE_NAME AS Course, sec.YEAR_LEVEL AS YearLevel,
+                    sec.SEMESTER AS Semester, sec.SECTION_NAME AS Section,
                     ar.ATTENDANCE_DATE AS AttendanceDate, ar.STATUS AS AttendanceStatus
                 FROM attendance_records ar
                 INNER JOIN students s ON s.id = ar.STUDENT_ID
@@ -175,8 +194,9 @@ namespace School_Attendance_System
                 INNER JOIN section sec ON sec.ID = cc.SECTION_ID
                 WHERE cc.TEACHER_ID = @TeacherID AND ar.ATTENDANCE_DATE BETWEEN @DateFrom AND @DateTo
                     AND (@CourseID IS NULL OR cc.COURSE_ID = @CourseID)
+                    AND (@YearLevel IS NULL OR sec.YEAR_LEVEL = @YearLevel)
+                    AND (@Semester IS NULL OR sec.SEMESTER = @Semester)
                     AND (@SectionID IS NULL OR cc.SECTION_ID = @SectionID)
-                    AND (@StudentID IS NULL OR ar.STUDENT_ID = @StudentID)
                 ORDER BY ar.ATTENDANCE_DATE DESC, c.COURSE_NAME, sec.SECTION_NAME, s.full_name;";
 
             List<ReportRow> rows = new List<ReportRow>();
@@ -188,8 +208,9 @@ namespace School_Attendance_System
                 command.Parameters.AddWithValue("@DateFrom", rangeFrom);
                 command.Parameters.AddWithValue("@DateTo", rangeTo);
                 command.Parameters.AddWithValue("@CourseID", aloneComboBox1.SelectedValue is int courseId ? courseId : (object)DBNull.Value);
+                command.Parameters.AddWithValue("@YearLevel", AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year) ? year : (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Semester", AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int semester) ? semester : (object)DBNull.Value);
                 command.Parameters.AddWithValue("@SectionID", aloneComboBox2.SelectedValue is int sectionId ? sectionId : (object)DBNull.Value);
-                command.Parameters.AddWithValue("@StudentID", SelectedStudentId() ?? (object)DBNull.Value);
                 connection.Open();
                 using MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -197,6 +218,8 @@ namespace School_Attendance_System
                     rows.Add(new ReportRow(
                         reader["StudentName"]?.ToString() ?? string.Empty,
                         reader["Course"]?.ToString() ?? string.Empty,
+                        Convert.ToInt32(reader["YearLevel"]),
+                        Convert.ToInt32(reader["Semester"]),
                         reader["Section"]?.ToString() ?? string.Empty,
                         Convert.ToDateTime(reader["AttendanceDate"]),
                         reader["AttendanceStatus"]?.ToString() ?? string.Empty));
@@ -212,19 +235,12 @@ namespace School_Attendance_System
         }
 
       
-        private int? SelectedStudentId()
-        {
-            if (studentcombo.SelectedValue is null || studentcombo.SelectedValue is DBNull) return null;
-            int id = Convert.ToInt32(studentcombo.SelectedValue);
-            return id == 0 ? null : id;
-        }
-
         private void RenderDetailed(List<ReportRow> rows)
         {
-            ResetColumns(("Student Name", 180), ("Course", 260), ("Section", 60), ("Date", 120), ("Status", 80));
+            ResetColumns(("Student Name", 180), ("Course", 220), ("Year", 55), ("Semester", 70), ("Section", 60), ("Date", 120), ("Status", 80));
             foreach (ReportRow row in rows)
             {
-                recentAttendanceGrid.Rows.Add(row.Student, row.Course, row.Section,
+                recentAttendanceGrid.Rows.Add(row.Student, row.Course, row.Year, row.Semester, row.Section,
                     row.Date.ToString("MMMM dd, yyyy"), row.Status);
             }
         }

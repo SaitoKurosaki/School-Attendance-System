@@ -23,7 +23,9 @@ namespace School_Attendance_System
             AppTheme.Grid(recentAttendanceGrid);
             colStudentName.FillWeight = 170;
             colCourse.FillWeight = 80;
-            colSection.FillWeight = 60;
+            colYear.FillWeight = 45;
+            colSemester.FillWeight = 65;
+            colSection.FillWeight = 55;
             colStatus.FillWeight = 70;
             colTime.FillWeight = 80;
             colRemarks.FillWeight = 100;
@@ -62,6 +64,8 @@ namespace School_Attendance_System
                 SELECT
                     s.full_name AS StudentName,
                     c.COURSE_NAME AS CourseName,
+                    sec.YEAR_LEVEL AS YearLevel,
+                    sec.SEMESTER AS Semester,
                     sec.SECTION_NAME AS SectionName,
                     ar.STATUS AS AttendanceStatus,
                     DATE_FORMAT(ar.TIME_IN, '%h:%i %p') AS AttendanceTime,
@@ -106,6 +110,8 @@ namespace School_Attendance_System
                         recentAttendanceGrid.Rows.Add(
                             recentReader["StudentName"],
                             Abbreviate(recentReader["CourseName"].ToString() ?? string.Empty),
+                            recentReader["YearLevel"],
+                            recentReader["Semester"],
                             recentReader["SectionName"],
                             recentReader["AttendanceStatus"],
                             recentReader["AttendanceTime"],
