@@ -69,7 +69,7 @@ namespace School_Attendance_System
             // logoBox
             // 
             logoBox.BackColor = Color.Transparent;
-            logoBox.BackgroundImage = Properties.Resources.ChatGPT_Image_Jul_26__2026__01_02_24_PM;
+            logoBox.BackgroundImage = Properties.Resources.logo_main;
             logoBox.BackgroundImageLayout = ImageLayout.Zoom;
             logoBox.Location = new Point(20, 20);
             logoBox.Name = "logoBox";

@@ -64,7 +64,7 @@ namespace School_Attendance_System
                     c.COURSE_NAME AS CourseName,
                     sec.SECTION_NAME AS SectionName,
                     ar.STATUS AS AttendanceStatus,
-                    DATE_FORMAT(COALESCE(ar.TIME_IN, ar.CREATED_AT), '%h:%i %p') AS AttendanceTime,
+                    DATE_FORMAT(ar.TIME_IN, '%h:%i %p') AS AttendanceTime,
                     ar.REMARKS AS Remarks
                 FROM attendance_records ar
                 INNER JOIN students s ON s.id = ar.STUDENT_ID
@@ -73,7 +73,7 @@ namespace School_Attendance_System
                 INNER JOIN section sec ON sec.ID = cc.SECTION_ID
                 WHERE cc.TEACHER_ID = @TeacherID
                     AND ar.ATTENDANCE_DATE = CURDATE()
-                ORDER BY COALESCE(ar.TIME_IN, ar.CREATED_AT) DESC, ar.ID DESC;";
+                ORDER BY ar.ATTENDANCE_DATE DESC, ar.TIME_IN DESC, ar.ID DESC;";
 
             try
             {
