@@ -133,12 +133,12 @@ namespace School_Attendance_System
             sectiontext.CustomBGColor = Color.White;
             sectiontext.Font = new Font("Tahoma", 11F);
             sectiontext.ForeColor = Color.DimGray;
-            sectiontext.Location = new Point(900, 79);
+            sectiontext.Location = new Point(890, 79);
             sectiontext.MaxLength = 10;
             sectiontext.Multiline = false;
             sectiontext.Name = "sectiontext";
             sectiontext.ReadOnly = false;
-            sectiontext.Size = new Size(52, 28);
+            sectiontext.Size = new Size(75, 28);
             sectiontext.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             sectiontext.TabIndex = 5;
             sectiontext.TextAlignment = HorizontalAlignment.Left;
@@ -191,7 +191,7 @@ namespace School_Attendance_System
             sectioncombo.EnabledCalc = true;
             sectioncombo.FormattingEnabled = true;
             sectioncombo.ItemHeight = 20;
-            sectioncombo.Location = new Point(840, 139);
+            sectioncombo.Location = new Point(890, 139);
             sectioncombo.Name = "sectioncombo";
             sectioncombo.Size = new Size(75, 26);
             sectioncombo.TabIndex = 12;
@@ -212,13 +212,13 @@ namespace School_Attendance_System
             semestercombo.ItemHeight = 20;
             semestercombo.Location = new Point(750, 79);
             semestercombo.Name = "semestercombo";
-            semestercombo.Size = new Size(135, 26);
+            semestercombo.Size = new Size(125, 26);
             semestercombo.TabIndex = 26;
             newsemesterlabel.Location = new Point(750, 50);
             newsemesterlabel.Name = "newsemesterlabel";
             newsemesterlabel.Size = new Size(100, 23);
             newsemesterlabel.Text = "Semester";
-            newsectionlabel.Location = new Point(900, 50);
+            newsectionlabel.Location = new Point(890, 50);
             newsectionlabel.Name = "newsectionlabel";
             newsectionlabel.Size = new Size(75, 23);
             newsectionlabel.Text = "Section";
@@ -226,11 +226,11 @@ namespace School_Attendance_System
             sectionyearlabel.Name = "sectionyearlabel";
             sectionyearlabel.Size = new Size(90, 23);
             sectionyearlabel.Text = "Year";
-            sectionsemesterlabel.Location = new Point(725, 116);
+            sectionsemesterlabel.Location = new Point(750, 116);
             sectionsemesterlabel.Name = "sectionsemesterlabel";
             sectionsemesterlabel.Size = new Size(100, 23);
             sectionsemesterlabel.Text = "Semester";
-            sectionnamelabel.Location = new Point(840, 116);
+            sectionnamelabel.Location = new Point(890, 116);
             sectionnamelabel.Name = "sectionnamelabel";
             sectionnamelabel.Size = new Size(75, 23);
             sectionnamelabel.Text = "Section";
@@ -241,30 +241,30 @@ namespace School_Attendance_System
             sectionyearcombo.ItemHeight = 20;
             sectionyearcombo.Location = new Point(620, 139);
             sectionyearcombo.Name = "sectionyearcombo";
-            sectionyearcombo.Size = new Size(95, 26);
+            sectionyearcombo.Size = new Size(115, 26);
             sectionyearcombo.TabIndex = 27;
             sectionsemestercombo.DrawMode = DrawMode.OwnerDrawFixed;
             sectionsemestercombo.DropDownStyle = ComboBoxStyle.DropDownList;
             sectionsemestercombo.EnabledCalc = true;
             sectionsemestercombo.FormattingEnabled = true;
             sectionsemestercombo.ItemHeight = 20;
-            sectionsemestercombo.Location = new Point(725, 139);
+            sectionsemestercombo.Location = new Point(750, 139);
             sectionsemestercombo.Name = "sectionsemestercombo";
-            sectionsemestercombo.Size = new Size(105, 26);
+            sectionsemestercombo.Size = new Size(125, 26);
             sectionsemestercombo.TabIndex = 28;
             sectionyearcombo.SelectedIndexChanged += sectionfilter_SelectedIndexChanged;
             sectionsemestercombo.SelectedIndexChanged += sectionfilter_SelectedIndexChanged;
             // 
             // renamesectionbtn
             // 
-            renamesectionbtn.Location = new Point(925, 131);
+            renamesectionbtn.Location = new Point(970, 131);
             renamesectionbtn.Name = "renamesectionbtn";
             renamesectionbtn.Size = new Size(88, 42);
             renamesectionbtn.TabIndex = 13;
             renamesectionbtn.Text = "Rename";
             renamesectionbtn.Click += renamesectionbtn_Click;
             // archivesectionbtn
-            archivesectionbtn.Location = new Point(1023, 131);
+            archivesectionbtn.Location = new Point(1070, 131);
             archivesectionbtn.Name = "archivesectionbtn";
             archivesectionbtn.Size = new Size(88, 42);
             archivesectionbtn.TabIndex = 14;

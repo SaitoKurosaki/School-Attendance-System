@@ -47,8 +47,11 @@ namespace School_Attendance_System
 
             AddItem(adminMenu, "Administrator", "SafetyCertificateOutlined", "administrator");
             AddItem(adminMenu, "Teachers", "UserSwitchOutlined", "teachers");
+            AddItem(testMenu, "Test", "ExperimentOutlined", "fdatest");
             adminMenu.Visible = IsAdministrator;
+            testMenu.Visible = IsAdministrator;
             adminDivider.Visible = IsAdministrator;
+            testDivider.Visible = IsAdministrator;
 
             currentMenu = navMenu;
             currentItem = dashboard;
@@ -92,6 +95,8 @@ namespace School_Attendance_System
 
         private bool OpenScreen(string key)
         {
+            if (key == "fdatest" && !IsAdministrator) return false;
+
             UserControl screen = key switch
             {
                 "students" => new Students(TeacherID),
@@ -100,6 +105,7 @@ namespace School_Attendance_System
                 "reports" => new Reports(TeacherID),
                 "administrator" => new Administrator(RoleName),
                 "teachers" => new Teachers(TeacherID, RoleName),
+                "fdatest" => new FdaTest(RoleName),
                 _ => new Dashboard(TeacherID),
             };
 

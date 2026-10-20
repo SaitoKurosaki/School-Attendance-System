@@ -41,8 +41,8 @@ namespace School_Attendance_System
             LoadSections();
 
             aloneComboBox1.SelectedIndexChanged += courseCombo_SelectedIndexChanged;
-            yearcombo.SelectedIndexChanged += academicFilterChanged;
-            semestercombo.SelectedIndexChanged += academicFilterChanged;
+            yearcombo.SelectedIndexChanged += yearFilterChanged;
+            semestercombo.SelectedIndexChanged += semesterFilterChanged;
             aloneComboBox2.SelectedIndexChanged += filterChanged;
             poisonDateTime1.ValueChanged += filterChanged;
             poisonDateTime2.ValueChanged += filterChanged;
@@ -51,37 +51,75 @@ namespace School_Attendance_System
 
         private void LoadCourses()
         {
-            const string query = "SELECT ID, COURSE_NAME FROM course ORDER BY COURSE_NAME;";
-            LoadComboBox(aloneComboBox1, query, "COURSE_NAME");
+            const string query = @"
+                SELECT DISTINCT c.ID, c.COURSE_NAME
+                FROM course c
+                INNER JOIN class_codes cc ON cc.COURSE_ID = c.ID AND cc.TEACHER_ID = @TeacherID
+                INNER JOIN section sec ON sec.ID = cc.SECTION_ID
+                WHERE sec.IS_ARCHIVED = 0
+                    AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                ORDER BY c.COURSE_NAME;";
+            LoadComboBox(aloneComboBox1, query, "COURSE_NAME", ("@TeacherID", teacherId));
         }
 
         private void LoadSections()
         {
-            if (!AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int year) ||
-                !AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int semester))
-            {
-                bool wasLoading = loadingFilters;
-                loadingFilters = true;
-                aloneComboBox2.DataSource = null;
-                loadingFilters = wasLoading;
-                return;
-            }
-
-            const string query = @"SELECT ID, SECTION_NAME FROM section
-                WHERE SECTION_NAME NOT LIKE 'ARCHIVED-%'
-                  AND YEAR_LEVEL = @YearLevel
-                  AND SEMESTER = @Semester
-                ORDER BY SECTION_NAME;";
+            object courseId = AppTheme.TryGetIntValue(aloneComboBox1.SelectedValue, out int selectedCourse)
+                ? selectedCourse : DBNull.Value;
+            object year = AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int selectedYear)
+                ? selectedYear : DBNull.Value;
+            object semester = AppTheme.TryGetIntValue(semestercombo.SelectedValue, out int selectedSemester)
+                ? selectedSemester : DBNull.Value;
+            const string query = @"
+                SELECT DISTINCT sec.ID, sec.SECTION_NAME
+                FROM section sec
+                INNER JOIN class_codes cc ON cc.SECTION_ID = sec.ID AND cc.TEACHER_ID = @TeacherID
+                WHERE sec.IS_ARCHIVED = 0 AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                    AND (@CourseID IS NULL OR cc.COURSE_ID = @CourseID)
+                    AND (@YearLevel IS NULL OR sec.YEAR_LEVEL = @YearLevel)
+                    AND (@Semester IS NULL OR sec.SEMESTER = @Semester)
+                ORDER BY sec.SECTION_NAME;";
             LoadComboBox(aloneComboBox2, query, "SECTION_NAME",
+                ("@TeacherID", teacherId),
+                ("@CourseID", courseId),
                 ("@YearLevel", year),
                 ("@Semester", semester));
         }
 
-        private void LoadYears() => LoadComboBox(yearcombo,
-            "SELECT DISTINCT CAST(YEAR_LEVEL AS SIGNED) AS ID, CONCAT('Year ', YEAR_LEVEL) AS Label FROM section WHERE SECTION_NAME NOT LIKE 'ARCHIVED-%' ORDER BY ID;", "Label");
+        private void LoadYears()
+        {
+            object courseId = AppTheme.TryGetIntValue(aloneComboBox1.SelectedValue, out int selectedCourse)
+                ? selectedCourse : DBNull.Value;
+            const string query = @"
+                SELECT DISTINCT CAST(sec.YEAR_LEVEL AS SIGNED) AS ID,
+                    CONCAT('Year ', sec.YEAR_LEVEL) AS Label
+                FROM section sec
+                INNER JOIN class_codes cc ON cc.SECTION_ID = sec.ID AND cc.TEACHER_ID = @TeacherID
+                WHERE sec.IS_ARCHIVED = 0 AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                    AND (@CourseID IS NULL OR cc.COURSE_ID = @CourseID)
+                ORDER BY ID;";
+            LoadComboBox(yearcombo, query, "Label",
+                ("@TeacherID", teacherId), ("@CourseID", courseId));
+        }
 
-        private void LoadSemesters() => LoadComboBox(semestercombo,
-            "SELECT CAST(1 AS SIGNED) AS ID, 'Semester 1' AS Label UNION ALL SELECT CAST(2 AS SIGNED), 'Semester 2';", "Label");
+        private void LoadSemesters()
+        {
+            object courseId = AppTheme.TryGetIntValue(aloneComboBox1.SelectedValue, out int selectedCourse)
+                ? selectedCourse : DBNull.Value;
+            object year = AppTheme.TryGetIntValue(yearcombo.SelectedValue, out int selectedYear)
+                ? selectedYear : DBNull.Value;
+            const string query = @"
+                SELECT DISTINCT CAST(sec.SEMESTER AS SIGNED) AS ID,
+                    CONCAT('Semester ', sec.SEMESTER) AS Label
+                FROM section sec
+                INNER JOIN class_codes cc ON cc.SECTION_ID = sec.ID AND cc.TEACHER_ID = @TeacherID
+                WHERE sec.IS_ARCHIVED = 0 AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
+                    AND (@CourseID IS NULL OR cc.COURSE_ID = @CourseID)
+                    AND (@YearLevel IS NULL OR sec.YEAR_LEVEL = @YearLevel)
+                ORDER BY ID;";
+            LoadComboBox(semestercombo, query, "Label",
+                ("@TeacherID", teacherId), ("@CourseID", courseId), ("@YearLevel", year));
+        }
 
         private void LoadComboBox(ComboBox comboBox, string query, string displayMember,
             params (string Name, object Value)[] parameters)
@@ -115,6 +153,8 @@ namespace School_Attendance_System
         private void courseCombo_SelectedIndexChanged(object? sender, EventArgs e)
         {
             if (loadingFilters) return;
+            LoadYears();
+            LoadSemesters();
             LoadSections();
             LoadReport();
         }
@@ -125,7 +165,15 @@ namespace School_Attendance_System
             LoadReport();
         }
 
-        private void academicFilterChanged(object? sender, EventArgs e)
+        private void yearFilterChanged(object? sender, EventArgs e)
+        {
+            if (loadingFilters) return;
+            LoadSemesters();
+            LoadSections();
+            LoadReport();
+        }
+
+        private void semesterFilterChanged(object? sender, EventArgs e)
         {
             if (loadingFilters) return;
             LoadSections();

@@ -35,7 +35,7 @@ namespace School_Attendance_System
                     sec.SECTION_NAME AS Section,
                     COALESCE(t.Present, 0) AS Present,
                     COALESCE(t.Late, 0) AS Late,
-                    COALESCE(t.Absent, 0) AS Absent,
+                    COALESCE(t.Absent, 0) + FLOOR(COALESCE(t.Late, 0) / 3) AS Absent,
                     CASE WHEN COALESCE(f.UnexcusedAbsents, 0) + FLOOR(COALESCE(f.LateCount, 0) / 3) >= 3
                         THEN 'FDA' ELSE '' END AS Status
                 FROM students s
@@ -55,7 +55,7 @@ namespace School_Attendance_System
                 LEFT JOIN (
                     SELECT ar.STUDENT_ID, ar.CLASS_CODE_ID,
                         SUM(ar.STATUS = 'Late') AS LateCount,
-                        SUM(ar.STATUS = 'Absent' AND ar.IS_EXCUSED = 0) AS UnexcusedAbsents
+                        SUM(ar.STATUS = 'Absent' AND COALESCE(ar.IS_EXCUSED, 0) = 0) AS UnexcusedAbsents
                     FROM attendance_records ar
                     INNER JOIN class_codes own ON own.ID = ar.CLASS_CODE_ID AND own.TEACHER_ID = @TeacherID
                     GROUP BY ar.STUDENT_ID, ar.CLASS_CODE_ID
@@ -106,11 +106,10 @@ namespace School_Attendance_System
         {
             if (studentlistcontent.DataSource is not DataView view) return;
 
-            string term = SearchFilter.Literal(searchtext.Text.Trim());
-            view.RowFilter = term.Length == 0
-                ? string.Empty
-                : string.Join(" OR ", new[] { "[Student Name]", "[Student Number]", "Email", "[Parent Email]", "Course", "Year", "Semester", "Section" }
-                    .Select(column => $"{column} LIKE '%{term}%'"));
+            view.RowFilter = SearchFilter.ContainsAny(
+                view.Table,
+                new[] { "Student Name", "Student Number", "Email", "Parent Email", "Course", "Year", "Semester", "Section" },
+                searchtext.Text);
         }
 
         private void searchtext_TextChanged(object sender, EventArgs e)

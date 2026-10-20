@@ -36,6 +36,8 @@ namespace School_Attendance_System
             navMenu = new AntdUI.Menu();
             adminDivider = new AntdUI.Divider();
             adminMenu = new AntdUI.Menu();
+            testDivider = new AntdUI.Divider();
+            testMenu = new AntdUI.Menu();
             userSeparator = new Panel();
             userName = new AntdUI.Label();
             userEmail = new AntdUI.Label();
@@ -55,6 +57,8 @@ namespace School_Attendance_System
             sidebar.Controls.Add(navMenu);
             sidebar.Controls.Add(adminDivider);
             sidebar.Controls.Add(adminMenu);
+            sidebar.Controls.Add(testDivider);
+            sidebar.Controls.Add(testMenu);
             sidebar.Controls.Add(userSeparator);
             sidebar.Controls.Add(userName);
             sidebar.Controls.Add(userEmail);
@@ -125,9 +129,29 @@ namespace School_Attendance_System
             adminMenu.Size = new Size(200, 110);
             adminMenu.TabIndex = 5;
             adminMenu.ItemClick += navMenu_ItemClick;
-            // 
+            //
+            // testDivider
+            //
+            testDivider.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            testDivider.Location = new Point(12, 492);
+            testDivider.Name = "testDivider";
+            testDivider.Size = new Size(200, 24);
+            testDivider.TabIndex = 6;
+            testDivider.Text = "Test";
+            //
+            // testMenu
+            //
+            testMenu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            testMenu.Gap = 4;
+            testMenu.Location = new Point(12, 520);
+            testMenu.Name = "testMenu";
+            testMenu.Radius = 8;
+            testMenu.Size = new Size(200, 56);
+            testMenu.TabIndex = 7;
+            testMenu.ItemClick += navMenu_ItemClick;
+            //
             // userSeparator
-            // 
+            //
             userSeparator.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             userSeparator.Location = new Point(12, 656);
             userSeparator.Name = "userSeparator";
@@ -203,6 +227,8 @@ namespace School_Attendance_System
         private AntdUI.Menu navMenu;
         private AntdUI.Divider adminDivider;
         private AntdUI.Menu adminMenu;
+        private AntdUI.Divider testDivider;
+        private AntdUI.Menu testMenu;
         private Panel userSeparator;
         private AntdUI.Label userName;
         private AntdUI.Label userEmail;

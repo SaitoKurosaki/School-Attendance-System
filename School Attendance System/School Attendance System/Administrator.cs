@@ -76,11 +76,10 @@ namespace School_Attendance_System
         {
             if (studentlistcontent.DataSource is not DataView view) return;
 
-            string term = SearchFilter.Literal(searchtext.Text.Trim());
-            view.RowFilter = term.Length == 0
-                ? string.Empty
-                : string.Join(" OR ", new[] { "[Student Name]", "[Student Number]", "Email", "[Parent Email]" }
-                    .Select(column => $"{column} LIKE '%{term}%'"));
+            view.RowFilter = SearchFilter.ContainsAny(
+                view.Table,
+                new[] { "Student Name", "Student Number", "Email", "Parent Email" },
+                searchtext.Text);
         }
 
         private void LoadCatalogs()

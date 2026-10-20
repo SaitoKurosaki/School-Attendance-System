@@ -10,6 +10,9 @@
     <Compile Update="Classcode.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="FdaTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="MainDashboard.cs">
       <SubType>Form</SubType>
     </Compile>

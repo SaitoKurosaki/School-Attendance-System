@@ -224,6 +224,24 @@ namespace School_Attendance_System
                 using MySqlConnection conn = new MySqlConnection(Connection);
                 conn.Open();
 
+                const string activeCatalogQuery = @"
+                    SELECT COUNT(*)
+                    FROM course c
+                    INNER JOIN section s ON s.ID = @sectionID
+                    WHERE c.ID = @courseID AND c.IS_ARCHIVED = 0
+                        AND s.IS_ARCHIVED = 0 AND s.SECTION_NAME NOT LIKE 'ARCHIVED-%';";
+                using (MySqlCommand activeCatalogCommand = new MySqlCommand(activeCatalogQuery, conn))
+                {
+                    activeCatalogCommand.Parameters.AddWithValue("@courseID", courseID);
+                    activeCatalogCommand.Parameters.AddWithValue("@sectionID", sectionID);
+                    if (Convert.ToInt32(activeCatalogCommand.ExecuteScalar()) == 0)
+                    {
+                        MessageBox.Show("Class codes can only be created for an active course and section.",
+                            "Class Code", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
                 const string existingCodeQuery = @"
                     SELECT CLASS_CODE FROM class_codes
                     WHERE TEACHER_ID = @teacherID AND COURSE_ID = @courseID AND SECTION_ID = @sectionID;";

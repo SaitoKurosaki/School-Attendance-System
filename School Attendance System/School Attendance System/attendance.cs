@@ -62,7 +62,8 @@ namespace School_Attendance_System
             colAbsent.Width = 75;
             colExcused.Width = 90;
             colRemarks.Width = 130;
-            colExcused.ReadOnly = true;
+            colExcused.ReadOnly = false;
+            colExcused.ToolTipText = "Mark an absence as excused. This applies only when the student is marked Absent.";
             colStudentName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             foreach (DataGridViewColumn column in recentAttendanceGrid.Columns)
@@ -83,7 +84,6 @@ namespace School_Attendance_System
                 INNER JOIN class_codes cc ON cc.COURSE_ID = c.ID AND cc.TEACHER_ID = @TeacherID
                 INNER JOIN section sec ON sec.ID = cc.SECTION_ID
                     AND sec.IS_ARCHIVED = 0 AND sec.SECTION_NAME NOT LIKE 'ARCHIVED-%'
-                WHERE c.IS_ARCHIVED = 0
                 ORDER BY c.COURSE_NAME;";
             LoadComboBox(coursecombo, query, null, ("@TeacherID", teacherId));
         }
@@ -347,7 +347,6 @@ namespace School_Attendance_System
                         status == "Present", status == "Late", status == "Absent",
                         status == "Absent" && reader["IsExcused"] != DBNull.Value && Convert.ToBoolean(reader["IsExcused"]),
                         reader["Remarks"] == DBNull.Value ? string.Empty : reader["Remarks"]);
-                    recentAttendanceGrid.Rows[rowIndex].Cells["colExcused"].ReadOnly = status != "Absent";
                     recentAttendanceGrid.Rows[rowIndex].Tag = new StudentRow(
                         Convert.ToInt32(reader["StudentId"]),
                         reader["StudentName"]?.ToString() ?? string.Empty,
@@ -500,21 +499,15 @@ namespace School_Attendance_System
                 if (GetStatus(row) == null)
                 {
                     row.Cells["colExcused"].Value = false;
-                    row.Cells["colExcused"].ReadOnly = true;
                 }
                 return;
             }
             foreach (string columnName in new[] { "colPresent", "colLate", "colAbsent" })
                 if (columnName != selectedColumn) row.Cells[columnName].Value = false;
 
-            if (selectedColumn == "colAbsent")
-            {
-                row.Cells["colExcused"].ReadOnly = false;
-            }
-            else
+            if (selectedColumn != "colAbsent")
             {
                 row.Cells["colExcused"].Value = false;
-                row.Cells["colExcused"].ReadOnly = true;
             }
 
             if (selectedColumn != "colAbsent" && selectedDate == DateTime.Today && string.IsNullOrWhiteSpace(row.Cells["colTimeIn"].Value?.ToString()))
